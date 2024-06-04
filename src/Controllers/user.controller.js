@@ -37,7 +37,7 @@ const userController = {
         });
     },
     getUserRolByID: (req, res, next) => {
-        const id = req.params.id;
+        const id = req.params.personeelsnummer;
         userDAO.getUserRolByID(id, (err, data) => {
             if (err) {
                 console.error("getUserRolByID error", err);
@@ -55,7 +55,7 @@ const userController = {
         });
     },
     getUserPasswordByID: (req, res, next) => {
-        const id = req.params.id;
+        const id = req.params.personeelsnummer;
         userDAO.getUserPasswordByID(id, (err, data) => {
             if (err) {
                 console.error("getUserPasswordByID error", err);
