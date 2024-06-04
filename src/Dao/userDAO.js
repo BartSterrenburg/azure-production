@@ -50,6 +50,8 @@ const userDAO = {
             callback(null, rows);
         });
     }
+
+    
 };
 
 module.exports = userDAO;
