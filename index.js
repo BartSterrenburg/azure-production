@@ -7,7 +7,7 @@ const formRoutes = require("./src/Routes/form.routes");
 // Gebruik CORS middleware
 const corsOptions = {
   origin: "http://127.0.0.1:1234",
-  methods: ["GET", "POST", "OPTIONS"],
+  methods: ["GET,HEAD,PUT,PATCH,POST,DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
  
