@@ -7,4 +7,6 @@ router.get("/api/user/:personeelsnummer", userController.getUserById)
 router.get("/api/user/rol/:personeelsnummer", userController.getUserRolByID)
 router.get("/api/user/password/:personeelsnummer", userController.getUserPasswordByID)
 
+router.post("/api/user/WPI", userController.saveWPI)
+
 module.exports = router
