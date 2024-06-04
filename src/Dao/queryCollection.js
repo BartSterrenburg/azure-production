@@ -4,7 +4,7 @@ const queries = {
     getUserById: "SELECT * FROM gebruiker WHERE personeelsnummer = ?",
     getUserRolByID: "SELECT rol FROM gebruiker WHERE personeelsnummer = ?",
     getPasswordByID: "SELECT wachtwoord FROM gebruiker WHERE personeelsnummer = ?",
-    postWPI: "INSERT INTO formulier_wpi (personeelsnummerEigenaar) VALUES (?)",
+    postWPI: "INSERT INTO formulier_wpi (formNummer) VALUES (?)",
   };
   
   module.exports = queries;

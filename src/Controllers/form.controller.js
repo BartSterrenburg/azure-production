@@ -5,6 +5,7 @@ const formController = {
 
     saveWPI: (req, res, next) => {
         const form = req.body;
+        console.log(form.nummer)
         formDAO.saveWPI(form, (err, data) => {
             if (err) {
                 console.error("saveWPI error", err);
