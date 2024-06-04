@@ -56,7 +56,8 @@ CREATE TABLE formulier_mio (
 
 -- Create formulier_wpi table
 CREATE TABLE formulier_wpi (
-    formNummer varchar(50) PRIMARY KEY,
+    primarykey INT AUTO_INCREMENT PRIMARY KEY,
+    formNummer varchar(50),
     personeelsnummerEigenaar INT,
     datum DATE,
     project VARCHAR(128),
