@@ -155,9 +155,9 @@ INSERT INTO rollen (rolNummer, rolOmschrijving) VALUES
 (20, 'Manager');
 
 -- Insert test data into gebruiker
-INSERT INTO gebruiker (personeelsnummer, naam, email, handtekening, rol) VALUES
-(1, 'Jan Janssen', 'jan.janssen@example.com', 'handtekening1', 10),
-(2, 'Piet Pietersen', 'piet.pietersen@example.com', 'handtekening2', 20);
+INSERT INTO gebruiker (personeelsnummer, naam, email, wachtwoord, handtekening, rol) VALUES
+(1, 'Jan Janssen', 'jan.janssen@example.com', 'password20202', 'handtekening1', 10),
+(2, 'Piet Pietersen', 'piet.pietersen@example.com', 'odsdfydfg2378G', 'handtekening2', 20);
 
 -- Insert test data into formulier_mio
 INSERT INTO formulier_mio (formId, ordernummer, personeelsnummerEige, datum, tijdstip, typeMelding, naamEigenaar, functieEigenaar, locatie, aardLetsel, plaatsLetsel, eersteBehandeling, onmiddellijkeActieNotitie, omschrijving, fotoTerIl, OH_onveiligeSnelheid, OH_beveiligingBuitenWerking, OH_verkeerdGereedschap, OH_nietGebruikenPBM) VALUES
