@@ -7,6 +7,8 @@ const queries = {
   saveWPI: "INSERT INTO formulier_wpi VALUES (?)",
   createUser:
     "INSERT INTO gebruiker (personeelsnummer, naam, email, wachtwoord, handtekening, rol) VALUES (?, ?, ?, ?, ?, ?)",
+  loginUser: "SELECT * FROM `gebruiker` WHERE personeelsnummer = ? AND wachtwoord = ?",
 };
+
 
 module.exports = queries;

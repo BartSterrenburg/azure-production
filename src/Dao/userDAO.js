@@ -41,6 +41,7 @@ const userDAO = {
             callback(null, rows);
         });
     },
+
     saveWPI: (personeelsnummerEige, callback) => {
         database.query(queryLibrary.saveWPI(personeelsnummerEige), (err, rows) => {
             if (err) {
@@ -49,8 +50,19 @@ const userDAO = {
             }
             callback(null, rows);
         });
-    }
+    },
 
+    // Login user
+    loginUser: (personeelsnummer, wachtwoord, callback) => {
+        database.query(queryLibrary.loginUser, [personeelsnummer, wachtwoord], (err, rows) => {
+            if (err) {
+                console.error("Error executing query", err);
+                return callback(err, null);
+            }
+            callback(null, rows);
+        });
+    },
+    
     
 };
 
