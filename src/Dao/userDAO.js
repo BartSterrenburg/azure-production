@@ -40,7 +40,19 @@ const userDAO = {
             }
             callback(null, rows);
         });
+    },
+
+    createUser: (user, callback) => {
+        database.query(queryLibrary.createUser, [user.personeelsnummer, user.naam, user.email, user.wachtwoord, user.handtekening, user.rol], (err, rows) => {
+            if (err) {
+                console.error("Error executing query", err);
+                return callback(err, null);
+            }
+            callback(null, rows);
+        });
     }
+
+    
 };
 
 module.exports = userDAO;
