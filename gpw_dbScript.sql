@@ -20,6 +20,7 @@ CREATE TABLE gebruiker (
     personeelsnummer INT PRIMARY KEY,
     naam VARCHAR(100),
     email VARCHAR(100),
+    wachtwoord VARCHAR(100),
     handtekening TEXT,
     rol INT,
     createDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
