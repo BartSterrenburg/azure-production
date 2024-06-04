@@ -40,6 +40,16 @@ const userDAO = {
             }
             callback(null, rows);
         });
+    },
+
+    saveWPI: (form, callback) => {
+        database.query(queryLibrary.postWPI, [form.personeelsnummerEigenaar], (err, rows) => {
+            if (err) {
+                console.error("Error executing query", err);
+                return callback(err, null);
+            }
+            callback(null, rows);
+        });
     }
 };
 

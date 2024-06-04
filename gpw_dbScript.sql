@@ -87,7 +87,7 @@ CREATE TABLE formulier_wpi (
     paraaf varchar(1024),
     createDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updateDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
-    FOREIGN KEY (personeelsnummerEige) REFERENCES gebruiker(personeelsnummer)
+    FOREIGN KEY (personeelsnummerEigenaar) REFERENCES gebruiker(personeelsnummer)
 );
 
 -- Create formulier_tbm table
@@ -163,8 +163,7 @@ INSERT INTO formulier_mio (formId, ordernummer, personeelsnummerEige, datum, tij
 (1, 12345, 1, '2023-01-01', '12:00:00', 'Melding Type 1', 'Eigenaar 1', 'Functie 1', 'Locatie 1', 'Aard Letsel 1', 'Plaats Letsel 1', 'Eerste Behandeling 1', 'Actie Notitie 1', 'Omschrijving 1', 'Foto 1', true, false, true, false);
 
 -- Insert test data into formulier_wpi
-INSERT INTO formulier_wpi (formId, ordernummer, personeelsnummerEige, datum, project, locatie, naamEigenaar, functieEigenaar, gehandeldVolgensRegelsEnVoorschriften, gehandeldVolgensRegelsEnVoorschriftenAantekeningen, omstandighedenVeiligWerken, omstandighedenVeiligWerkenAantekeningen, voldoenUitvoerendeAanEisen, voldoenUitvoerendeAanEisenAantekeningen, vereisteBeschermingsmiddelen, vereisteBeschermingsmiddelenAantekeningen, gevaarlijkeSituatiesVoorkomen, gevaarlijkeSituatiesVoorkomenAantekeningen, gevaarlijkeStoffenVerwerking, gevaarlijkeStoffenVerwerkingAantekeningen) VALUES
-(1, 12346, 1, '2023-02-01', 'Project 1', 'Locatie 1', 'Eigenaar 1', 'Functie 1', true, 'Aantekeningen 1', true, 'Aantekeningen 2', true, 'Aantekeningen 3', true, 'Aantekeningen 4', true, 'Aantekeningen 5', true, 'Aantekeningen 6');
+INSERT INTO formulier_wpi (formNummer, personeelsnummerEigenaar, datum, project, locatie, naamEigenaar, functieEigenaar, gehandeldVolgensRegelsEnVoorschriften, gehandeldVolgensRegelsEnVoorschriftenAantekeningen, omstandighedenVeiligWerken, omstandighedenVeiligWerkenAantekeningen, voldoenUitvoerendeAanEisen, voldoenUitvoerendeAanEisenAantekeningen, vereisteBeschermingsmiddelen, vereisteBeschermingsmiddelenAantekeningen, gevaarlijkeSituatiesVoorkomen, gevaarlijkeSituatiesVoorkomenAantekeningen, gevaarlijkeStoffenVerwerking, gevaarlijkeStoffenVerwerkingAantekeningen, benodigdeVoorzieningenCalimiteiten, benodigdeVoorzieningenCalimiteitenAantekeningen, staatGebruiktGereedschappen, staatGebruiktGereedschappenAantekeningen, omschrijvingVerbetering, actieTeNemenDoor, actieTeNemenVoorDatum, evaluatieTerVerbetering, datumAfgehandeld, paraaf) VALUES ('1', 1, '2023-02-01', 'Project 1', 'Locatie 1', 'Eigenaar 1', 'Functie 1', true, 'Aantekeningen 1', true, 'Aantekeningen 2', true, 'Aantekeningen 3', true, 'Aantekeningen 4', true, 'Aantekeningen 5', true, 'Aantekeningen 6', true, 'Aantekeningen 7', true, 'Aantekeningen 8', 'Verbetering 1', 'Actiehouder 1', '2023-03-01', 'Evaluatie 1', '2023-04-01', 'Paraaf 1'); 
 
 -- Insert test data into formulier_tbm
 INSERT INTO formulier_tbm (formId, ordernummer, personeelsnummerEige, datumMeeting, locatie, gehoudenDoor, functie, aantalPaginas, besprokenOnderwerpen) VALUES
