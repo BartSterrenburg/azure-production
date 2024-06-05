@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const userRoutes = require('./src/Routes/user.routes');
+const tokenRoutes = require('./src/Routes/token.routes');
 
 // Gebruik CORS middleware
 app.use(cors());
@@ -17,7 +18,7 @@ app.get("/", (req, res, next) => {
 });
 
 app.use(userRoutes)
-
+app.use(tokenRoutes)
 
 // Route error handler
 app.use((req, res, next) => {

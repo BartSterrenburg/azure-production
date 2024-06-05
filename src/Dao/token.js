@@ -3,18 +3,21 @@ require('dotenv').config()
 
 
 const tokenFunctions = {
-  getPersoneelsNummerFromToken: (token) => {
+  getPersoneelsNummerFromToken: (token, callback) => {
     try {
       // Decode the token
-      const decoded = jwt.verify(token, process.env.JWT_KEY)
 
+      const decoded = jwt.verify(token, process.env.JWT_KEY);
+      console.log(token)
       // Extract userId from the decoded payload
       const userId = decoded.id
+      console.log(userId)
 
-      return userId
+      return callback(null, userId)
     } catch (error) {
       // If token is invalid or expired, return null
-      return null
+      console.log(error)
+      return callback(error, null)
     }
   },
 
