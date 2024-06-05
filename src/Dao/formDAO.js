@@ -12,6 +12,7 @@ const formDAO = {
         form.locatie,
         form.naamEigenaar,
         form.functieEigenaar,
+        form.foto,
         form.inspectie.regelsVoorschriften
           .gehandeldVolgensRegelsEnVoorschriften,
         form.inspectie.regelsVoorschriften
@@ -40,7 +41,6 @@ const formDAO = {
           form.evaluatieTerVerbetering,
           form.datumAfgehandeld,
           form.paraaf
-
       ],
       (err, rows) => {
         if (err) {
