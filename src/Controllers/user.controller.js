@@ -75,8 +75,8 @@ const userController = {
 
    // Login user
    loginUser: (req, res, next) => {
-    const personeelsnummer = req.body.employeeNumber; // Match frontend naming
-    const wachtwoord = req.body.password; // Match frontend naming
+    const personeelsnummer = req.body.employeeNumber; 
+    const wachtwoord = req.body.password; 
 
     userDAO.loginUser(personeelsnummer, wachtwoord, (err, rows) => {
         if (err) {
@@ -88,14 +88,12 @@ const userController = {
             });
         }
         if (rows.length === 0) {
-            // No user found with the given credentials
             return res.status(401).json({
                 status: 401,
                 message: "Invalid employee number or password",
                 data: {},
             });
         }
-        // User found, login successful
         res.json({
             status: 200,
             message: "Login successful",
