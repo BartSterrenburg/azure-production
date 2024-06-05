@@ -51,6 +51,27 @@ const formDAO = {
       }
     );
   },
+
+  saveTRA: (form, callback) => {
+    database.query(
+      queryLibrary.postTRA,
+      [
+        form.nummer,
+        form.naamVGWCoordinator,
+        form.paraafVGWCoordinator,
+        form.naamUitvoerendeLeidinggevende,
+        form.paraafUitvoerendeLeidinggevende,
+        form.omschrijvingTaak,
+      ],
+      (err, rows) => {
+        if (err) {
+          console.error("Error executing query", err);
+          return callback(err, null);
+        }
+        callback(null, rows);
+      }
+    );
+  },
 };
 
 module.exports = formDAO;

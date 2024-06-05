@@ -22,6 +22,26 @@ const formController = {
             });
         });
     },
+
+    saveTRA: (req, res, next) => {
+        console.log('works')
+        const form = req.body;
+        formDAO.saveTRA(form, (err, data) => {
+            if (err) {
+                console.error("saveWPI error", err);
+                return next({
+                    status: 500,
+                    message: "Internal Server Error",
+                    data: {},
+                });
+            }
+            res.json({
+                status: 200,
+                message: "TRA saved",
+                data: data,
+            });
+        });
+    },
 };
 
 module.exports = formController;
