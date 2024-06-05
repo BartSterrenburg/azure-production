@@ -5,10 +5,15 @@ const userRoutes = require('./src/Routes/user.routes');
 const tokenRoutes = require('./src/Routes/token.routes');
 
 // Gebruik CORS middleware
-app.use(cors());
-
+const corsOptions = {
+  origin: "http://127.0.0.1:1234",
+  methods: ["GET,HEAD,PUT,PATCH,POST,DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+ 
+app.use(cors(corsOptions));
 app.use(express.json());
-
+ 
 app.get("/", (req, res, next) => {
   res.json({
     status: 200,
@@ -20,6 +25,7 @@ app.get("/", (req, res, next) => {
 app.use(userRoutes)
 app.use(tokenRoutes)
 
+
 // Route error handler
 app.use((req, res, next) => {
   next({
@@ -28,7 +34,7 @@ app.use((req, res, next) => {
     data: {},
   });
 });
-
+ 
 // Express error handler
 app.use((error, req, res, next) => {
   res.status(error.status || 500).json({
@@ -37,7 +43,7 @@ app.use((error, req, res, next) => {
     data: {},
   });
 });
-
+ 
 // Onderstaande code zorgt ervoor dat de server alleen luistert als het bestand niet tijdens testen wordt uitgevoerd.
 if (process.env.NODE_ENV !== "test") {
   const port = process.env.PORT || 3000;
@@ -45,5 +51,5 @@ if (process.env.NODE_ENV !== "test") {
     console.log(`Server is running on port ${port}`);
   });
 }
-
+ 
 module.exports = app;

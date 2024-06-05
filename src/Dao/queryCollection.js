@@ -8,6 +8,7 @@ const queries = {
   createUser:
     "INSERT INTO gebruiker (personeelsnummer, naam, email, wachtwoord, handtekening, rol) VALUES (?, ?, ?, ?, ?, ?)",
   loginUser: "SELECT * FROM `gebruiker` WHERE personeelsnummer = ? AND wachtwoord = ?",
+  postWPI: "INSERT INTO formulier_wpi (formNummer) VALUES (?)",
 };
 
 
