@@ -13,7 +13,7 @@ const queries = {
   postMIO:"INSERT INTO formulier_mio() VALUES ()",
   
   postTBM: "INSERT INTO formulier_tbm(formNummer, personeelsnummerEige, datumMeeting, locatie, gehoudenDoor, functie, aantalPaginas, besprokenOnderwerpen) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-  postSignature: "INSERT INTO handtekening(formNummer, name, signature) VALUES (?, ?, ?)",
+  postSignature: "INSERT INTO handtekening(formNummer, name, signature) VALUES(?,?,?)",
 
 };
 
