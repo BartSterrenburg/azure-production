@@ -53,18 +53,24 @@ const userDAO = {
         });
     },
 
-    // Login user
-    loginUser: (personeelsnummer, wachtwoord, callback) => {
-        database.query(queryLibrary.loginUser, [personeelsnummer, wachtwoord], (err, rows) => {
-            if (err) {
-                console.error("Error executing query", err);
-                return callback(err, null);
-            }
-            const token = tokenFunctions.createToken(personeelsnummer);
-            rows[0].token = token;
-            callback(null, rows);
-        });
-    },
+// Login user
+loginUser: (personeelsnummer, wachtwoord, callback) => {
+    database.query(queryLibrary.loginUser, [personeelsnummer, wachtwoord], (err, rows) => {
+        if (err) {
+            console.error("Error executing query", err);
+            return callback(err, null);
+        }
+        if (rows.length === 0) {
+            const error = new Error("User not found");
+            error.code = "USER_NOT_FOUND";
+            return callback(error, null);
+        }
+        const token = tokenFunctions.createToken(personeelsnummer);
+        rows[0].token = token;
+        callback(null, rows);
+    });
+},
+
 };
     
 
