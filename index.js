@@ -30,6 +30,7 @@ app.get("/", (req, res, next) => {
 
 app.use(userRoutes)
 app.use(tokenRoutes)
+app.use(formRoutes)
 
 
 // Route error handler
