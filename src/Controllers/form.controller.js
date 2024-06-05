@@ -60,6 +60,46 @@ const formController = {
             });
         });
     },
+
+    saveTBM: (req, res, next) => {
+        const form = req.body;
+        formDAO.saveTBM(form, (err, data) => {
+            if (err) {
+                console.error("saveWPI error", err);
+                return next({
+                    status: 500,
+                    message: "Internal Server Error",
+                    data: {},
+                });
+            }
+            res.json({
+                status: 200,
+                message: "TBM saved",
+                data: data,
+            });
+        });
+    },
+
+    saveSignature: (req, res, next) => {
+        const form = req.body;
+        formDAO.saveSignature(form, (err, data) => {
+            if (err) {
+                console.error("saveSignature error", err);
+                return next({
+                    status: 500,
+                    message: "Internal Server Error",
+                    data: {},
+                });
+            }
+            res.json({
+                status: 200,
+                message: "Signature saved",
+                data: data,
+            });
+        });
+    },
+
+
 };
 
 module.exports = formController;

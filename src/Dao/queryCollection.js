@@ -11,6 +11,9 @@ const queries = {
     "INSERT INTO formulier_tra(formNummer, naamVGWCoordinator, paraafVGWCoordinator, naamAkkoordUitvoerendLeidinggevende, paraafAkkoordUitvoerendLeidinggevende, taakomschrijving) VALUES (?, ?, ?, ?, ?, ?)",
   
   postMIO:"INSERT INTO formulier_mio() VALUES ()",
+  
+  postTBM: "INSERT INTO formulier_tbm(formNummer, personeelsnummerEige, datumMeeting, locatie, gehoudenDoor, functie, aantalPaginas, besprokenOnderwerpen) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+  postSignature: "INSERT INTO handtekening(formNummer, name, signature) VALUES (?, ?, ?)",
 
 };
 
