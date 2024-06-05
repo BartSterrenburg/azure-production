@@ -72,6 +72,47 @@ const formDAO = {
       }
     );
   },
+
+    saveTBM: (form, callback) => {
+        database.query(
+        queryLibrary.postTBM,
+        [
+            form.number,
+            form.owner,
+            form.date,
+            form.location,
+            form.holdBy,
+            form.function,
+            form.pageAmount,
+            form.summary,
+        ],
+        (err, rows) => {
+            if (err) {
+            console.error("Error executing query", err);
+            return callback(err, null);
+            }
+            callback(null, rows);
+        }
+        );
+    },
+
+    saveSignature: (form, callback) => {
+        database.query(
+        queryLibrary.postSignature,
+        [
+            form.number,
+            form.name,
+            form.signature,
+        ],
+        (err, rows) => {
+            if (err) {
+            console.error("Error executing query", err);
+            return callback(err, null);
+            }
+            callback(null, rows);
+        }
+        );
+    }
 };
 
 module.exports = formDAO;
