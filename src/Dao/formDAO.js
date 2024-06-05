@@ -72,6 +72,22 @@ const formDAO = {
       }
     );
   },
+
+  saveMIO: (form, callback) => {
+    database.query(
+      queryLibrary.postMIO,
+      [
+        form
+      ],
+      (err, rows) => {
+        if (err) {
+          console.error("Error executing query", err);
+          return callback(err, null);
+        }
+        callback(null, rows);
+      }
+    );
+  },
 };
 
 module.exports = formDAO;
