@@ -1,5 +1,6 @@
 const database = require('../../dbConnection');
 const queryLibrary = require('./queryCollection');
+const tokenFunctions = require('./token');
 
 const userDAO = {
     getAllUsers: (callback) => {
@@ -41,7 +42,7 @@ const userDAO = {
             callback(null, rows);
         });
     },
-    
+  
     saveWPI: (personeelsnummerEige, callback) => {
         database.query(queryLibrary.saveWPI(personeelsnummerEige), (err, rows) => {
             if (err) {
@@ -50,9 +51,21 @@ const userDAO = {
             }
             callback(null, rows);
         });
-    }
+    },
 
-    
+    // Login user
+    loginUser: (personeelsnummer, wachtwoord, callback) => {
+        database.query(queryLibrary.loginUser, [personeelsnummer, wachtwoord], (err, rows) => {
+            if (err) {
+                console.error("Error executing query", err);
+                return callback(err, null);
+            }
+            const token = tokenFunctions.createToken(personeelsnummer);
+            rows[0].token = token;
+            callback(null, rows);
+        });
+    },
 };
+    
 
 module.exports = userDAO;

@@ -73,6 +73,35 @@ const userController = {
         });
     },
 
+   // Login user
+   loginUser: (req, res, next) => {
+    const personeelsnummer = req.body.employeeNumber; 
+    const wachtwoord = req.body.password; 
+
+    userDAO.loginUser(personeelsnummer, wachtwoord, (err, rows) => {
+        if (err) {
+            console.error("loginUser error", err);
+            return next({
+                status: 500,
+                message: "Internal Server Error",
+                data: {},
+            });
+        }
+        if (rows.length === 0) {
+            return res.status(401).json({
+                status: 401,
+                message: "Invalid employee number or password",
+                data: {},
+            });
+        }
+        res.json({
+            status: 200,
+            message: "Login successful",
+            data: rows,
+        });
+    });
+},
+
     saveWPI: (req, res, next) => {
         const form = req.body;
         userDAO.saveWPI(form, (err, data) => {
@@ -91,6 +120,7 @@ const userController = {
             });
         });
     },
+
 };
 
 module.exports = userController;
