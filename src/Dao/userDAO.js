@@ -41,6 +41,7 @@ const userDAO = {
             callback(null, rows);
         });
     },
+    
     saveWPI: (personeelsnummerEige, callback) => {
         database.query(queryLibrary.saveWPI(personeelsnummerEige), (err, rows) => {
             if (err) {

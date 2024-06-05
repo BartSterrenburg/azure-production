@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const userController = require("../Controllers/user.controller")
 
+//User routes
 router.get("/api/user", userController.getAllUsers)
 router.get("/api/user/:personeelsnummer", userController.getUserById)
 router.get("/api/user/rol/:personeelsnummer", userController.getUserRolByID)
