@@ -64,7 +64,7 @@ CREATE TABLE formulier_wpi (
     locatie VARCHAR(128),
     naamEigenaar VARCHAR(128),
     functieEigenaar VARCHAR(128),
-    foto BLOB,
+    foto MEDIUMBLOB,
     gehandeldVolgensRegelsEnVoorschriften BOOLEAN,
     gehandeldVolgensRegelsEnVoorschriftenAantekeningen varchar(512),
     omstandighedenVeiligWerken BOOLEAN,
