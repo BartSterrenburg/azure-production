@@ -2,13 +2,14 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const bodyParser = require('body-parser');
-const userRoutes = require("./src/Routes/user.routes");
+const userRoutes = require('./src/Routes/user.routes');
+const tokenRoutes = require('./src/Routes/token.routes');
 const formRoutes = require("./src/Routes/form.routes");
 
 // Set limits for JSON and URL-encoded data
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
- 
+
 // Gebruik CORS middleware
 const corsOptions = {
   origin: "http://127.0.0.1:1234",
@@ -26,10 +27,11 @@ app.get("/", (req, res, next) => {
     data: {},
   });
 });
- 
-app.use(userRoutes);
-app.use(formRoutes);
- 
+
+app.use(userRoutes)
+app.use(tokenRoutes)
+
+
 // Route error handler
 app.use((req, res, next) => {
   next({

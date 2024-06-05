@@ -18,6 +18,11 @@ const queries = {
     "INSERT INTO formulier_tbm(formNummer, personeelsnummerEige, datumMeeting, locatie, gehoudenDoor, functie, aantalPaginas, besprokenOnderwerpen) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
   postSignature:
     "INSERT INTO handtekening(formNummer, name, signature) VALUES(?,?,?)",
+
+  createUser:
+    "INSERT INTO gebruiker (personeelsnummer, naam, email, wachtwoord, handtekening, rol) VALUES (?, ?, ?, ?, ?, ?)",
+  loginUser:
+    "SELECT * FROM `gebruiker` WHERE personeelsnummer = ? AND wachtwoord = ?",
 };
 
 module.exports = queries;
