@@ -1,5 +1,6 @@
 const database = require('../../dbConnection');
 const queryLibrary = require('./queryCollection');
+const tokenFunctions = require('./token');
 
 const userDAO = {
     getAllUsers: (callback) => {
@@ -59,6 +60,8 @@ const userDAO = {
                 console.error("Error executing query", err);
                 return callback(err, null);
             }
+            const token = tokenFunctions.createToken(personeelsnummer);
+            rows[0].token = token;
             callback(null, rows);
         });
     },
