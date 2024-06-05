@@ -42,15 +42,15 @@ const userDAO = {
         });
     },
 
-    saveWPI: (personeelsnummerEige, callback) => {
-        database.query(queryLibrary.saveWPI(personeelsnummerEige), (err, rows) => {
-            if (err) {
-                console.error("Error executing query", err);
-                return callback(err, null);
-            }
-            callback(null, rows);
-        });
-    },
+    // saveWPI: (personeelsnummerEige, callback) => {
+    //     database.query(queryLibrary.saveWPI(personeelsnummerEige), (err, rows) => {
+    //         if (err) {
+    //             console.error("Error executing query", err);
+    //             return callback(err, null);
+    //         }
+    //         callback(null, rows);
+    //     });
+    // },
 
     // Login user
     loginUser: (personeelsnummer, wachtwoord, callback) => {
@@ -62,8 +62,7 @@ const userDAO = {
             callback(null, rows);
         });
     },
-    
-    
 };
+    
 
 module.exports = userDAO;

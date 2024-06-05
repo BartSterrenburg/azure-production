@@ -74,36 +74,35 @@ const userController = {
     },
 
    // Login user
-    // Login user
-    loginUser: (req, res, next) => {
-        const personeelsnummer = req.body.personeelsnummer;
-        const wachtwoord = req.body.wachtwoord;
+   loginUser: (req, res, next) => {
+    const personeelsnummer = req.body.employeeNumber; // Match frontend naming
+    const wachtwoord = req.body.password; // Match frontend naming
 
-        userDAO.loginUser(personeelsnummer, wachtwoord, (err, rows) => {
-            if (err) {
-                console.error("loginUser error", err);
-                return next({
-                    status: 500,
-                    message: "Internal Server Error",
-                    data: {},
-                });
-            }
-            if (rows.length === 0) {
-                // No user found with the given credentials
-                return res.status(401).json({
-                    status: 401,
-                    message: "Invalid employee number or password",
-                    data: {},
-                });
-            }
-            // User found, login successful
-            res.json({
-                status: 200,
-                message: `User logged in with personeelsnummer ${personeelsnummer} and wachtwoord ${wachtwoord} successfully`,
-                data: rows, 
+    userDAO.loginUser(personeelsnummer, wachtwoord, (err, rows) => {
+        if (err) {
+            console.error("loginUser error", err);
+            return next({
+                status: 500,
+                message: "Internal Server Error",
+                data: {},
             });
+        }
+        if (rows.length === 0) {
+            // No user found with the given credentials
+            return res.status(401).json({
+                status: 401,
+                message: "Invalid employee number or password",
+                data: {},
+            });
+        }
+        // User found, login successful
+        res.json({
+            status: 200,
+            message: "Login successful",
+            data: rows,
         });
-    },
+    });
+},
 };
 
 module.exports = userController;
