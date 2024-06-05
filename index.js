@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const userRoutes = require('./src/Routes/user.routes');
-const tokenRoutes = require('./src/Routes/token.routes');
-
+const userRoutes = require("./src/Routes/user.routes");
+const formRoutes = require("./src/Routes/form.routes");
+ 
 // Gebruik CORS middleware
 const corsOptions = {
   origin: "http://127.0.0.1:1234",
@@ -21,11 +21,10 @@ app.get("/", (req, res, next) => {
     data: {},
   });
 });
-
-app.use(userRoutes)
-app.use(tokenRoutes)
-
-
+ 
+app.use(userRoutes);
+app.use(formRoutes);
+ 
 // Route error handler
 app.use((req, res, next) => {
   next({
