@@ -73,6 +73,39 @@ const formDAO = {
     );
   },
 
+  
+  saveTaakStap: (form, callback) => {
+    database.query(
+      queryLibrary.postTaakStap,
+      [
+        
+      ],
+      (err, rows) => {
+        if (err) {
+          console.error("Error executing query", err);
+          return callback(err, null);
+        }
+        callback(null, rows);
+      }
+    );
+  },
+
+  saveGezienUitvoering: (form, callback) => {
+    database.query(
+      queryLibrary.postGezienUitvoering,
+      [
+
+      ],
+      (err, rows) => {
+        if (err) {
+          console.error("Error executing query", err);
+          return callback(err, null);
+        }
+        callback(null, rows);
+      }
+    );
+  },
+
   saveMIO: (form, callback) => {
     database.query(
       queryLibrary.postMIO,

@@ -9,6 +9,8 @@ const queries = {
     
   postTRA: 
     "INSERT INTO formulier_tra(formNummer, naamVGWCoordinator, paraafVGWCoordinator, naamAkkoordUitvoerendLeidinggevende, paraafAkkoordUitvoerendLeidinggevende, taakomschrijving) VALUES (?, ?, ?, ?, ?, ?)",
+  postTaakStap: "INSERT INTO taakstap_tra() VALUES()",
+  postGezienUitvoering: "INSERT INTO gezienVoorUitvoering_tra() VALUES()",
   
   postMIO:"INSERT INTO formulier_mio() VALUES ()",
   

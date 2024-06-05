@@ -42,6 +42,44 @@ const formController = {
         });
     },
 
+    saveTaakStap: (req, res, next) => {
+        const form = req.body;
+        formDAO.saveTRA(form, (err, data) => {
+            if (err) {
+                console.error("saveWPI error", err);
+                return next({
+                    status: 500,
+                    message: "Internal Server Error",
+                    data: {},
+                });
+            }
+            res.json({
+                status: 200,
+                message: "TRA saved",
+                data: data,
+            });
+        });
+    },
+
+    saveGezienUitvoering: (req, res, next) => {
+        const form = req.body;
+        formDAO.saveTRA(form, (err, data) => {
+            if (err) {
+                console.error("saveWPI error", err);
+                return next({
+                    status: 500,
+                    message: "Internal Server Error",
+                    data: {},
+                });
+            }
+            res.json({
+                status: 200,
+                message: "TRA saved",
+                data: data,
+            });
+        });
+    },
+
     saveMIO: (req, res, next) => {
         const form = req.body;
         formDAO.saveMIO(form, (err, data) => {

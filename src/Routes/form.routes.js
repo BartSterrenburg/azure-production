@@ -9,5 +9,8 @@ router.post("/api/form/MIO", formController.saveMIO)
 router.post("/api/form/TBM", formController.saveTBM)
 
 router.post("/api/signature", formController.saveSignature)
+router.post("/api/taakstap", formController.saveTaakStap)
+router.post("/api/gezienVoorUitvoering", formController.saveGezienUitvoering)
+
 module.exports = router
 
