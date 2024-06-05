@@ -85,7 +85,7 @@ CREATE TABLE formulier_wpi (
     actieTeNemenVoorDatum DATE,
     evaluatieTerVerbetering varchar(512),
     datumAfgehandeld DATE,
-    paraaf varchar(1024),
+    paraaf varchar(5000),
     createDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updateDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
     FOREIGN KEY (personeelsnummerEigenaar) REFERENCES gebruiker(personeelsnummer)
