@@ -9,7 +9,6 @@ router.get("/api/user/rol/:personeelsnummer", userController.getUserRolByID)
 router.get("/api/user/password/:personeelsnummer", userController.getUserPasswordByID)
 // router.post("/api/user", userController.createUser)
 router.post("/api/login", userController.loginUser)
-router.put("/api/user/:personeelsnummer", userController.updateSignature)
 
 // router.post("/api/user/WPI", userController.saveWPI)
 

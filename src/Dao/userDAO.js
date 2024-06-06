@@ -71,17 +71,6 @@ loginUser: (personeelsnummer, wachtwoord, callback) => {
     });
 },
 
-updateSignature: (personeelsnummer, handtekening, callback) => {
-    console.log(personeelsnummer, handtekening);
-    database.query(queryLibrary.updateSignature, [personeelsnummer, handtekening], (err, rows) => {
-        if (err) {
-            console.error("Error executing query", err);
-            return callback(err, null);
-        }
-        callback(null, rows);
-    });
-},
-
 };
     
 
