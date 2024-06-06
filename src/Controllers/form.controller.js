@@ -136,9 +136,10 @@ const formController = {
     });
   },
 
+  //Get WPI data by primary key
   getWPI: (req, res, next) => {
     const primarykey = req.params.primarykey;
-    formDAO.getWPI(primarykey, (err, data) => {
+    formDAO.getWPI(primarykey, async (err, data) => {
       if (err) {
         console.error("getWPI error", err);
         return next({
@@ -147,13 +148,28 @@ const formController = {
           data: {},
         });
       }
-      res.json({
-        status: 200,
-        message: "getWPI success",
-        data: data,
-      });
+      
+      //Try to get PDF data and covert it to byte array to send to client
+      try {
+        const pdfBase64 = await getPdf.getPdfWPI(data);
+        const byteArray = Buffer.from(pdfBase64, 'base64');
+        res.set({
+          'Content-Type': 'application/pdf',
+          'Content-Length': byteArray.length
+        });
+        res.send(byteArray);
+      } catch (error) {
+        console.error("Error sending PDF:", error);
+        next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
     });
-  },
+  }
+  
+  
 };
 
 module.exports = formController;
