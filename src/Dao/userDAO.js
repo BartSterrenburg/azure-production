@@ -73,7 +73,7 @@ loginUser: (personeelsnummer, wachtwoord, callback) => {
 
 updateSignature: (personeelsnummer, handtekening, callback) => {
     console.log(personeelsnummer, handtekening);
-    database.query(queryLibrary.updateSignature, [personeelsnummer, handtekening], (err, rows) => {
+    database.query(queryLibrary.updateSignature, [handtekening, personeelsnummer], (err, rows) => {
         if (err) {
             console.error("Error executing query", err);
             return callback(err, null);

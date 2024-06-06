@@ -122,10 +122,7 @@ const userController = {
     },
 
     updateSignature: (req, res, next) => {
-        console.log("knbvhgjklm");
-        console.log(req.body);
         const personeelsnummer = req.params.personeelsnummer;
-        console.log(personeelsnummer);
         const handtekening = req.body.handtekening;
         console.log(personeelsnummer, handtekening);
         userDAO.updateSignature(personeelsnummer, handtekening, (err, data) => {
@@ -137,6 +134,7 @@ const userController = {
                     data: {},
                 });
             }
+            console.log(data);
             res.json({
                 status: 200,
                 message: "Signature updated",
