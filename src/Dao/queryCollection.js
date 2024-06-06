@@ -23,6 +23,9 @@ const queries = {
     "INSERT INTO gebruiker (personeelsnummer, naam, email, wachtwoord, handtekening, rol) VALUES (?, ?, ?, ?, ?, ?)",
   loginUser:
     "SELECT * FROM `gebruiker` WHERE personeelsnummer = ? AND wachtwoord = ?",
+
+  updateSignature:
+    "UPDATE gebruiker SET handtekening = ? WHERE personeelsnummer = ?",
 };
 
 module.exports = queries;
