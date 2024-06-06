@@ -3,6 +3,7 @@ const router = express.Router()
 const formController = require("../Controllers/form.controller")
 
 //Form routes
+router.get("/api/form/WPI/:primarykey", formController.getWPI)
 router.post("/api/form/WPI", formController.saveWPI)
 router.post("/api/form/TRA", formController.saveTRA)
 router.post("/api/form/MIO", formController.saveMIO)

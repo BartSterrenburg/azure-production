@@ -73,7 +73,6 @@ const formDAO = {
     );
   },
 
-  
   saveTaakStap: (form, callback) => {
     database.query(
       queryLibrary.postTaakStap,
@@ -98,11 +97,7 @@ const formDAO = {
   saveGezienUitvoering: (form, callback) => {
     database.query(
       queryLibrary.postGezienUitvoering,
-      [
-        form.number,
-        form.name,
-        form.signature,
-      ],
+      [form.number, form.name, form.signature],
       (err, rows) => {
         if (err) {
           console.error("Error executing query", err);
@@ -209,6 +204,15 @@ const formDAO = {
         callback(null, rows);
       }
     );
+  },
+  getWPI: (primarykey, callback) => {
+    database.query(queryLibrary.getWPI, [primarykey], (err, rows) => {
+      if (err) {
+        console.error("Error executing query", err);
+        return callback(err, null);
+      }
+      callback(null, rows);
+    });
   },
 };
 

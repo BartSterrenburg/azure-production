@@ -134,6 +134,25 @@ const formController = {
       });
     });
   },
+  getWPI: (req, res, next) => {
+    const primarykey = req.params.primarykey;
+    console.log(primarykey);
+    formDAO.getWPI(primarykey, (err, data) => {
+      if (err) {
+        console.error("getWPI error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "WPI fetched",
+        data: data,
+      });
+    });
+  },
 };
 
 module.exports = formController;
