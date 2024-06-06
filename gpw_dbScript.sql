@@ -2,6 +2,7 @@
 DROP TABLE IF EXISTS gezienVoorUitvoering_tra;
 DROP TABLE IF EXISTS taakstap_tra;
 DROP TABLE IF EXISTS deelnemer_tbm;
+DROP TABLE IF EXISTS handtekening;
 DROP TABLE IF EXISTS formulier_tbm;
 DROP TABLE IF EXISTS formulier_tra;
 DROP TABLE IF EXISTS formulier_mio;
@@ -30,28 +31,56 @@ CREATE TABLE gebruiker (
 
 -- Create formulier_mio table
 CREATE TABLE formulier_mio (
-    formId INT PRIMARY KEY,
-    ordernummer INT,
-    personeelsnummerEige INT,
+    primarykey INT AUTO_INCREMENT PRIMARY KEY,
+    formNummer varChar(50),
+    personeelsnummerEigenaar INT,
     typeMelding VARCHAR(50),
     datum DATE,
     tijdstip TIME,
     naamEigenaar VARCHAR(100),
     functieEigenaar VARCHAR(100),
     locatie VARCHAR(100),
-    aardLetsel TEXT,
-    plaatsLetsel TEXT,
-    eersteBehandeling TEXT,
-    onmiddellijkeActieNotitie TEXT,
-    omschrijving TEXT,
-    fotoTerIl TEXT,
-    OH_onveiligeSnelheid BOOLEAN,
-    OH_beveiligingBuitenWerking BOOLEAN,
-    OH_verkeerdGereedschap BOOLEAN,
-    OH_nietGebruikenPBM BOOLEAN,
+    aardLetsel varChar(100),
+    plaatsLetsel varChar(100),
+    foto MEDIUMBLOB,
+    eersteBehandeling varChar(100),
+    onmiddellijkeActieNotitie varChar(512),
+    omschrijving varChar(512),
+    OH_onveiligeSnelheid BOOL,
+    OH_beveiligingBuitenWerking BOOL,
+    OH_verkeerdGebruikGereedschap BOOL,
+    OH_nietGebruikenPBM BOOL,
+    OH_onveiligLaden BOOL,
+    OH_innemenOnveiligeLaden BOOL,
+    OH_werkenAanGevaarlijkeDelen BOOL,
+    OH_Afleiden BOOL,
+    OH_AndersB BOOL,
+    OH_Anders varChar(100),
+    OS_onvoldoendeBeveiligd BOOL,
+    OS_onbeveiligd BOOL,
+    OS_defectInstallatie BOOL,
+    OS_onveiligeConstructie BOOL,
+    OS_ondeugdelijkeGereedschap BOOL,
+    OS_onveiligeKleding BOOL,
+    OS_gebreikkigeOrdeEnNetheid BOOL,
+    OS_AndersB BOOL,
+    OS_Anders varChar(100),
+    BZ_onvoldoendeMaatregelen BOOL,
+    BZ_onvoldoendeErvaring  BOOL,
+    BZ_onvoldoendeInstructie BOOL,
+    BZ_nietBevoegdBedienen BOOL,
+    BZ_onvoldoendeOnderhoud BOOL,
+    BZ_onvoldoendeVakkenis BOOL,
+    BZ_AndersB BOOL,
+    BZ_Anders varChar(100),
+    OmschrijvingActie varChar(512),
+    ActieTeNemenDoor varChar(100),
+    ActieTeNemenVoorDatum DATE,
+    MeldingAfgehandeldVoorDatum DATE,
+    MeldingAfgehandeldDoor varChar(100),
     createDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updateDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
-    FOREIGN KEY (personeelsnummerEige) REFERENCES gebruiker(personeelsnummer)
+    FOREIGN KEY (personeelsnummerEigenaar) REFERENCES gebruiker(personeelsnummer)
 );
 
 -- Create formulier_wpi table
@@ -64,28 +93,29 @@ CREATE TABLE formulier_wpi (
     locatie VARCHAR(128),
     naamEigenaar VARCHAR(128),
     functieEigenaar VARCHAR(128),
-    gehandeldVolgensRegelsEnVoorschriften BOOLEAN,
+    foto MEDIUMBLOB,
+    gehandeldVolgensRegelsEnVoorschriften BOOL,
     gehandeldVolgensRegelsEnVoorschriftenAantekeningen varchar(512),
-    omstandighedenVeiligWerken BOOLEAN,
+    omstandighedenVeiligWerken BOOL,
     omstandighedenVeiligWerkenAantekeningen varchar(512),
-    voldoenUitvoerendeAanEisen BOOLEAN,
+    voldoenUitvoerendeAanEisen BOOL,
     voldoenUitvoerendeAanEisenAantekeningen varchar(512),
-    vereisteBeschermingsmiddelen BOOLEAN,
+    vereisteBeschermingsmiddelen BOOL,
     vereisteBeschermingsmiddelenAantekeningen varchar(512),
-    gevaarlijkeSituatiesVoorkomen BOOLEAN,
+    gevaarlijkeSituatiesVoorkomen BOOL,
     gevaarlijkeSituatiesVoorkomenAantekeningen varchar(512),
-    gevaarlijkeStoffenVerwerking BOOLEAN,
+    gevaarlijkeStoffenVerwerking BOOL,
     gevaarlijkeStoffenVerwerkingAantekeningen varchar(512),
-    benodigdeVoorzieningenCalimiteiten BOOLEAN,
+    benodigdeVoorzieningenCalimiteiten BOOL,
     benodigdeVoorzieningenCalimiteitenAantekeningen varchar(512),
-    staatGebruiktGereedschappen BOOLEAN,
+    staatGebruiktGereedschappen BOOL,
     staatGebruiktGereedschappenAantekeningen varchar(512),
     omschrijvingVerbetering varchar(512),
     actieTeNemenDoor varchar(128),
     actieTeNemenVoorDatum DATE,
     evaluatieTerVerbetering varchar(512),
     datumAfgehandeld DATE,
-    paraaf varchar(1024),
+    paraaf varchar(5000),
     createDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updateDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
     FOREIGN KEY (personeelsnummerEigenaar) REFERENCES gebruiker(personeelsnummer)
@@ -93,8 +123,8 @@ CREATE TABLE formulier_wpi (
 
 -- Create formulier_tbm table
 CREATE TABLE formulier_tbm (
-    formId INT PRIMARY KEY,
-    ordernummer INT,
+    formId INT AUTO_INCREMENT PRIMARY KEY,
+    formNummer varchar(50),
     personeelsnummerEige INT,
     datumMeeting DATE,
     locatie VARCHAR(100),
@@ -109,35 +139,36 @@ CREATE TABLE formulier_tbm (
 
 -- Create formulier_tra table
 CREATE TABLE formulier_tra (
-    formId INT PRIMARY KEY,
-    ordernummer INT,
-    personeelsnummerEige INT,
+    primarykey INT AUTO_INCREMENT PRIMARY KEY,
+    formNummer varchar(50),
+    personeelsnummerEigenaar INT,
     naamVGWCoordinator VARCHAR(100),
-    paraafVGWCoordinator TEXT,
+    paraafVGWCoordinator varchar(5000),
     naamAkkoordUitvoerendLeidinggevende VARCHAR(100),
-    paraafAkkoordUitvoerendLeidinggevende TEXT,
-    taakomschrijving TEXT,
+    paraafAkkoordUitvoerendLeidinggevende varchar(5000),
+    taakomschrijving varchar(512),
     createDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updateDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
-    FOREIGN KEY (personeelsnummerEige) REFERENCES gebruiker(personeelsnummer)
+    FOREIGN KEY (personeelsnummerEigenaar) REFERENCES gebruiker(personeelsnummer)
 );
 
 -- Create gezienVoorUitvoering_tra table
 CREATE TABLE gezienVoorUitvoering_tra (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    formId INT,
+    formNummer varchar(50),
     naam VARCHAR(100),
     paraaf TEXT,
-    FOREIGN KEY (formId) REFERENCES formulier_tra(formId)
+    PRIMARY KEY (formNummer, naam)
 );
 
 -- Create taakstap_tra table
 CREATE TABLE taakstap_tra (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    formId INT,
+    formNummer varchar(50),
     taakstapNummer INT,
-    taakstapActiviteit TEXT,
-    FOREIGN KEY (formId) REFERENCES formulier_tra(formId)
+    taakstapActiviteit varChar(512),
+    gevaar varchar(512),
+    beheersMaatregel varchar(512),
+    actieDoor varchar(100),
+    PRIMARY KEY (formNummer, taakstapNummer)
 );
 
 -- Create deelnemer_tbm table
@@ -147,6 +178,13 @@ CREATE TABLE deelnemer_tbm (
     PRIMARY KEY (formId, personeelsnummer),
     FOREIGN KEY (formId) REFERENCES formulier_tbm(formId),
     FOREIGN KEY (personeelsnummer) REFERENCES gebruiker(personeelsnummer)
+);
+
+-- Create handtekening table
+CREATE TABLE handtekening (
+    formNummer VARCHAR(50),
+    name VARCHAR(100),
+    signature varchar(5000)
 );
 
 -- Insert test data into rollen
@@ -160,27 +198,30 @@ INSERT INTO gebruiker (personeelsnummer, naam, email, wachtwoord, handtekening, 
 (2, 'Piet Pietersen', 'piet.pietersen@example.com', 'odsdfydfg2378G', '', 20);
 
 -- Insert test data into formulier_mio
-INSERT INTO formulier_mio (formId, ordernummer, personeelsnummerEige, datum, tijdstip, typeMelding, naamEigenaar, functieEigenaar, locatie, aardLetsel, plaatsLetsel, eersteBehandeling, onmiddellijkeActieNotitie, omschrijving, fotoTerIl, OH_onveiligeSnelheid, OH_beveiligingBuitenWerking, OH_verkeerdGereedschap, OH_nietGebruikenPBM) VALUES
-(1, 12345, 1, '2023-01-01', '12:00:00', 'Melding Type 1', 'Eigenaar 1', 'Functie 1', 'Locatie 1', 'Aard Letsel 1', 'Plaats Letsel 1', 'Eerste Behandeling 1', 'Actie Notitie 1', 'Omschrijving 1', 'Foto 1', true, false, true, false);
+INSERT INTO formulier_mio (formNummer, personeelsnummerEigenaar, typeMelding, datum, tijdstip, naamEigenaar, functieEigenaar, locatie, aardLetsel, plaatsLetsel, foto, eersteBehandeling, onmiddellijkeActieNotitie, omschrijving, OH_onveiligeSnelheid, OH_beveiligingBuitenWerking, OH_verkeerdGebruikGereedschap, OH_nietGebruikenPBM, OH_onveiligLaden, OH_innemenOnveiligeLaden, OH_werkenAanGevaarlijkeDelen, OH_Afleiden, OH_Anders, OS_onvoldoendeBeveiligd, OS_onbeveiligd, OS_defectInstallatie, OS_onveiligeConstructie, OS_ondeugdelijkeGereedschap, OS_onveiligeKleding, OS_gebreikkigeOrdeEnNetheid, OS_Anders, BZ_onvoldoendeMaatregelen, BZ_onvoldoendeErvaring, BZ_onvoldoendeInstructie, BZ_nietBevoegdBedienen, BZ_onvoldoendeOnderhoud, BZ_onvoldoendeVakkenis, BZ_Anders, OmschrijvingActie, ActieTeNemenDoor, ActieTeNemenVoorDatum, MeldingAfgehandeldVoorDatum, MeldingAfgehandeldDoor)
+VALUES ('ABC123', 2, 'Type Melding', '2024-06-06', '12:30:00', 'Naam Eigenaar', 'Functie Eigenaar', 'Locatie', 'Aard Letsel', 'Plaats Letsel', NULL, 'Eerste Behandeling', 'Onmiddellijke Actie Notitie', 'Omschrijving', 1, 0, 1, 0, 1, 0, 1, 0, 'Anders', 1, 0, 1, 0, 1, 0, 1, 'Anders', 1, 0, 1, 0, 1, 0, 'Anders', 'Omschrijving Actie', 'Actie Te Nemen Door', '2024-06-07', '2024-06-08', 'Afgehandeld Door');
 
 -- Insert test data into formulier_wpi
-INSERT INTO formulier_wpi (formNummer, personeelsnummerEigenaar, datum, project, locatie, naamEigenaar, functieEigenaar, gehandeldVolgensRegelsEnVoorschriften, gehandeldVolgensRegelsEnVoorschriftenAantekeningen, omstandighedenVeiligWerken, omstandighedenVeiligWerkenAantekeningen, voldoenUitvoerendeAanEisen, voldoenUitvoerendeAanEisenAantekeningen, vereisteBeschermingsmiddelen, vereisteBeschermingsmiddelenAantekeningen, gevaarlijkeSituatiesVoorkomen, gevaarlijkeSituatiesVoorkomenAantekeningen, gevaarlijkeStoffenVerwerking, gevaarlijkeStoffenVerwerkingAantekeningen, benodigdeVoorzieningenCalimiteiten, benodigdeVoorzieningenCalimiteitenAantekeningen, staatGebruiktGereedschappen, staatGebruiktGereedschappenAantekeningen, omschrijvingVerbetering, actieTeNemenDoor, actieTeNemenVoorDatum, evaluatieTerVerbetering, datumAfgehandeld, paraaf) VALUES ('1', 1, '2023-02-01', 'Project 1', 'Locatie 1', 'Eigenaar 1', 'Functie 1', true, 'Aantekeningen 1', true, 'Aantekeningen 2', true, 'Aantekeningen 3', true, 'Aantekeningen 4', true, 'Aantekeningen 5', true, 'Aantekeningen 6', true, 'Aantekeningen 7', true, 'Aantekeningen 8', 'Verbetering 1', 'Actiehouder 1', '2023-03-01', 'Evaluatie 1', '2023-04-01', 'Paraaf 1'); 
+INSERT INTO formulier_wpi (formNummer, personeelsnummerEigenaar, datum, project, locatie, naamEigenaar, functieEigenaar, gehandeldVolgensRegelsEnVoorschriften, gehandeldVolgensRegelsEnVoorschriftenAantekeningen, omstandighedenVeiligWerken, omstandighedenVeiligWerkenAantekeningen, voldoenUitvoerendeAanEisen, voldoenUitvoerendeAanEisenAantekeningen, vereisteBeschermingsmiddelen, vereisteBeschermingsmiddelenAantekeningen, gevaarlijkeSituatiesVoorkomen, gevaarlijkeSituatiesVoorkomenAantekeningen, gevaarlijkeStoffenVerwerking, gevaarlijkeStoffenVerwerkingAantekeningen, benodigdeVoorzieningenCalimiteiten, benodigdeVoorzieningenCalimiteitenAantekeningen, staatGebruiktGereedschappen, staatGebruiktGereedschappenAantekeningen, omschrijvingVerbetering, actieTeNemenDoor, actieTeNemenVoorDatum, evaluatieTerVerbetering, datumAfgehandeld, paraaf) VALUES 
+('1', 2, '2023-02-01', 'Project 1', 'Locatie 1', 'Eigenaar 1', 'Functie 1', true, 'Aantekeningen 1', true, 'Aantekeningen 2', true, 'Aantekeningen 3', true, 'Aantekeningen 4', true, 'Aantekeningen 5', true, 'Aantekeningen 6', true, 'Aantekeningen 7', true, 'Aantekeningen 8', 'Verbetering 1', 'Actiehouder 1', '2023-03-01', 'Evaluatie 1', '2023-04-01', 'Paraaf 1');
 
 -- Insert test data into formulier_tbm
-INSERT INTO formulier_tbm (formId, ordernummer, personeelsnummerEige, datumMeeting, locatie, gehoudenDoor, functie, aantalPaginas, besprokenOnderwerpen) VALUES
-(1, 12347, 2, '2023-03-01', 'Locatie 2', 'Door 1', 'Functie 1', 5, 'Onderwerpen 1');
+INSERT INTO formulier_tbm (formNummer, personeelsnummerEige, datumMeeting, locatie, gehoudenDoor, functie, aantalPaginas, besprokenOnderwerpen)
+VALUES ('TBM001', 1, '2023-06-01', 'Locatie A', 'John Doe', 'Manager', 5, 'Onderwerp 1, Onderwerp 2, Onderwerp 3');
 
 -- Insert test data into formulier_tra
-INSERT INTO formulier_tra (formId, ordernummer, personeelsnummerEige, naamVGWCoordinator, paraafVGWCoordinator, naamAkkoordUitvoerendLeidinggevende, paraafAkkoordUitvoerendLeidinggevende, taakomschrijving) VALUES
-(1, 12348, 2, 'VGW Coordinator 1', 'Paraaf 1', 'Leidinggevende 1', 'Paraaf 2', 'Taakomschrijving 1');
+INSERT INTO formulier_tra (formNummer, personeelsnummerEigenaar, naamVGWCoordinator, paraafVGWCoordinator, naamAkkoordUitvoerendLeidinggevende, paraafAkkoordUitvoerendLeidinggevende, taakomschrijving) 
+VALUES ('12348', 2, 'VGW Coordinator 1', 'Paraaf 1', 'Leidinggevende 1', 'Paraaf 2', 'Taakomschrijving 1');
 
 -- Insert test data into gezienVoorUitvoering_tra
-INSERT INTO gezienVoorUitvoering_tra (formId, naam, paraaf) VALUES
-(1, 'Naam 1', 'Paraaf 1');
+INSERT INTO gezienVoorUitvoering_tra (formNummer, naam, paraaf) VALUES
+('12348', 'Naam 1', 'Paraaf 1');
 
 -- Insert test data into taakstap_tra
-INSERT INTO taakstap_tra (formId, taakstapNummer, taakstapActiviteit) VALUES
-(1, 1, 'Activiteit 1');
+INSERT INTO taakstap_tra (formNummer, taakstapNummer, taakstapActiviteit, gevaar, Beheersmaatregel, actieDoor) VALUES
+('12348', 1, 'Activiteit 1', 'Gevaar 1', 'Beheersmaatregel 1', 'Actie Door 1'), 
+('12348', 2, 'Activiteit 2', 'Gevaar 2', 'Beheersmaatregel 2', 'Actie Door 2'), 
+('12348', 3, 'Activiteit 3', 'Gevaar 3', 'Beheersmaatregel 3', 'Actie Door 3');
 
 -- Insert test data into deelnemer_tbm
 INSERT INTO deelnemer_tbm (formId, personeelsnummer) VALUES
