@@ -135,6 +135,7 @@ const formController = {
       });
     });
   },
+
   getWPI: (req, res, next) => {
     const primarykey = req.params.primarykey;
     formDAO.getWPI(primarykey, (err, data) => {
@@ -146,9 +147,11 @@ const formController = {
           data: {},
         });
       }
-      const sendPDF = getPdf.getPdfWPI(data);
-      res.set('Content-Type', 'image/png');
-      res.send(sendPDF);
+      res.json({
+        status: 200,
+        message: "getWPI success",
+        data: data,
+      });
     });
   },
 };
