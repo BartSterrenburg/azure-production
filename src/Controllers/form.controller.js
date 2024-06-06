@@ -1,4 +1,5 @@
 const formDAO = require("../Dao/formDAO");
+const getPdf = require("../functions/getPdf");
 
 const formController = {
   saveWPI: (req, res, next) => {
@@ -136,7 +137,6 @@ const formController = {
   },
   getWPI: (req, res, next) => {
     const primarykey = req.params.primarykey;
-    console.log(primarykey);
     formDAO.getWPI(primarykey, (err, data) => {
       if (err) {
         console.error("getWPI error", err);
@@ -146,11 +146,9 @@ const formController = {
           data: {},
         });
       }
-      res.json({
-        status: 200,
-        message: "WPI fetched",
-        data: data,
-      });
+      const sendPDF = getPdf.getPdfWPI(data);
+      res.set('Content-Type', 'image/png');
+      res.send(sendPDF);
     });
   },
 };
