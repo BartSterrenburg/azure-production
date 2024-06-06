@@ -78,7 +78,12 @@ const formDAO = {
     database.query(
       queryLibrary.postTaakStap,
       [
-        
+        form.number,
+        form.taakstapNummer,
+        form.taakstapActiviteit,
+        form.gevaar,
+        form.beheersMaatregel,
+        form.actieDoor,
       ],
       (err, rows) => {
         if (err) {
@@ -94,7 +99,9 @@ const formDAO = {
     database.query(
       queryLibrary.postGezienUitvoering,
       [
-
+        form.number,
+        form.name,
+        form.signature,
       ],
       (err, rows) => {
         if (err) {

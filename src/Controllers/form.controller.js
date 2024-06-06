@@ -42,7 +42,7 @@ const formController = {
 
   saveTaakStap: (req, res, next) => {
     const form = req.body;
-    formDAO.saveTRA(form, (err, data) => {
+    formDAO.saveTaakStap(form, (err, data) => {
       if (err) {
         console.error("saveWPI error", err);
         return next({
@@ -53,7 +53,7 @@ const formController = {
       }
       res.json({
         status: 200,
-        message: "TRA saved",
+        message: "Taakstap saved",
         data: data,
       });
     });
@@ -61,7 +61,7 @@ const formController = {
 
   saveGezienUitvoering: (req, res, next) => {
     const form = req.body;
-    formDAO.saveTRA(form, (err, data) => {
+    formDAO.saveGezienUitvoering(form, (err, data) => {
       if (err) {
         console.error("saveWPI error", err);
         return next({
