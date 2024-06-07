@@ -2,6 +2,20 @@ const database = require("../../dbConnection");
 const queryLibrary = require("./queryCollection");
 
 const formDAO = {
+  getFormsByPersoneelsnummer: (personeelsnummer, callback) => {
+    database.query(
+      queryLibrary.getFormsByPersoneelsnummer,
+      [personeelsnummer, personeelsnummer, personeelsnummer, personeelsnummer],
+      (err, rows) => {
+        if (err) {
+          console.error("Error executing query", err);
+          return callback(err, null);
+        }
+        callback(null, rows);
+      }
+    );
+  },
+
   saveWPI: (form, callback) => {
     database.query(
       queryLibrary.postWPI,
