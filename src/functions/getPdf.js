@@ -8,18 +8,21 @@ const pdfFunctions = {
         
         doc.setFontSize(16);
         doc.text("Werkplekinspectie", 105, 10, { align: "center" });
-    
-        doc.setFontSize(12);
-        doc.text(`Nummer: ${object.formNummer}`, 10, 20);
-        doc.text(`Locatie: ${object.locatie}`, 10, 30);
-        
         const startY = 40;
         
         const fields = [
+            //General Information
+            { label: "Nummer WPI-:", value: object.nummer, y: startY },
             { label: "Datum:", value: object.datum, y: startY },
             { label: "Project:", value: object.project, y: startY + 10 },
+            { label: "Locatie:", value: object.locatie, y: startY + 20 },
             { label: "Naam:", value: object.naamEigenaar, y: startY + 20 },
             { label: "Functie:", value: object.functieEigenaar, y: startY + 30 },
+
+            //Foto
+            { label: "Foto", value: object.foto, y: startY + 40 },
+
+            //General Inspections
             { label: "Omschrijving actie(s) ter verbetering:", value: object.omschrijvingVerbetering, y: startY + 40 },
             { label: "Actie te nemen door:", value: object.actieTeNemenDoor, y: startY + 50 },
             { label: "Voor datum:", value: object.actieTeNemenVoorDatum, y: startY + 60 },
