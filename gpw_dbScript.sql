@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS formulier_tbm;
 DROP TABLE IF EXISTS formulier_tra;
 DROP TABLE IF EXISTS formulier_mio;
 DROP TABLE IF EXISTS formulier_wpi;
+DROP TABLE IF EXISTS formulier_lmra;
 DROP TABLE IF EXISTS gebruiker;
 DROP TABLE IF EXISTS rollen;
 
@@ -152,6 +153,26 @@ CREATE TABLE formulier_tra (
     FOREIGN KEY (personeelsnummerEigenaar) REFERENCES gebruiker(personeelsnummer)
 );
 
+-- Create formulier_lmra table
+CREATE TABLE formulier_lmra (
+    primarykey INT AUTO_INCREMENT PRIMARY KEY,
+    formNummer varchar(50),
+    personeelsnummerEigenaar varchar(6),
+    inhoudTraWerkvergunning BOOL,
+    TraWervergunningBesproken BOOL,
+    KenIkMijnTaak BOOL,
+    WaarWerkzaam BOOL,
+    GekeurdGereedschapBeschikken BOOL,
+    JuisteMiddelenBeschikken BOOL,
+    GevaarVallendeVoorwerpen BOOL,
+    GevaarKnellenOfStoten BOOL,
+    Struikelgevaar BOOL,
+    VoldoendeVerlicht BOOL,
+    KenIkMijnVluchtroute BOOL,
+    JuistePBMBeschikken BOOL,
+    FOREIGN KEY (personeelsnummerEigenaar) REFERENCES gebruiker(personeelsnummer)
+);
+
 -- Create gezienVoorUitvoering_tra table
 CREATE TABLE gezienVoorUitvoering_tra (
     formNummer varchar(50),
@@ -166,7 +187,7 @@ CREATE TABLE taakstap_tra (
     taakstapNummer INT,
     taakstapActiviteit varChar(512),
     gevaar varchar(512),
-    beheersMaatregel varchar(512),
+    beheersMaatregel varchar(512),0
     actieDoor varchar(100),
     PRIMARY KEY (formNummer, taakstapNummer)
 );
@@ -212,6 +233,10 @@ VALUES ('TBM001','000001', '2023-06-01', 'Locatie A', 'John Doe', 'Manager', 5, 
 -- Insert test data into formulier_tra
 INSERT INTO formulier_tra (formNummer, personeelsnummerEigenaar, naamVGWCoordinator, paraafVGWCoordinator, naamAkkoordUitvoerendLeidinggevende, paraafAkkoordUitvoerendLeidinggevende, taakomschrijving) 
 VALUES ('12348', '000002', 'VGW Coordinator 1', 'Paraaf 1', 'Leidinggevende 1', 'Paraaf 2', 'Taakomschrijving 1');
+
+-- Insert test data into formulier_lmra
+INSERT INTO formulier_lmra (formNummer, personeelsnummerEigenaar, inhoudTraWerkvergunning, TraWervergunningBesproken, KenIkMijnTaak, WaarWerkzaam, GekeurdGereedschapBeschikken, JuisteMiddelenBeschikken, GevaarVallendeVoorwerpen, GevaarKnellenOfStoten, Struikelgevaar, VoldoendeVerlicht, KenIkMijnVluchtroute, JuistePBMBeschikken)
+VALUES ('12345', '000001', 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1);
 
 -- Insert test data into gezienVoorUitvoering_tra
 INSERT INTO gezienVoorUitvoering_tra (formNummer, naam, paraaf) VALUES
