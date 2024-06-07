@@ -2,29 +2,39 @@ const { jsPDF } = require("jspdf");
 const fs = require("fs");
 
 const pdfFunctions = {
-    //Get data from GET request
     getPdfWPI: async (data) => {
         const doc = new jsPDF();
         const object = data[0];
         
-        // Voeg de titel "Werkplekinspectie" toe
         doc.setFontSize(16);
         doc.text("Werkplekinspectie", 105, 10, { align: "center" });
     
-        // Voeg de tekst over locatie toe
         doc.setFontSize(12);
         doc.text(`Nummer: ${object.formNummer}`, 10, 20);
         doc.text(`Locatie: ${object.locatie}`, 10, 30);
         
-    
-        // Genereer de PDF als een data-URI
-        const pdfDataUri = doc.output('datauristring'); 
-    
-        // Verwijder de voorvoegsel om de base64-gecodeerde PDF te verkrijgen
-        const base64 = pdfDataUri.split(',')[1]; 
+        const startY = 40;
+        
+        const fields = [
+            { label: "Datum:", value: object.datum, y: startY },
+            { label: "Project:", value: object.project, y: startY + 10 },
+            { label: "Naam:", value: object.naamEigenaar, y: startY + 20 },
+            { label: "Functie:", value: object.functieEigenaar, y: startY + 30 },
+            { label: "Omschrijving actie(s) ter verbetering:", value: object.omschrijvingVerbetering, y: startY + 40 },
+            { label: "Actie te nemen door:", value: object.actieTeNemenDoor, y: startY + 50 },
+            { label: "Voor datum:", value: object.actieTeNemenVoorDatum, y: startY + 60 },
+            { label: "Evaluatie van de actie(s) ter verbetering:", value: object.evaluatieTerVerbetering, y: startY + 70 },
+            { label: "Afgehandeld voor datum:", value: object.datumAfgehandeld, y: startY + 80 },
+            { label: "Door:", value: object.paraaf, y: startY + 90 },
+        ];
 
-        // Sla het document op met de toegevoegde titel en logo
-        doc.save('a4.pdf'); 
+        fields.forEach(field => {
+            doc.text(`${field.label} ${field.value}`, 10, field.y);
+        });
+
+        // Output het PDF-document als een base64-string
+        const pdfDataUri = doc.output('datauristring');
+        const base64 = pdfDataUri.split(',')[1];
 
         return base64;
     }
