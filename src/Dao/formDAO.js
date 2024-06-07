@@ -157,6 +157,7 @@ const formDAO = {
         form.actieTenemenVoorDatum,
         form.meldingAfgehandeldVoorDatum,
         form.meldingAfgehandeldDoor,
+        form.paraaf,
       ],
 
       (err, rows) => {
@@ -208,6 +209,15 @@ const formDAO = {
   
   getWPI: (primarykey, callback) => {
     database.query(queryLibrary.getWPI, [primarykey], (err, rows) => {
+      if (err) {
+        console.error("Error executing query", err);
+        return callback(err, null);
+      }
+      callback(null, rows);
+    });
+  },
+  getMIO: (primarykey, callback) => {
+    database.query(queryLibrary.getMIO, [primarykey], (err, rows) => {
       if (err) {
         console.error("Error executing query", err);
         return callback(err, null);

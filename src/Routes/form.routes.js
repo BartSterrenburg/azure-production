@@ -4,6 +4,7 @@ const formController = require("../Controllers/form.controller")
 
 //Form routes
 router.get("/api/form/WPI/:primarykey", formController.getWPI)
+router.get("/api/form/MIO/:primarykey", formController.getMIO)
 router.post("/api/form/WPI", formController.saveWPI)
 router.post("/api/form/TRA", formController.saveTRA)
 router.post("/api/form/MIO", formController.saveMIO)

@@ -37,7 +37,36 @@ const pdfFunctions = {
         const base64 = pdfDataUri.split(',')[1];
 
         return base64;
+    },
+
+    getPdfMIO: async (data) => {
+        const doc = new jsPDF();
+        const object = data[0];
+        
+        doc.setFontSize(16);
+        doc.text("Melding Incident Ongeval", 105, 10, { align: "center" });
+    
+        doc.setFontSize(12);
+        const startY = 40;
+        
+        const fields = [
+            { label: "Datum:", value: object.paraaf, y: startY },
+        ];
+    
+        fields.forEach(field => {
+            doc.text(`${field.label} ${field.value}`, 10, field.y);
+        });
+    
+    
+        // Add the image to the PDF
+        doc.addImage(object.paraaf, 'PNG', 10, 50, 50, 50); 
+
+        // Output the PDF document as a base64 string
+        const pdfDataUri = doc.output('datauristring');
+        const base64 = pdfDataUri.split(',')[1];
+    
+        return base64;
     }
-};
+    };
 
 module.exports = pdfFunctions;

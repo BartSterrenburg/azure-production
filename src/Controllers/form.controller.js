@@ -167,7 +167,40 @@ const formController = {
         });
       }
     });
-  }
+  },
+  getMIO: (req, res, next) => {
+    const primarykey = req.params.primarykey;
+    formDAO.getMIO(primarykey, async (err, data) => {
+      if (err) {
+        console.error("getMIO error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      
+      //Try to get PDF data and covert it to byte array to send to client
+      try {
+        const pdfBase64 = await getPdf.getPdfMIO(data);
+        const byteArray = Buffer.from(pdfBase64, 'base64');
+        res.set({
+          'Content-Type': 'application/pdf',
+          'Content-Length': byteArray.length
+        });
+        res.send(byteArray);
+      } catch (error) {
+        console.error("Error sending PDF:", error);
+        next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+    });
+  },
+
+
   
   
 };

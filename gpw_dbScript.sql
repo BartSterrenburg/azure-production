@@ -78,6 +78,7 @@ CREATE TABLE formulier_mio (
     ActieTeNemenVoorDatum DATE,
     MeldingAfgehandeldVoorDatum DATE,
     MeldingAfgehandeldDoor varChar(100),
+    paraaf varChar(5000),
     createDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updateDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
     FOREIGN KEY (personeelsnummerEigenaar) REFERENCES gebruiker(personeelsnummer)
