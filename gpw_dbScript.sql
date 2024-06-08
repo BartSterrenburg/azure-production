@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS formulier_mio;
 DROP TABLE IF EXISTS formulier_wpi;
 DROP TABLE IF EXISTS gebruiker;
 DROP TABLE IF EXISTS rollen;
+DROP TABLE IF EXISTS `order`;
 
 -- Create rollen table
 CREATE TABLE rollen (
@@ -187,6 +188,14 @@ CREATE TABLE handtekening (
     signature varchar(5000)
 );
 
+-- Create orde table
+CREATE TABLE `order` (
+    ordernummer varchar(50) PRIMARY KEY,
+    Naam varchar(100),
+    beschrijving varchar(500)
+);
+
+
 -- Insert test data into rollen
 INSERT INTO rollen (rolNummer, rolOmschrijving) VALUES
 (10, 'Medewerker'),
@@ -212,3 +221,17 @@ VALUES ('TBM-234523523', 1, '2023-06-01', 'Locatie A', 'John Doe', 'Manager', 5,
 -- Insert test data into formulier_tra
 INSERT INTO formulier_tra (formNummer, personeelsnummerEigenaar, naamVGWCoordinator, paraafVGWCoordinator, naamAkkoordUitvoerendLeidinggevende, paraafAkkoordUitvoerendLeidinggevende, taakomschrijving) 
 VALUES ('TRA-23412348', 1, 'VGW Coordinator 1', 'Paraaf 1', 'Leidinggevende 1', 'Paraaf 2', 'Taakomschrijving 1');
+
+
+-- Insert test data into `order` table
+INSERT INTO `order` (ordernummer, Naam, beschrijving) VALUES
+('10324234', 'Naam 1', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.'),
+('20730274', 'Naam 2', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.'),
+('36382940', 'Naam 3', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.'),
+('39362811', 'Naam 4', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.'),
+('32849332', 'Naam 5', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.'),
+('32674383', 'Naam 6', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.'),
+('32398254', 'Naam 7', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.'),
+('10328492', 'Naam 8', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.'),
+('20738490', 'Naam 9', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.'),
+('36389420', 'Naam 10', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.');
