@@ -42,7 +42,7 @@ CREATE TABLE formulier_mio (
     locatie VARCHAR(100),
     aardLetsel varChar(100),
     plaatsLetsel varChar(100),
-    foto MEDIUMBLOB,
+    foto TEXT,
     eersteBehandeling varChar(100),
     onmiddellijkeActieNotitie varChar(512),
     omschrijving varChar(512),
@@ -78,7 +78,7 @@ CREATE TABLE formulier_mio (
     ActieTeNemenVoorDatum DATE,
     MeldingAfgehandeldVoorDatum DATE,
     MeldingAfgehandeldDoor varChar(100),
-    paraaf varChar(5000),
+    paraaf TEXT,
     createDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updateDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
     FOREIGN KEY (personeelsnummerEigenaar) REFERENCES gebruiker(personeelsnummer)
