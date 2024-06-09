@@ -22,7 +22,7 @@ CREATE TABLE gebruiker (
     naam VARCHAR(100),
     email VARCHAR(100),
     wachtwoord VARCHAR(100),
-    handtekening TEXT,
+    handtekening MEDIUMTEXT,
     rol INT,
     createDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updateDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
@@ -42,7 +42,7 @@ CREATE TABLE formulier_mio (
     locatie VARCHAR(100),
     aardLetsel varChar(100),
     plaatsLetsel varChar(100),
-    foto TEXT,
+    foto MEDIUMTEXT,
     eersteBehandeling varChar(100),
     onmiddellijkeActieNotitie varChar(512),
     omschrijving varChar(512),
@@ -78,7 +78,7 @@ CREATE TABLE formulier_mio (
     ActieTeNemenVoorDatum DATE,
     MeldingAfgehandeldVoorDatum DATE,
     MeldingAfgehandeldDoor varChar(100),
-    paraaf TEXT,
+    paraaf MEDIUMTEXT,
     createDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updateDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
     FOREIGN KEY (personeelsnummerEigenaar) REFERENCES gebruiker(personeelsnummer)
@@ -94,7 +94,7 @@ CREATE TABLE formulier_wpi (
     locatie VARCHAR(128),
     naamEigenaar VARCHAR(128),
     functieEigenaar VARCHAR(128),
-    foto MEDIUMBLOB,
+    foto MEDIUMTEXT,
     gehandeldVolgensRegelsEnVoorschriften BOOL,
     gehandeldVolgensRegelsEnVoorschriftenAantekeningen varchar(512),
     omstandighedenVeiligWerken BOOL,
@@ -117,7 +117,7 @@ CREATE TABLE formulier_wpi (
     evaluatieTerVerbetering varchar(512),
     datumAfgehandeld DATE,
     door varchar(128),
-    paraaf varchar(5000),
+    paraaf MEDIUMTEXT,
     createDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updateDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
     FOREIGN KEY (personeelsnummerEigenaar) REFERENCES gebruiker(personeelsnummer)
@@ -133,7 +133,7 @@ CREATE TABLE formulier_tbm (
     gehoudenDoor VARCHAR(100),
     functie VARCHAR(100),
     aantalPaginas INT,
-    besprokenOnderwerpen TEXT,
+    besprokenOnderwerpen MEDIUMTEXT,
     createDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updateDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
     FOREIGN KEY (personeelsnummerEige) REFERENCES gebruiker(personeelsnummer)
@@ -145,9 +145,9 @@ CREATE TABLE formulier_tra (
     formNummer varchar(50),
     personeelsnummerEigenaar INT,
     naamVGWCoordinator VARCHAR(100),
-    paraafVGWCoordinator varchar(5000),
+    paraafVGWCoordinator MEDIUMTEXT,
     naamAkkoordUitvoerendLeidinggevende VARCHAR(100),
-    paraafAkkoordUitvoerendLeidinggevende varchar(5000),
+    paraafAkkoordUitvoerendLeidinggevende MEDIUMTEXT,
     taakomschrijving varchar(512),
     createDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updateDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
@@ -158,7 +158,7 @@ CREATE TABLE formulier_tra (
 CREATE TABLE gezienVoorUitvoering_tra (
     formNummer varchar(50),
     naam VARCHAR(100),
-    paraaf TEXT,
+    paraaf MEDIUMTEXT,
     PRIMARY KEY (formNummer, naam)
 );
 
