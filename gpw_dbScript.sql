@@ -133,8 +133,7 @@ CREATE TABLE formulier_tbm (
     functie VARCHAR(100),
     aantalPaginas INT,
     besprokenOnderwerpen TEXT,
-    bestand MEDIUMBLOB, 
-    bestandUploadDatum DATETIME DEFAULT CURRENT_TIMESTAMP,
+    bijlage MEDIUMBLOB,
     createDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updateDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
     FOREIGN KEY (personeelsnummerEigenaar) REFERENCES gebruiker(personeelsnummer)
@@ -150,6 +149,7 @@ CREATE TABLE formulier_tra (
     naamAkkoordUitvoerendLeidinggevende VARCHAR(100),
     paraafAkkoordUitvoerendLeidinggevende varchar(5000),
     taakomschrijving varchar(512),
+
     createDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updateDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
     FOREIGN KEY (personeelsnummerEigenaar) REFERENCES gebruiker(personeelsnummer)
@@ -196,11 +196,12 @@ CREATE TABLE `order` (
     Naam varchar(100),
     beschrijving varchar(500)
 );
- 
+
 -- Insert test data into rollen
 INSERT INTO rollen (rolNummer, rolOmschrijving) VALUES
 (10, 'Medewerker'),
 (20, 'Manager');
+
  
 -- Insert test data into gebruiker
 INSERT INTO gebruiker (personeelsnummer, naam, email, wachtwoord, handtekening, rol) VALUES
@@ -222,4 +223,3 @@ VALUES ('TBM-234523523', 1, '2023-06-01', 'Locatie A', 'John Doe', 'Manager', 5,
 -- Insert test data into formulier_tra
 INSERT INTO formulier_tra (formNummer, personeelsnummerEigenaar, naamVGWCoordinator, paraafVGWCoordinator, naamAkkoordUitvoerendLeidinggevende, paraafAkkoordUitvoerendLeidinggevende, taakomschrijving)
 VALUES ('TRA-23412348', 1, 'VGW Coordinator 1', 'Paraaf 1', 'Leidinggevende 1', 'Paraaf 2', 'Taakomschrijving 1');
-

@@ -26,6 +26,16 @@ const queries = {
 
     updateSignature:
     "UPDATE gebruiker SET handtekening = ? WHERE personeelsnummer = ?",
+
+  getTBMOrderNummer: "SELECT formNummer FROM formulier_tbm",
+
+  putFile: "UPDATE formulier_TBM SET bijlage = ? WHERE formNummer = ?",
+  getFile: "SELECT bijlage FROM formulier_TBM WHERE formNummer = ?",
+  checkFormNumberExists: "SELECT COUNT(*) AS count FROM formulier_TBM WHERE formNummer = ?",
+
+
+  
+    
 };
 
 module.exports = queries;
