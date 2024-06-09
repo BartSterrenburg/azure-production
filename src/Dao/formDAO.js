@@ -207,9 +207,27 @@ const formDAO = {
       }
     );
   },
-  
+
   getWPI: (primarykey, callback) => {
     database.query(queryLibrary.getWPI, [primarykey], (err, rows) => {
+      if (err) {
+        console.error("Error executing query", err);
+        return callback(err, null);
+      }
+      callback(null, rows);
+    });
+  },
+  getTBM: (primarykey, callback) => {
+    database.query(queryLibrary.getTBM, [primarykey], (err, rows) => {
+      if (err) {
+        console.error("Error executing query", err);
+        return callback(err, null);
+      }
+      callback(null, rows);
+    });
+  },
+  getTRA: (primarykey, callback) => {
+    database.query(queryLibrary.getTRA, [primarykey], (err, rows) => {
       if (err) {
         console.error("Error executing query", err);
         return callback(err, null);

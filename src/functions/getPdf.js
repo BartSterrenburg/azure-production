@@ -56,6 +56,48 @@ const pdfFunctions = {
 
     return base64;
   },
+  getPdfTBM: async (data) => {
+    const doc = new jsPDF();
+    const object = data[0];
+    doc.setFontSize(16);
+    doc.text("Toolbox Meeting", 105, 10, { align: "center" });
+
+    doc.setFontSize(12);
+    const startY = 40;
+
+    const fields = [{ label: "Nummer:", value: object.formNummer, y: startY }];
+
+    fields.forEach((field) => {
+      doc.text(`${field.label} ${field.value}`, 10, field.y);
+    });
+
+    // Output the PDF document as a base64 string
+    const base64 = doc.output("datauristring").split(",")[1];
+
+    return base64;
+  },
+
+  getPdfTRA: async (data) => {
+    const doc = new jsPDF();
+    const object = data[0];
+    console.log("object: " + object);
+    doc.setFontSize(16);
+    doc.text("Taak Risico Analyse", 105, 10, { align: "center" });
+
+    doc.setFontSize(12);
+    const startY = 40;
+    const fields = [{ label: "Nummer:", value: object.formNummer, y: startY }];
+    fields.forEach((field) => {
+      doc.text(`${field.label} ${field.value}`, 10, field.y);
+    });
+
+    // Output the PDF document as a base64 string
+    const base64 = doc.output("datauristring").split(",")[1];
+
+    console.log("works");
+
+    return base64;
+  },
 
   getPdfMIO: async (data) => {
     const doc = new jsPDF();
