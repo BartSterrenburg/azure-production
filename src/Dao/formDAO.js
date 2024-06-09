@@ -40,6 +40,7 @@ const formDAO = {
         form.actieTeNemenVoorDatum,
         form.evaluatieTerVerbetering,
         form.datumAfgehandeld,
+        form.door,
         form.paraaf,
       ],
       (err, rows) => {
