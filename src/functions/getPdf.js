@@ -10,17 +10,22 @@ const pdfFunctions = {
 
     const logoImageData = fs.readFileSync(logoPath);
 
-    const logoWidth = 50; 
-    const logoHeight = 30; 
-    doc.addImage(logoImageData, "PNG", 10, 10, logoWidth, logoHeight);
-
+    const logoWidth = 40; 
+    const logoHeight = 20; 
+    const pageWidth = doc.internal.pageSize.getWidth(); // Breedte van de pagina
+    const logoX = (pageWidth - logoWidth) / 2; // Bereken de x-positie van het logo
+    const logoY = 10; // Y-positie van het logo
+    doc.addImage(logoImageData, "PNG", logoX, logoY, logoWidth, logoHeight);
 
     doc.setFont("Arial", "bold"); // Gebruik het lettertype "Arial"
     doc.setFontSize(20);
     doc.setTextColor(0, 0, 0);
-    doc.text("Werkplekinspectie", 105, 20, { align: "center" });
+    const titleWidth = doc.getStringUnitWidth("Werkplekinspectie") * doc.internal.getFontSize() / doc.internal.scaleFactor;
+    const titleX = (pageWidth - titleWidth) / 2; // Bereken de x-positie van de titel
+    const titleY = logoY + logoHeight + 10; // Y-positie van de titel
+    doc.text("Werkplekinspectie", titleX + 25, titleY, { align: "center" }); // Verschuif de titel naar rechts met 10 eenheden
     doc.setFontSize(10);
-    const startY = 50;
+    const startY = titleY + 10; // Begin Y-positie voor de velden
     let currentY = startY;
 
     // Function to format date to day/month/year format
@@ -34,7 +39,8 @@ const pdfFunctions = {
 
     const fields = [
       // General Information
-      { label: "Nummer WPI-:", value: String(object.formNummer) },
+      { label: "Nummer WPI-", value: String(object.formNummer) },
+      { label: "Beschrijving:", value: String(object.beschrijving) }, 
       { label: "Datum:", value: formatDate(object.datum) },
       { label: "Project:", value: String(object.project) },
       { label: "Locatie:", value: String(object.locatie) },
@@ -65,7 +71,7 @@ const pdfFunctions = {
         doc.addPage();
         currentY = 20; 
       }
-      doc.text(label, 10, currentY, { fontWeight: 'normal', color: [0, 0, 0] }); l
+      doc.text(label, 10, currentY, { fontWeight: 'normal', color: [0, 0, 0] }); 
       doc.setTextColor(100); // Dark gray color for values
       const splitText = doc.splitTextToSize(value, 180 - labelWidth);
       splitText.forEach(line => {
@@ -198,7 +204,6 @@ const pdfFunctions = {
   },
 
 
-
   getPdfTBM: async (data) => {
     const doc = new jsPDF();
     const object = data[0];
@@ -282,7 +287,7 @@ const pdfFunctions = {
     });
 
     doc.addImage(object.foto, "PNG", 10, 140, 50, 50);
-    doc.addImage(object.paraaf, "PNG", 10, 200, 50, 50);
+    doc.addImage(object.paraaf, "PNG", 10, 200, 80, 50);
 
     // Output the PDF document as a base64 string
     const base64 = doc.output("datauristring").split(",")[1];
