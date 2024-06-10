@@ -1,4 +1,5 @@
 const database = require("../../dbConnection");
+const { saveLMRA } = require("../Controllers/form.controller");
 const queryLibrary = require("./queryCollection");
 
 const formDAO = {
@@ -186,6 +187,34 @@ const formDAO = {
         form.function,
         form.pageAmount,
         form.summary,
+      ],
+      (err, rows) => {
+        if (err) {
+          console.error("Error executing query", err);
+          return callback(err, null);
+        }
+        callback(null, rows);
+      }
+    );
+  },
+
+  saveLMRA: (form, callback) => {
+    database.query(
+      queryLibrary.postLMRA,
+      [
+        form.personeelsnummerEigenaar,
+        form.inhoudTraWerkvergunning,
+        form.traWerkvergunningBesproken,
+        form.kenIkMijnTaak,
+        form.waarWerkzaam,
+        form.gekeurdGereedschapBeschikken,
+        form.juisteMiddelenBeschikken,
+        form.gevaarVoorVallendeVoorwerpen,
+        form.gevaarKnellenOfStoten,
+        form.struikelgevaar,
+        form.voldoendeVerlicht,
+        form.kenIkMijnVluchtroute,
+        form.juistePBMBeschikken,
       ],
       (err, rows) => {
         if (err) {

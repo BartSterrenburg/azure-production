@@ -16,8 +16,10 @@ const queries = {
     "INSERT INTO formulier_mio (formNummer, typeMelding, datum, tijdstip, naamEigenaar, functieEigenaar, locatie, aardLetsel, plaatsLetsel, foto, eersteBehandeling, onmiddellijkeActieNotitie, omschrijving, OH_onveiligeSnelheid, OH_beveiligingBuitenWerking, OH_verkeerdGebruikGereedschap, OH_nietGebruikenPBM, OH_onveiligLaden, OH_innemenOnveiligeLaden, OH_werkenAanGevaarlijkeDelen, OH_Afleiden, OH_AndersB, OH_Anders, OS_onvoldoendeBeveiligd, OS_onbeveiligd, OS_defectInstallatie, OS_onveiligeConstructie, OS_ondeugdelijkeGereedschap, OS_onveiligeKleding, OS_gebreikkigeOrdeEnNetheid, OS_Anders, OS_AndersB, BZ_onvoldoendeMaatregelen, BZ_onvoldoendeErvaring, BZ_onvoldoendeInstructie, BZ_nietBevoegdBedienen, BZ_onvoldoendeOnderhoud, BZ_onvoldoendeVakkenis, BZ_Anders, BZ_AndersB, omschrijvingActie, actieTeNemenDoor, actieTenemenVoorDatum, meldingAfgehandeldVoorDatum, meldingAfgehandeldDoor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
   postTBM:
     "INSERT INTO formulier_tbm(formNummer, personeelsnummerEige, datumMeeting, locatie, gehoudenDoor, functie, aantalPaginas, besprokenOnderwerpen) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+  postLMRA:
+    "INSERT INTO formulier_lmra (personeelsnummerEigenaar, inhoudTraWerkvergunning, traWerkvergunningBesproken, kenIkMijnTaak, waarWerkzaam, gekeurdGereedschapBeschikken, juisteMiddelenBeschikken, gevaarVallendeVoorwerpen, gevaarKnellenOfStoten, struikelgevaar, voldoendeVerlicht, kenIkMijnVluchtroute, juistePBMBeschikken) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
   postSignature:
-    "INSERT INTO handtekening(formNummer, name, signature) VALUES(?,?,?)",
+  "INSERT INTO handtekening(formNummer, name, signature) VALUES(?,?,?)",
 
   createUser:
     "INSERT INTO gebruiker (personeelsnummer, naam, email, wachtwoord, handtekening, rol) VALUES (?, ?, ?, ?, ?, ?)",

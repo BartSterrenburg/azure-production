@@ -1,6 +1,6 @@
 const formDAO = require("../Dao/formDAO");
 
-const formController = {
+const formController = {  
   saveWPI: (req, res, next) => {
     const form = req.body;
     console.log(form.nummer);
@@ -111,6 +111,26 @@ const formController = {
       res.json({
         status: 200,
         message: "TBM saved",
+        data: data,
+      });
+    });
+  },
+
+  saveLMRA: (req, res, next) => {
+    console.log("saveLMRA");
+    const form = req.body;
+    formDAO.saveLMRA(form, (err, data) => {
+      if (err) {
+        console.error("saveLMRA error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "LMRA saved",
         data: data,
       });
     });

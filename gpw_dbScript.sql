@@ -156,20 +156,19 @@ CREATE TABLE formulier_tra (
 -- Create formulier_lmra table
 CREATE TABLE formulier_lmra (
     primarykey INT AUTO_INCREMENT PRIMARY KEY,
-    formNummer varchar(50),
     personeelsnummerEigenaar varchar(6),
     inhoudTraWerkvergunning BOOL,
-    TraWervergunningBesproken BOOL,
-    KenIkMijnTaak BOOL,
-    WaarWerkzaam BOOL,
-    GekeurdGereedschapBeschikken BOOL,
-    JuisteMiddelenBeschikken BOOL,
-    GevaarVallendeVoorwerpen BOOL,
-    GevaarKnellenOfStoten BOOL,
-    Struikelgevaar BOOL,
-    VoldoendeVerlicht BOOL,
-    KenIkMijnVluchtroute BOOL,
-    JuistePBMBeschikken BOOL,
+    traWerkvergunningBesproken BOOL,
+    kenIkMijnTaak BOOL,
+    waarWerkzaam BOOL,
+    gekeurdGereedschapBeschikken BOOL,
+    juisteMiddelenBeschikken BOOL,
+    gevaarVallendeVoorwerpen BOOL,
+    gevaarKnellenOfStoten BOOL,
+    struikelgevaar BOOL,
+    voldoendeVerlicht BOOL,
+    kenIkMijnVluchtroute BOOL,
+    juistePBMBeschikken BOOL,
     FOREIGN KEY (personeelsnummerEigenaar) REFERENCES gebruiker(personeelsnummer)
 );
 
@@ -235,8 +234,8 @@ INSERT INTO formulier_tra (formNummer, personeelsnummerEigenaar, naamVGWCoordina
 VALUES ('12348', '000002', 'VGW Coordinator 1', 'Paraaf 1', 'Leidinggevende 1', 'Paraaf 2', 'Taakomschrijving 1');
 
 -- Insert test data into formulier_lmra
-INSERT INTO formulier_lmra (formNummer, personeelsnummerEigenaar, inhoudTraWerkvergunning, TraWervergunningBesproken, KenIkMijnTaak, WaarWerkzaam, GekeurdGereedschapBeschikken, JuisteMiddelenBeschikken, GevaarVallendeVoorwerpen, GevaarKnellenOfStoten, Struikelgevaar, VoldoendeVerlicht, KenIkMijnVluchtroute, JuistePBMBeschikken)
-VALUES ('12345', '000001', 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1);
+INSERT INTO formulier_lmra (personeelsnummerEigenaar, inhoudTraWerkvergunning, traWerkvergunningBesproken, kenIkMijnTaak, waarWerkzaam, gekeurdGereedschapBeschikken, juisteMiddelenBeschikken, gevaarVallendeVoorwerpen, gevaarKnellenOfStoten, struikelgevaar, voldoendeVerlicht, kenIkMijnVluchtroute, juistePBMBeschikken)
+VALUES ('000001', 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1);
 
 -- Insert test data into gezienVoorUitvoering_tra
 INSERT INTO gezienVoorUitvoering_tra (formNummer, naam, paraaf) VALUES
