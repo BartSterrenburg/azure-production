@@ -42,7 +42,7 @@ const fileDAO = {
             // Het formulier bestaat, voer de query uit om het bestand bij te werken
             database.query(
                 queryLibrary.putFile,
-                [fileData, formNumber],
+                [fileData, formNumber], // Plaats de bestand- en formulier nummer parameters in een array
                 (err, result) => {
                     if (err) {
                         console.error("Error executing query", err);
@@ -53,7 +53,7 @@ const fileDAO = {
             );
         });
     },
-
+    
     getFile: (formNumber, callback) => {
         // Controleer eerst of het formulier bestaat
         fileDAO.checkFormNumberExists(formNumber, (err, exists) => {

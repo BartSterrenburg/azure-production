@@ -29,9 +29,9 @@ const queries = {
 
   getTBMOrderNummer: "SELECT formNummer FROM formulier_tbm",
 
-  putFile: "UPDATE formulier_TBM SET bijlage = ? WHERE formNummer = ?",
-  getFile: "SELECT bijlage FROM formulier_TBM WHERE formNummer = ?",
-  checkFormNumberExists: "SELECT COUNT(*) AS count FROM formulier_TBM WHERE formNummer = ?",
+  putFile: "UPDATE formulier_tbm SET bijlage = ? WHERE formNummer = ?",
+  getFile: "SELECT bijlage FROM formulier_tbm WHERE formNummer = ?",
+  checkFormNumberExists: "SELECT COUNT(*) AS count FROM formulier_tbm WHERE formNummer = ?",
 
 
   
