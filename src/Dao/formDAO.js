@@ -217,6 +217,7 @@ const formDAO = {
       callback(null, rows);
     });
   },
+
   getTBM: (primarykey, callback) => {
     database.query(queryLibrary.getTBM, [primarykey], (err, rows) => {
       if (err) {
@@ -226,6 +227,7 @@ const formDAO = {
       callback(null, rows);
     });
   },
+
   getTRA: (primarykey, callback) => {
     database.query(queryLibrary.getTRA, [primarykey], (err, rows) => {
       if (err) {
@@ -235,6 +237,7 @@ const formDAO = {
       callback(null, rows);
     });
   },
+  
   getMIO: (primarykey, callback) => {
     database.query(queryLibrary.getMIO, [primarykey], (err, rows) => {
       if (err) {
