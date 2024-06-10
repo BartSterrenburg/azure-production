@@ -12,20 +12,20 @@ const pdfFunctions = {
 
     const logoWidth = 40; 
     const logoHeight = 20; 
-    const pageWidth = doc.internal.pageSize.getWidth(); // Breedte van de pagina
-    const logoX = (pageWidth - logoWidth) / 2; // Bereken de x-positie van het logo
-    const logoY = 10; // Y-positie van het logo
+    const pageWidth = doc.internal.pageSize.getWidth(); 
+    const logoX = (pageWidth - logoWidth) / 2; 
+    const logoY = 10; 
     doc.addImage(logoImageData, "PNG", logoX, logoY, logoWidth, logoHeight);
 
-    doc.setFont("Arial", "bold"); // Gebruik het lettertype "Arial"
+    doc.setFont("helvetica", "bold");
     doc.setFontSize(20);
     doc.setTextColor(0, 0, 0);
     const titleWidth = doc.getStringUnitWidth("Werkplekinspectie") * doc.internal.getFontSize() / doc.internal.scaleFactor;
-    const titleX = (pageWidth - titleWidth) / 2; // Bereken de x-positie van de titel
-    const titleY = logoY + logoHeight + 10; // Y-positie van de titel
-    doc.text("Werkplekinspectie", titleX + 25, titleY, { align: "center" }); // Verschuif de titel naar rechts met 10 eenheden
+    const titleX = (pageWidth - titleWidth) / 2; 
+    const titleY = logoY + logoHeight + 10; 
+    doc.text("Werkplekinspectie", titleX + 25, titleY, { align: "center" }); 
     doc.setFontSize(10);
-    const startY = titleY + 10; // Begin Y-positie voor de velden
+    const startY = titleY + 10; 
     let currentY = startY;
 
     // Function to format date to day/month/year format
@@ -72,14 +72,14 @@ const pdfFunctions = {
         currentY = 20; 
       }
       doc.text(label, 10, currentY, { fontWeight: 'normal', color: [0, 0, 0] }); 
-      doc.setTextColor(100); // Dark gray color for values
+      doc.setTextColor(100); 
       const splitText = doc.splitTextToSize(value, 180 - labelWidth);
       splitText.forEach(line => {
         if (currentY + 8 > 280) { 
           doc.addPage();
           currentY = 20; 
         }
-        doc.text(line, 10 + labelWidth + 5, currentY);
+        doc.text(line, 10 + labelWidth + 2, currentY);
         currentY += 8;
       });
     };
@@ -247,53 +247,240 @@ const pdfFunctions = {
     return base64;
   },
 
-  getPdfMIO: async (data) => {
-    const doc = new jsPDF();
+
+  getPdfMIO : async (data) => {
+    const doc = new jsPDF('p', 'mm', 'a4');
     const object = data[0];
-
-    doc.setFontSize(16);
-    doc.text("Melding Incident Ongeval", 105, 10, { align: "center" });
-
-    doc.setFontSize(12);
-    const startY = 40;
-
-    const fields = [
-      { label: "Nummer:", value: object.formNummer, y: startY },
-      { label: "Beschrijving:", value: object.beschrijving, y: startY + 10 },
-      { label: "typeMelding", value: object.typeMelding, y: startY + 20 },
-      { label: "Datum:", value: object.datum, y: startY + 30 },
-      { label: "Tijd:", value: object.tijdstip, y: startY + 40 },
-      { label: "Naam eigenaar:", value: object.naamEigenaar, y: startY + 50 },
+    const logoPath = path.join(__dirname, "logo.png");
+    const logoImageData = fs.readFileSync(logoPath);
+    const logoWidth = 40;
+    const logoHeight = 20;
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const logoX = (pageWidth - logoWidth) / 2;
+    const logoY = 10;
+  
+    doc.addImage(logoImageData, "PNG", logoX, logoY, logoWidth, logoHeight);
+  
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(20);
+    doc.setTextColor(0, 0, 0);
+    const titleWidth = doc.getStringUnitWidth("Melding Incident en Ongeval") * doc.internal.getFontSize() / doc.internal.scaleFactor;
+    const titleX = (pageWidth - titleWidth) / 2;
+    const titleY = logoY + logoHeight + 10;
+    doc.text("Melding Incident en Ongeval", titleX + 45, titleY, { align: "center" });
+    doc.setFontSize(10);
+    let currentY = titleY + 10;
+  
+    // Function to format date to day/month/year format
+    const formatDate = (date) => {
+      const d = new Date(date);
+      const day = d.getDate();
+      const month = d.getMonth() + 1;
+      const year = d.getFullYear();
+      return `${day}/${month}/${year}`;
+    };
+  
+    // Function to capitalize first letter of each word
+    const capitalizeFirstLetter = (str) => {
+      return str.replace(/\b\w/g, c => c.toUpperCase());
+    };
+  
+    // Function to draw checkboxes
+    const drawCheckbox = (x, y, checked) => {
+      doc.rect(x, y, 5, 5);
+      if (checked) {
+        doc.setFillColor(0, 0, 0); 
+        doc.rect(x, y, 5, 5, "F"); 
+      }
+    };
+  
+    // Function to add fields with text
+    const addField = (label, value) => {
+      const text = `${label} ${value}`;
+      doc.setTextColor(0, 0, 0); 
+      const labelWidth = doc.getStringUnitWidth(label) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+      if (currentY + 8 > 280) { 
+        doc.addPage();
+        currentY = 20; 
+      }
+      doc.text(label, 10, currentY, { fontWeight: 'normal', color: [0, 0, 0] }); 
+      doc.setTextColor(100); 
+      const splitText = doc.splitTextToSize(value, 180 - labelWidth);
+      splitText.forEach(line => {
+        if (currentY + 8 > 280) { 
+          doc.addPage();
+          currentY = 20; 
+        }
+        doc.text(line, 10 + labelWidth + 2, currentY); 
+        currentY += 8; 
+      });
+    };
+  
+    // Function to add fields with checkboxes
+    const addFieldWithCheckbox = (label, checked) => {
+      const text = `${label}`;
+      doc.setTextColor(0, 0, 0);
+      if (currentY + 8 > 280) {
+        doc.addPage();
+        currentY = 20;
+      }
+      doc.text(label, 10, currentY + 2, { fontWeight: 'normal', color: [0, 0, 0] });
+      drawCheckbox(140, currentY - 2, checked);
+      currentY += 8;
+    };
+  
+    // Define the checkbox sections
+    const checkboxFields = [
       {
-        label: "Functie eigenaar:",
-        value: object.functieEigenaar,
-        y: startY + 60,
+        label: "Onveilige Handelingen", values: {
+          onveiligeSnelheid: object.OH_onveiligeSnelheid,
+          beveiligingBuitenWerking: object.OH_beveiligingBuitenWerking,
+          verkeerdGebruikGereedschap: object.OH_verkeerdGebruikGereedschap,
+          nietGebruikenPBM: object.OH_nietGebruikenPBM,
+          onveiligLaden: object.OH_onveiligLaden,
+          innemenOnveiligeLaden: object.OH_innemenOnveiligeLaden,
+          werkenAanGevaarlijkeDelen: object.OH_werkenAanGevaarlijkeDelen,
+          Afleiden: object.OH_Afleiden,
+          Anders: object.OH_AndersB
+        },
+        andersField: "OH_Anders"
       },
-      { label: "locatie:", value: object.locatie, y: startY + 70 },
       {
-        label: "Aard van de letsel:",
-        value: object.aardLetsel,
-        y: startY + 80,
+        label: "Onveilige Situaties", values: {
+          onvoldoendeBeveiligd: object.OS_onvoldoendeBeveiligd,
+          onbeveiligd: object.OS_onbeveiligd,
+          defectInstallatie: object.OS_defectInstallatie,
+          onveiligeConstructie: object.OS_onveiligeConstructie,
+          ondeugdelijkeGereedschap: object.OS_ondeugdelijkeGereedschap,
+          onveiligeKleding: object.OS_onveiligeKleding,
+          gebrekkigeOrdeEnNetheid: object.OS_gebrekkigeOrdeEnNetheid,
+          Anders: object.OS_AndersB
+        },
+        andersField: "OS_Anders"
       },
       {
-        label: "Plaats van de letsel:",
-        value: object.plaatsLetsel,
-        y: startY + 90,
-      },
+        label: "Bijkomende Zaken", values: {
+          onvoldoendeMaatregelen: object.BZ_onvoldoendeMaatregelen,
+          onvoldoendeErvaring: object.BZ_onvoldoendeErvaring,
+          onvoldoendeInstructie: object.BZ_onvoldoendeInstructie,
+          nietBevoegdBedienen: object.BZ_nietBevoegdBedienen,
+          onvoldoendeOnderhoud: object.BZ_onvoldoendeOnderhoud,
+          onvoldoendeVakkenis: object.BZ_onvoldoendeVakkenis,
+          Anders: object.BZ_AndersB
+        },
+        andersField: "BZ_Anders"
+      }
     ];
-
-    fields.forEach((field) => {
-      doc.text(`${field.label} ${field.value}`, 10, field.y);
+  
+    // Function to add a checkbox section
+    const addCheckboxSection = (section) => {
+      const sectionHeight = (Object.keys(section.values).length + 1) * 8 + 16; 
+      if (currentY + sectionHeight > 280) { 
+        doc.addPage();
+        currentY = 20; 
+      }
+      doc.setFontSize(12); 
+      addField(section.label, ''); 
+      doc.setFontSize(10); 
+      Object.entries(section.values).forEach(([key, value]) => {
+        addFieldWithCheckbox(`${capitalizeFirstLetter(key)}:`, value === 1);
+      });
+      addField("", String(object[section.andersField] || ""));
+      currentY += 8; 
+    };
+  
+    // Add fields
+    const fields = [
+      { label: "Nummer MIO-", value: String(object.formNummer) },
+      { label: "Beschrijving:", value: String(object.beschrijving) },
+      { label: "Type Melding:", value: capitalizeFirstLetter(object.typeMelding) },
+      { label: "Datum:", value: formatDate(object.datum) },
+      { label: "Tijd:", value: String(object.tijdstip) },
+      { label: "Naam eigenaar:", value: String(object.naamEigenaar) },
+      { label: "Functie eigenaar:", value: String(object.functieEigenaar) },
+      { label: "Locatie:", value: String(object.locatie) },
+      { label: "Aard van de letsel:", value: String(object.aardLetsel) },
+      { label: "Plaats van de letsel:", value: String(object.plaatsLetsel) },
+      { label: "Eerste behandeling:", value: capitalizeFirstLetter(String(object.eersteBehandeling)) },
+    ];
+  
+    fields.forEach(field => {
+      addField(field.label, field.value);
+      if (field.label === "Eerste behandeling:") {
+        currentY += 10; 
+      }
+    });
+  
+    // Add checkbox sections
+    checkboxFields.forEach(section => {
+      addCheckboxSection(section);
     });
 
-    doc.addImage(object.foto, "PNG", 10, 140, 50, 50);
-    doc.addImage(object.paraaf, "PNG", 10, 200, 80, 50);
-
+    // Add remaining fields
+    const remainingFields = [
+      { label: "Omschrijving van Actie:", value: String(object.OmschrijvingActie) },
+      { label: "Actie te nemen door:", value: String(object.ActieTeNemenDoor) },
+      { label: "Actie te nemen voor datum:", value: formatDate(object.ActieTeNemenVoorDatum) },
+      { label: "Melding afgehandeld voor datum:", value: formatDate(object.MeldingAfgehandeldVoorDatum) },
+      { label: "Melding afgehandeld door:", value: String(object.MeldingAfgehandeldDoor) }
+    ];
+  
+    remainingFields.forEach(field => {
+      addField(field.label, field.value);
+    });
+  
+    // Add paraaf section
+    if (object.paraaf) {
+      const paraafHeight = 65;
+      if (currentY + paraafHeight > 280) {
+        doc.addPage();
+        currentY = 20; 
+      }
+      const paraafY = currentY + 5;
+      doc.setTextColor(0);
+      doc.text("Paraaf:", 10, paraafY);
+      doc.addImage(object.paraaf, "PNG", 10, paraafY + 5, 50, 50);
+      currentY += paraafHeight; 
+    }
+  
+    // Add photo(s)
+    if (object.foto && Array.isArray(object.foto)) {
+      object.foto.forEach(photo => {
+        if (currentY > 230) { 
+          doc.addPage();
+          currentY = 20; 
+        }
+        doc.setTextColor(0); 
+        doc.text("Foto:", 10, currentY + 10);
+        doc.addImage(photo, "PNG", 10, currentY + 15, 50, 50);
+        currentY += 70; 
+      });
+    } else if (object.foto) {
+      if (currentY > 230) { 
+        doc.addPage();
+        currentY = 20;
+      }
+      doc.setTextColor(0); 
+      doc.text("Foto:", 10, currentY + 10);
+      doc.addImage(object.foto, "PNG", 10, currentY + 15, 50, 50);
+      currentY += 70; 
+    }
+  
     // Output the PDF document as a base64 string
     const base64 = doc.output("datauristring").split(",")[1];
-
+  
     return base64;
   },
-};
-
-module.exports = pdfFunctions;
+  
+  
+  
+  
+  
+  
+  
+  
+}
+  
+  module.exports = pdfFunctions;
+  
