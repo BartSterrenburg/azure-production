@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const userRoutes = require('./src/Routes/user.routes');
 const tokenRoutes = require('./src/Routes/token.routes');
 const formRoutes = require("./src/Routes/form.routes");
+const orderRoutes = require("./src/Routes/order.routes");
 
 // Set limits for JSON and URL-encoded data
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -31,6 +32,7 @@ app.get("/", (req, res, next) => {
 app.use(userRoutes)
 app.use(tokenRoutes)
 app.use(formRoutes)
+app.use(orderRoutes)
 
 
 // Route error handler

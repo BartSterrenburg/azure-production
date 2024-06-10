@@ -121,6 +121,27 @@ const userController = {
         });
     },
 
+    updateSignature: (req, res, next) => {
+        const personeelsnummer = req.params.personeelsnummer;
+        const handtekening = req.body.handtekening;
+        console.log(personeelsnummer, handtekening);
+        userDAO.updateSignature(personeelsnummer, handtekening, (err, data) => {
+            if (err) {
+                console.error("updateSignature error", err);
+                return next({
+                    status: 500,
+                    message: "Internal Server Error",
+                    data: {},
+                });
+            }
+            console.log(data);
+            res.json({
+                status: 200,
+                message: "Signature updated",
+                data: data,
+            });
+        });
+    },
 };
 
 module.exports = userController;
