@@ -27,7 +27,7 @@ const queries = {
     "SELECT * FROM `gebruiker` WHERE personeelsnummer = ? AND wachtwoord = ?",
   getWPI: "SELECT * FROM `formulier_wpi` WHERE primarykey = ?",
   getTBM: "SELECT * FROM `formulier_tbm` WHERE formId = ?",
-  getTRA: "SELECT * FROM `formulier_tra` WHERE formNummer = ?",
+  getTRA: "SELECT * FROM `formulier_tra` WHERE primarykey = ?",
   getMIO: "SELECT * FROM `formulier_mio` WHERE primarykey = ?",
 };
 

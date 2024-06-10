@@ -512,12 +512,112 @@ const pdfFunctions = {
     return base64;
   },
   
-  
-  
-  
-  
-  
-  
+  getPdfTRA: async (data) => {
+    const doc = new jsPDF('p', 'mm', 'a4');
+    const object = data[0];
+    const logoPath = path.join(__dirname, "logo.png");
+
+    const logoImageData = fs.readFileSync(logoPath);
+
+    const logoWidth = 40; 
+    const logoHeight = 20; 
+    const pageWidth = doc.internal.pageSize.getWidth(); 
+    const logoX = (pageWidth - logoWidth) / 2; 
+    const logoY = 10; 
+    doc.addImage(logoImageData, "PNG", logoX, logoY, logoWidth, logoHeight);
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(20);
+    doc.setTextColor(0, 0, 0);
+    const titleWidth = doc.getStringUnitWidth("Taak Risico Analyse") * doc.internal.getFontSize() / doc.internal.scaleFactor;
+    const titleX = (pageWidth - titleWidth) / 2; 
+    const titleY = logoY + logoHeight + 10; 
+    doc.text("Taak Risico Analyse", titleX + 25, titleY, { align: "center" }); 
+    doc.setFontSize(10);
+    const startY = titleY + 10; 
+    let currentY = startY;
+
+    // Function to format date to day/month/year format
+    const formatDate = (date) => {
+        const d = new Date(date);
+        const day = d.getDate();
+        const month = d.getMonth() + 1;
+        const year = d.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+
+    const fields = [
+        // General Information
+        { label: "Nummer TRA -", value: String(object.formNummer) },
+        { label: "Beschrijving:", value: String(object.beschrijving) }, 
+        { label: "Naam VGW Coördinator:", value: formatDate(object.naamVGWCoordinator) },
+        { label: "Naam Uitvoerende Leidinggevende:", value: String(object.naamAkkoordUitvoerendLeidinggevende) },
+        { label: "Taak Omschrijving:", value: String(object.taakomschrijving) },
+    ];
+
+    // Function to add and check for new page
+    const addField = (label, value) => {
+        const text = `${label} ${value}`;
+        doc.setTextColor(0, 0, 0); 
+        const labelWidth = doc.getStringUnitWidth(label) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+        if (currentY + 8 > 280) { 
+            doc.addPage();
+            currentY = 20;
+        }
+        if (currentY + 8 > 280) { 
+            doc.addPage();
+            currentY = 20; 
+        }
+        doc.text(label, 10, currentY, { fontWeight: 'normal', color: [0, 0, 0] }); 
+        doc.setTextColor(100); 
+        const splitText = doc.splitTextToSize(value, 180 - labelWidth);
+        splitText.forEach(line => {
+            if (currentY + 8 > 280) { 
+                doc.addPage();
+                currentY = 20; 
+            }
+            doc.text(line, 10 + labelWidth + 2, currentY);
+            currentY += 8;
+        });
+    };
+
+    fields.forEach(field => {
+        addField(field.label, field.value);
+    });
+
+    // // Add paraaf section for VGW Coordinator
+    // if (object.paraafVGWCoordinator) {
+    //     const paraafHeight = 65;
+    //     if (currentY + paraafHeight > 280) {
+    //         doc.addPage();
+    //         currentY = 20; 
+    //     }
+    //     const paraafY = currentY + 5;
+    //     doc.setTextColor(0);
+    //     doc.text("Paraaf VGW Coördinator:", 10, paraafY);
+    //     doc.addImage(object.paraafVGWCoordinator, "PNG", 10, paraafY + 5, 50, 50);
+    //     currentY += paraafHeight; 
+    // }
+
+    // // Add paraaf section for Uitvoerende Leidinggevende
+    // if (object.paraafUitvoerendLeidinggevende) {
+    //     const paraafHeight = 65;
+    //     if (currentY + paraafHeight > 280) {
+    //         doc.addPage();
+    //         currentY = 20; 
+    //     }
+    //     const paraafY = currentY + 5;
+    //     doc.setTextColor(0);
+    //     doc.text("Paraaf Uitvoerende Leidinggevende:", 10, paraafY);
+    //     doc.addImage(object.paraafUitvoerendLeidinggevende, "PNG", 10, paraafY + 5, 50, 50);
+    //     currentY += paraafHeight; 
+    // }
+
+    // Output the PDF document as a base64 string
+    const base64 = doc.output("datauristring").split(",")[1];
+
+    return base64;
+},
   
 }
   
