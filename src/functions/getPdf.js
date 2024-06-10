@@ -6,16 +6,12 @@ const pdfFunctions = {
   getPdfWPI: async (data) => {
     const doc = new jsPDF('p', 'mm', 'a4');
     const object = data[0];
-
-    // Construct the absolute path to the logo file relative to the script file
     const logoPath = path.join(__dirname, "logo.png");
 
-    // Read the logo image data
     const logoImageData = fs.readFileSync(logoPath);
 
-    // Add the logo in the top-left corner
-    const logoWidth = 50; // Breedte van het logo
-    const logoHeight = 30; // Hoogte van het logo
+    const logoWidth = 50; 
+    const logoHeight = 30; 
     doc.addImage(logoImageData, "PNG", 10, 10, logoWidth, logoHeight);
 
 
@@ -56,26 +52,26 @@ const pdfFunctions = {
       }
     };
 
-    // Function to add a field with highlighted labels
+    // Function to add and check for new page
     const addField = (label, value) => {
       const text = `${label} ${value}`;
-      doc.setTextColor(0, 0, 0); // Set text color to black for labels
+      doc.setTextColor(0, 0, 0); 
       const labelWidth = doc.getStringUnitWidth(label) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-      if (currentY + 8 > 280) { // Check if there's enough space for the label and value
+      if (currentY + 8 > 280) { 
         doc.addPage();
-        currentY = 20; // Reset currentY for new page
+        currentY = 20;
       }
-      if (currentY + 8 > 280) { // Check if a new page is needed
+      if (currentY + 8 > 280) { 
         doc.addPage();
-        currentY = 20; // Reset currentY for new page
+        currentY = 20; 
       }
-      doc.text(label, 10, currentY, { fontWeight: 'normal', color: [0, 0, 0] }); // Normal font weight for label
+      doc.text(label, 10, currentY, { fontWeight: 'normal', color: [0, 0, 0] }); l
       doc.setTextColor(100); // Dark gray color for values
       const splitText = doc.splitTextToSize(value, 180 - labelWidth);
       splitText.forEach(line => {
-        if (currentY + 8 > 280) { // Check if a new page is needed
+        if (currentY + 8 > 280) { 
           doc.addPage();
-          currentY = 20; // Reset currentY for new page
+          currentY = 20; 
         }
         doc.text(line, 10 + labelWidth + 5, currentY);
         currentY += 8;
@@ -141,10 +137,9 @@ const pdfFunctions = {
       doc.text("n.v.t.", 132, currentY);
       currentY += 8;
       addField("Aantekeningen:", section.notes || "");
-      currentY += 4; // Extra space between sections
+      currentY += 4; 
     });
 
-    // Add the remaining fields after checkboxes
     const remainingFields = [
       { label: "Omschrijving actie(s) ter verbetering:", value: String(object.omschrijvingVerbetering) },
       { label: "Actie te nemen door:", value: String(object.actieTeNemenDoor) },
@@ -160,37 +155,37 @@ const pdfFunctions = {
 
     // Add the paraaf section
     if (object.paraaf) {
-      const paraafHeight = 65; // Height of the paraaf section
-      if (currentY + paraafHeight > 280) { // Check if a new page is needed for the signature
+      const paraafHeight = 65; 
+      if (currentY + paraafHeight > 280) { 
         doc.addPage();
-        currentY = 20; // Reset currentY for new page
+        currentY = 20; 
       }
       const paraafY = currentY + 10;
-      doc.setTextColor(0); // Set text color to black for paraaf
+      doc.setTextColor(0); 
       doc.text("Paraaf:", 10, paraafY);
       doc.addImage(object.paraaf, "PNG", 10, paraafY + 5, 50, 50);
-      currentY += paraafHeight; // Increment currentY by paraafHeight
+      currentY += paraafHeight; 
     }
 
 
     // Add photo(s)
     if (object.foto && Array.isArray(object.foto)) {
       object.foto.forEach(photo => {
-        if (currentY > 230) { // Check if a new page is needed for the photo
+        if (currentY > 230) { 
           doc.addPage();
-          currentY = 20; // Reset currentY for new page
+          currentY = 20; 
         }
-        doc.setTextColor(0); // Set text color to black for photo
+        doc.setTextColor(0);
         doc.text("Foto:", 10, currentY + 10);
         doc.addImage(photo, "PNG", 10, currentY + 15, 50, 50);
         currentY += 70;
       });
-    } else if (object.foto) { // Only one photo
-      if (currentY > 230) { // Check if a new page is needed for the photo
+    } else if (object.foto) { 
+      if (currentY > 230) { 
         doc.addPage();
-        currentY = 20; // Reset currentY for new page
+        currentY = 20; 
       }
-      doc.setTextColor(0); // Set text color to black for photo
+      doc.setTextColor(0);
       doc.text("Foto:", 10, currentY + 10);
       doc.addImage(object.foto, "PNG", 10, currentY + 15, 50, 50);
       currentY += 70;
