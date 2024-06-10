@@ -39,7 +39,7 @@ const pdfFunctions = {
 
     const fields = [
       // General Information
-      { label: "Nummer WPI-", value: String(object.formNummer) },
+      { label: "Nummer WPI -", value: String(object.formNummer) },
       { label: "Beschrijving:", value: String(object.beschrijving) }, 
       { label: "Datum:", value: formatDate(object.datum) },
       { label: "Project:", value: String(object.project) },
@@ -205,44 +205,83 @@ const pdfFunctions = {
 
 
   getPdfTBM: async (data) => {
-    const doc = new jsPDF();
+    const doc = new jsPDF('p', 'mm', 'a4');
     const object = data[0];
-    doc.setFontSize(16);
-    doc.text("Toolbox Meeting", 105, 10, { align: "center" });
+    const logoPath = path.join(__dirname, "logo.png");
 
-    doc.setFontSize(12);
-    const startY = 40;
+    const logoImageData = fs.readFileSync(logoPath);
 
-    const fields = [{ label: "Nummer:", value: object.formNummer, y: startY }];
+    const logoWidth = 40; 
+    const logoHeight = 20; 
+    const pageWidth = doc.internal.pageSize.getWidth(); 
+    const logoX = (pageWidth - logoWidth) / 2; 
+    const logoY = 10; 
+    doc.addImage(logoImageData, "PNG", logoX, logoY, logoWidth, logoHeight);
 
-    fields.forEach((field) => {
-      doc.text(`${field.label} ${field.value}`, 10, field.y);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(20);
+    doc.setTextColor(0, 0, 0);
+    const titleWidth = doc.getStringUnitWidth("ToolBox Meeting") * doc.internal.getFontSize() / doc.internal.scaleFactor;
+    const titleX = (pageWidth - titleWidth) / 2; 
+    const titleY = logoY + logoHeight + 10; 
+    doc.text("ToolBox Meeting", titleX + 25, titleY, { align: "center" }); 
+    doc.setFontSize(10);
+    const startY = titleY + 10; 
+    let currentY = startY;
+
+    // Function to format date to day/month/year format
+    const formatDate = (date) => {
+      const d = new Date(date);
+      const day = d.getDate();
+      const month = d.getMonth() + 1;
+      const year = d.getFullYear();
+      return `${day}/${month}/${year}`;
+    };
+
+    const fields = [
+      // General Information
+      { label: "Nummer TBM -", value: String(object.formNummer) },
+      { label: "Beschrijving:", value: String(object.beschrijving) }, 
+      { label: "Datum Meeting:", value: formatDate(object.datumMeeting) },
+      { label: "Locatie:", value: String(object.locatie) },
+      { label: "Gehouden door:", value: String(object.gehoudenDoor) },
+      { label: "Functie:", value: String(object.functie) },
+      { label: "Aantal pagina's:", value: String(object.aantalPaginas) },
+      { label: "Besproken onderwerpen:", value: String(object.besprokenOnderwerpen) },
+    ];
+
+    // Function to add and check for new page
+    const addField = (label, value) => {
+      const text = `${label} ${value}`;
+      doc.setTextColor(0, 0, 0); 
+      const labelWidth = doc.getStringUnitWidth(label) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+      if (currentY + 8 > 280) { 
+        doc.addPage();
+        currentY = 20;
+      }
+      if (currentY + 8 > 280) { 
+        doc.addPage();
+        currentY = 20; 
+      }
+      doc.text(label, 10, currentY, { fontWeight: 'normal', color: [0, 0, 0] }); 
+      doc.setTextColor(100); 
+      const splitText = doc.splitTextToSize(value, 180 - labelWidth);
+      splitText.forEach(line => {
+        if (currentY + 8 > 280) { 
+          doc.addPage();
+          currentY = 20; 
+        }
+        doc.text(line, 10 + labelWidth + 2, currentY);
+        currentY += 8;
+      });
+    };
+
+    fields.forEach(field => {
+      addField(field.label, field.value);
     });
 
     // Output the PDF document as a base64 string
     const base64 = doc.output("datauristring").split(",")[1];
-
-    return base64;
-  },
-
-  getPdfTRA: async (data) => {
-    const doc = new jsPDF();
-    const object = data[0];
-    console.log("object: " + object);
-    doc.setFontSize(16);
-    doc.text("Taak Risico Analyse", 105, 10, { align: "center" });
-
-    doc.setFontSize(12);
-    const startY = 40;
-    const fields = [{ label: "Nummer:", value: object.formNummer, y: startY }];
-    fields.forEach((field) => {
-      doc.text(`${field.label} ${field.value}`, 10, field.y);
-    });
-
-    // Output the PDF document as a base64 string
-    const base64 = doc.output("datauristring").split(",")[1];
-
-    console.log("works");
 
     return base64;
   },
@@ -392,7 +431,7 @@ const pdfFunctions = {
   
     // Add fields
     const fields = [
-      { label: "Nummer MIO-", value: String(object.formNummer) },
+      { label: "Nummer MIO -", value: String(object.formNummer) },
       { label: "Beschrijving:", value: String(object.beschrijving) },
       { label: "Type Melding:", value: capitalizeFirstLetter(object.typeMelding) },
       { label: "Datum:", value: formatDate(object.datum) },

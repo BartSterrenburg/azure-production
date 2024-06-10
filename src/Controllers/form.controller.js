@@ -168,6 +168,7 @@ const formController = {
       }
     });
   },
+
   getTBM: (req, res, next) => {
     const primarykey = req.params.primarykey;
     formDAO.getTBM(primarykey, async (err, data) => {
@@ -199,6 +200,7 @@ const formController = {
       }
     });
   },
+  
   getTRA: (req, res, next) => {
     console.log("getTRA")
     const primarykey = req.params.primarykey;
