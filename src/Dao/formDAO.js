@@ -54,8 +54,19 @@ const formDAO = {
   },
 
   saveTRA: (form, callback) => {
+    const insertQuery = `
+      INSERT INTO formulier_tra (
+        formNummer, 
+        naamVGWCoordinator, 
+        paraafVGWCoordinator, 
+        naamAkkoordUitvoerendLeidinggevende, 
+        paraafAkkoordUitvoerendLeidinggevende, 
+        taakomschrijving
+      ) VALUES (?, ?, ?, ?, ?, ?);
+    `;
+
     database.query(
-      queryLibrary.postTRA,
+      insertQuery,
       [
         form.nummer,
         form.naamVGWCoordinator,
@@ -64,12 +75,24 @@ const formDAO = {
         form.paraafUitvoerendeLeidinggevende,
         form.omschrijvingTaak,
       ],
-      (err, rows) => {
+      (err, result) => {
         if (err) {
-          console.error("Error executing query", err);
+          console.error("Error executing INSERT query", err);
           return callback(err, null);
         }
-        callback(null, rows);
+
+        // After successful INSERT, perform the SELECT operation
+        const selectQuery = `SELECT last_insert_id() AS id`;
+
+        database.query(selectQuery, (err, rows) => {
+          if (err) {
+            console.error("Error executing SELECT query", err);
+            return callback(err, null);
+          }
+
+          console.log(rows);
+          callback(null, rows);
+        });
       }
     );
   },
@@ -78,6 +101,7 @@ const formDAO = {
     database.query(
       queryLibrary.postTaakStap,
       [
+        form.id,
         form.number,
         form.taakstapNummer,
         form.taakstapActiviteit,
@@ -98,7 +122,7 @@ const formDAO = {
   saveGezienUitvoering: (form, callback) => {
     database.query(
       queryLibrary.postGezienUitvoering,
-      [form.number, form.name, form.signature],
+      [form.id, form.number, form.name, form.signature],
       (err, rows) => {
         if (err) {
           console.error("Error executing query", err);
@@ -237,7 +261,7 @@ const formDAO = {
       callback(null, rows);
     });
   },
-  
+
   getMIO: (primarykey, callback) => {
     database.query(queryLibrary.getMIO, [primarykey], (err, rows) => {
       if (err) {
@@ -247,7 +271,6 @@ const formDAO = {
       callback(null, rows);
     });
   },
-
 };
 
 module.exports = formDAO;

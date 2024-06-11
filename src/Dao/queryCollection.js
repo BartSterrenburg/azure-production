@@ -10,9 +10,9 @@ const queries = {
   postTRA:
     "INSERT INTO formulier_tra(formNummer, naamVGWCoordinator, paraafVGWCoordinator, naamAkkoordUitvoerendLeidinggevende, paraafAkkoordUitvoerendLeidinggevende, taakomschrijving) VALUES (?, ?, ?, ?, ?, ?)",
   postTaakStap:
-    "INSERT INTO taakstap_tra(formNummer, taakstapNummer, taakstapActiviteit, gevaar, beheersMaatregel, actieDoor) VALUES(?, ?, ?, ?, ?, ?)",
+    "INSERT INTO taakstap_tra(primarykey, formNummer, taakstapNummer, taakstapActiviteit, gevaar, beheersMaatregel, actieDoor) VALUES(?, ?, ?, ?, ?, ?, ?)",
   postGezienUitvoering:
-    "INSERT INTO gezienVoorUitvoering_tra(formNummer, naam, paraaf) VALUES(?, ?, ?)",
+    "INSERT INTO gezienVoorUitvoering_tra(primarykey, formNummer, naam, paraaf) VALUES(?, ?, ?, ?)",
 
   postMIO:
     "INSERT INTO formulier_mio (formNummer, typeMelding, datum, tijdstip, naamEigenaar, functieEigenaar, locatie, aardLetsel, plaatsLetsel, foto, eersteBehandeling, onmiddellijkeActieNotitie, omschrijving, OH_onveiligeSnelheid, OH_beveiligingBuitenWerking, OH_verkeerdGebruikGereedschap, OH_nietGebruikenPBM, OH_onveiligLaden, OH_innemenOnveiligeLaden, OH_werkenAanGevaarlijkeDelen, OH_Afleiden, OH_AndersB, OH_Anders, OS_onvoldoendeBeveiligd, OS_onbeveiligd, OS_defectInstallatie, OS_onveiligeConstructie, OS_ondeugdelijkeGereedschap, OS_onveiligeKleding, OS_gebreikkigeOrdeEnNetheid, OS_Anders, OS_AndersB, BZ_onvoldoendeMaatregelen, BZ_onvoldoendeErvaring, BZ_onvoldoendeInstructie, BZ_nietBevoegdBedienen, BZ_onvoldoendeOnderhoud, BZ_onvoldoendeVakkenis, BZ_Anders, BZ_AndersB, omschrijvingActie, actieTeNemenDoor, actieTenemenVoorDatum, meldingAfgehandeldVoorDatum, meldingAfgehandeldDoor, paraaf) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",

@@ -156,25 +156,30 @@ CREATE TABLE formulier_tra (
 
 -- Create gezienVoorUitvoering_tra table
 CREATE TABLE gezienVoorUitvoering_tra (
+    primarykey INT,
     formNummer varchar(50),
     naam VARCHAR(100),
     paraaf MEDIUMTEXT,
-    PRIMARY KEY (formNummer, naam)
+    PRIMARY KEY (primarykey, naam),
+    FOREIGN KEY (primarykey) REFERENCES formulier_tra(primarykey)
 );
 
 -- Create taakstap_tra table
 CREATE TABLE taakstap_tra (
+    primarykey INT,
     formNummer varchar(50),
     taakstapNummer INT,
-    taakstapActiviteit varChar(512),
+    taakstapActiviteit varchar(512),
     gevaar varchar(512),
     beheersMaatregel varchar(512),
     actieDoor varchar(100),
-    PRIMARY KEY (formNummer, taakstapNummer)
+    PRIMARY KEY (primarykey, taakstapNummer),
+    FOREIGN KEY (primarykey) REFERENCES formulier_tra(primarykey)
 );
 
 -- Create deelnemer_tbm table
 CREATE TABLE deelnemer_tbm (
+    primarykey INT,
     formId INT,
     personeelsnummer INT,
     PRIMARY KEY (formId, personeelsnummer),
