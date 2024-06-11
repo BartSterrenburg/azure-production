@@ -154,6 +154,64 @@ const formController = {
       });
     });
   },
+
+  getMIO: (req, res, next) => {
+    const id = req.params.id;
+    formDAO.getMIO(id, (err, data) => {
+      if (err) {
+        console.error("getMIO error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "MIO found",
+        data: data,
+      });
+    });
+  },
+
+  getTBM: (req, res, next) => {
+    const id = req.params.id;
+    formDAO.getTBM(id, (err, data) => {
+      if (err) {
+        console.error("getTBM error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "TBM found",
+        data: data,
+      });
+    });
+  },
+
+  getTBMKey: (req, res, next) => {
+    const formNummer = req.params.formNummer;
+    formDAO.getTBMKey(formNummer, (err, data) => {
+      if (err) {
+        console.error("getTBMKey error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "TBM found",
+        data: data,
+      });
+    });
+  }
+
 };
 
 module.exports = formController;

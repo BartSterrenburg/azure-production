@@ -227,6 +227,37 @@ const formDAO = {
       }
     );
   },
+
+  getMIO: (id, callback) => {
+    database.query(queryLibrary.getMIO, [id], (err, rows) => {
+      if (err) {
+        console.error("Error executing query", err);
+        return callback(err, null);
+      }
+      callback(null, rows);
+    });
+  },
+
+  getTBM: (id, callback) => {
+    database.query(queryLibrary.getTBM, [id], (err, rows) => {
+      if (err) {
+        console.error("Error executing query", err);
+        return callback(err, null);
+      }
+      callback(null, rows);
+    });
+  },
+
+  getTBMKey: (formNummer, callback) => {
+    database.query(queryLibrary.getTBMKey, [formNummer], (err, rows) => {
+      if (err) {
+        console.error("Error executing query", err);
+        return callback(err, null);
+      }
+      callback(null, rows);
+    });
+  },
+
 };
 
 module.exports = formDAO;

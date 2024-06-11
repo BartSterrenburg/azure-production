@@ -31,9 +31,14 @@ const queries = {
   updateSignature:
     "UPDATE gebruiker SET handtekening = ? WHERE personeelsnummer = ?",
 
-  getFormsByPersoneelsnummer: "SELECT formNummer, datum FROM formulier_mio WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, datumMeeting FROM formulier_tbm WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, createDate FROM formulier_tra WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, datum FROM formulier_wpi WHERE personeelsnummerEigenaar = ?;",
+  getFormsByPersoneelsnummer: "SELECT formNummer, datum FROM formulier_mio WHERE personeelsnummerEigenaar = ? UNION ALL SELECT formNummer, datumMeeting FROM formulier_tbm WHERE personeelsnummerEigenaar = ? UNION ALL SELECT formNummer, createDate FROM formulier_tra WHERE personeelsnummerEigenaar = ? UNION ALL SELECT formNummer, datum FROM formulier_wpi WHERE personeelsnummerEigenaar = ?;",
 
   getOrders: "SELECT * FROM `order`",
+
+  getTBMKey: "SELECT * FROM formulier_tbm WHERE formNummer = ?",
+
+  getMIO: "SELECT * FROM formulier_mio WHERE formId = ?",
+  getTBM: "SELECT * FROM formulier_tbm WHERE formId = ?",
 };
 
 module.exports = queries;

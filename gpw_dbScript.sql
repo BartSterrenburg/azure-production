@@ -32,7 +32,7 @@ CREATE TABLE gebruiker (
 
 -- Create formulier_mio table
 CREATE TABLE formulier_mio (
-    primarykey INT AUTO_INCREMENT PRIMARY KEY,
+    formId INT AUTO_INCREMENT PRIMARY KEY,
     formNummer varChar(10),
     personeelsnummerEigenaar varchar(6),
     typeMelding VARCHAR(50),
