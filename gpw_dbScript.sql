@@ -157,6 +157,7 @@ CREATE TABLE formulier_tra (
 -- Create formulier_lmra table
 CREATE TABLE formulier_lmra (
     primarykey INT AUTO_INCREMENT PRIMARY KEY,
+    formNummer varchar(50) DEFAULT "LMRA",
     personeelsnummerEigenaar varchar(6),
     inhoudTraWerkvergunning BOOL,
     traWerkvergunningBesproken BOOL,
@@ -170,6 +171,8 @@ CREATE TABLE formulier_lmra (
     voldoendeVerlicht BOOL,
     kenIkMijnVluchtroute BOOL,
     juistePBMBeschikken BOOL,
+    createDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    updateDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
     FOREIGN KEY (personeelsnummerEigenaar) REFERENCES gebruiker(personeelsnummer)
 );
 

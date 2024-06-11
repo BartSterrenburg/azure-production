@@ -1,12 +1,11 @@
 const database = require("../../dbConnection");
-const { saveLMRA } = require("../Controllers/form.controller");
 const queryLibrary = require("./queryCollection");
 
 const formDAO = {
   getFormsByPersoneelsnummer: (personeelsnummer, callback) => {
     database.query(
       queryLibrary.getFormsByPersoneelsnummer,
-      [personeelsnummer, personeelsnummer, personeelsnummer, personeelsnummer],
+      [personeelsnummer, personeelsnummer, personeelsnummer, personeelsnummer, personeelsnummer],
       (err, rows) => {
         if (err) {
           console.error("Error executing query", err);
