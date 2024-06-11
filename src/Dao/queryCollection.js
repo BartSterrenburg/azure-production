@@ -19,17 +19,17 @@ const queries = {
   postTBM:
     "INSERT INTO formulier_tbm(formNummer, personeelsnummerEige, datumMeeting, locatie, gehoudenDoor, functie, aantalPaginas, besprokenOnderwerpen) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
   postSignature:
-    "INSERT INTO handtekening(formNummer, name, signature) VALUES(?,?,?)",
+    "INSERT INTO handtekening(formId, name, signature) VALUES(?,?,?)",
 
   createUser:
     "INSERT INTO gebruiker (personeelsnummer, naam, email, wachtwoord, handtekening, rol) VALUES (?, ?, ?, ?, ?, ?)",
   loginUser:
     "SELECT * FROM `gebruiker` WHERE personeelsnummer = ? AND wachtwoord = ?",
   getWPI: "SELECT * FROM `formulier_wpi` WHERE primarykey = ?",
-  getTBM: "SELECT * FROM `formulier_tbm` WHERE formId = ?",
-  getTRA: "SELECT * FROM formulier_tra JOIN taakstap_tra ON formulier_tra.primarykey = taakstap_tra.primarykey JOIN gezienVoorUitvoering_tra ON formulier_tra.primarykey = gezienVoorUitvoering_tra.primarykey WHERE formulier_tra.primarykey = ?",
+  getTBM:
+    "SELECT * FROM formulier_tbm JOIN handtekening ON handtekening.formId = formulier_tbm.formId WHERE formulier_tbm.formId = ?",
+  getTRA:
+    "SELECT * FROM formulier_tra JOIN taakstap_tra ON formulier_tra.primarykey = taakstap_tra.primarykey JOIN gezienVoorUitvoering_tra ON formulier_tra.primarykey = gezienVoorUitvoering_tra.primarykey WHERE formulier_tra.primarykey = ?",
 };
-
-module.exports = queries;
 
 module.exports = queries;

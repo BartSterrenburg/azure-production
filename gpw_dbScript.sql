@@ -177,21 +177,12 @@ CREATE TABLE taakstap_tra (
     FOREIGN KEY (primarykey) REFERENCES formulier_tra(primarykey)
 );
 
--- Create deelnemer_tbm table
-CREATE TABLE deelnemer_tbm (
-    primarykey INT,
-    formId INT,
-    personeelsnummer INT,
-    PRIMARY KEY (formId, personeelsnummer),
-    FOREIGN KEY (formId) REFERENCES formulier_tbm(formId),
-    FOREIGN KEY (personeelsnummer) REFERENCES gebruiker(personeelsnummer)
-);
-
 -- Create handtekening table
 CREATE TABLE handtekening (
-    formNummer VARCHAR(50),
+    formId INT,
     name VARCHAR(100),
-    signature varchar(5000)
+    signature MEDIUMTEXT,
+    FOREIGN KEY (formId) REFERENCES formulier_tbm(formId)
 );
 
 -- Insert test data into rollen

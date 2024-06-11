@@ -213,7 +213,18 @@ const formDAO = {
           console.error("Error executing query", err);
           return callback(err, null);
         }
-        callback(null, rows);
+        // After successful INSERT, perform the SELECT operation
+        const selectQuery = `SELECT last_insert_id() AS id`;
+
+        database.query(selectQuery, (err, rows) => {
+          if (err) {
+            console.error("Error executing SELECT query", err);
+            return callback(err, null);
+          }
+
+          console.log(rows);
+          callback(null, rows);
+        });
       }
     );
   },
@@ -221,7 +232,7 @@ const formDAO = {
   saveSignature: (form, callback) => {
     database.query(
       queryLibrary.postSignature,
-      [form.number, form.name, form.signature],
+      [form.id, form.name, form.signature],
       (err, rows) => {
         if (err) {
           console.error("Error executing query", err);
