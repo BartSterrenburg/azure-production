@@ -208,16 +208,16 @@ const pdfFunctions = {
     const doc = new jsPDF('p', 'mm', 'a4');
     const object = data[0];
     const logoPath = path.join(__dirname, "logo.png");
-
+  
     const logoImageData = fs.readFileSync(logoPath);
-
+  
     const logoWidth = 40; 
     const logoHeight = 20; 
     const pageWidth = doc.internal.pageSize.getWidth(); 
     const logoX = (pageWidth - logoWidth) / 2; 
     const logoY = 10; 
     doc.addImage(logoImageData, "PNG", logoX, logoY, logoWidth, logoHeight);
-
+  
     doc.setFont("helvetica", "bold");
     doc.setFontSize(20);
     doc.setTextColor(0, 0, 0);
@@ -226,9 +226,8 @@ const pdfFunctions = {
     const titleY = logoY + logoHeight + 10; 
     doc.text("ToolBox Meeting", titleX + 25, titleY, { align: "center" }); 
     doc.setFontSize(10);
-    const startY = titleY + 10; 
-    let currentY = startY;
-
+    let currentY = titleY + 10; 
+  
     // Function to format date to day/month/year format
     const formatDate = (date) => {
       const d = new Date(date);
@@ -237,7 +236,45 @@ const pdfFunctions = {
       const year = d.getFullYear();
       return `${day}/${month}/${year}`;
     };
+  
+    // Function to add a section title
+    const addSectionTitle = (title) => {
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(14);
+      if (currentY + 10 > 280) { 
+        doc.addPage();
+        currentY = 20;
+      }
+      doc.setTextColor(0); 
+      doc.text(title, 10, currentY + 10);
+      currentY += 15;
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+    };
 
+    // Function to add a field
+    const addField = (label, value) => {
+      doc.setTextColor(0); 
+      doc.setFont("helvetica", "bold");
+      const labelWidth = doc.getStringUnitWidth(label) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+      if (currentY + 8 > 280) { 
+          doc.addPage();
+          currentY = 20;
+      }
+      doc.text(label, 10, currentY, { fontWeight: 'normal', color: [0, 0, 0] }); 
+      doc.setTextColor(150); 
+      const splitText = doc.splitTextToSize(value, 180 - labelWidth);
+      splitText.forEach(line => {
+          if (currentY + 8 > 280) { 
+              doc.addPage();
+              currentY = 20; 
+          }
+          doc.text(line, 10 + labelWidth + 2, currentY);
+          currentY += 8;
+      });
+    };
+
+  
     const fields = [
       // General Information
       { label: "Nummer TBM -", value: String(object.formNummer) },
@@ -249,36 +286,35 @@ const pdfFunctions = {
       { label: "Aantal pagina's:", value: String(object.aantalPaginas) },
       { label: "Besproken onderwerpen:", value: String(object.besprokenOnderwerpen) },
     ];
-
-    // Function to add and check for new page
-    const addField = (label, value) => {
-      const text = `${label} ${value}`;
-      doc.setTextColor(0, 0, 0); 
-      const labelWidth = doc.getStringUnitWidth(label) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-      if (currentY + 8 > 280) { 
-        doc.addPage();
-        currentY = 20;
-      }
-      if (currentY + 8 > 280) { 
-        doc.addPage();
-        currentY = 20; 
-      }
-      doc.text(label, 10, currentY, { fontWeight: 'normal', color: [0, 0, 0] }); 
-      doc.setTextColor(100); 
-      const splitText = doc.splitTextToSize(value, 180 - labelWidth);
-      splitText.forEach(line => {
-        if (currentY + 8 > 280) { 
-          doc.addPage();
-          currentY = 20; 
-        }
-        doc.text(line, 10 + labelWidth + 2, currentY);
-        currentY += 8;
-      });
-    };
-
+  
+    const deelnemersFields = [
+      { label: "Deelnemers:", value: String(object.name) },
+    ];
+  
     fields.forEach(field => {
       addField(field.label, field.value);
     });
+
+    // Add section title for deelnemers
+    addSectionTitle("Deelnemers");
+  
+    deelnemersFields.forEach(field => {
+      addField(field.label, field.value);
+    });
+  
+    // Add paraaf section for deelnemers
+    if (object.signature) {
+      const paraafHeight = 65;
+      if (currentY + paraafHeight > 280) {
+        doc.addPage();
+            currentY = 20; 
+        }
+        const paraafY = currentY + 5;
+        doc.setTextColor(0);
+        doc.text("Paraaf Uitvoerende Leidinggevende:", 10, paraafY);
+        doc.addImage(object.signature, "PNG", 10, paraafY + 5, 50, 50);
+        currentY += paraafHeight; 
+    }
 
     // Output the PDF document as a base64 string
     const base64 = doc.output("datauristring").split(",")[1];
