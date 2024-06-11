@@ -193,24 +193,6 @@ const formController = {
     });
   },
 
-  getTBMKey: (req, res, next) => {
-    const formNummer = req.params.formNummer;
-    formDAO.getTBMKey(formNummer, (err, data) => {
-      if (err) {
-        console.error("getTBMKey error", err);
-        return next({
-          status: 500,
-          message: "Internal Server Error",
-          data: {},
-        });
-      }
-      res.json({
-        status: 200,
-        message: "TBM found",
-        data: data,
-      });
-    });
-  }
 
 };
 

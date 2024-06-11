@@ -31,7 +31,7 @@ const queries = {
   updateSignature:
     "UPDATE gebruiker SET handtekening = ? WHERE personeelsnummer = ?",
 
-  getFormsByPersoneelsnummer: "SELECT formNummer, datum FROM formulier_mio WHERE personeelsnummerEigenaar = ? UNION ALL SELECT formNummer, datumMeeting FROM formulier_tbm WHERE personeelsnummerEigenaar = ? UNION ALL SELECT formNummer, createDate FROM formulier_tra WHERE personeelsnummerEigenaar = ? UNION ALL SELECT formNummer, datum FROM formulier_wpi WHERE personeelsnummerEigenaar = ?;",
+  getFormsByPersoneelsnummer: "SELECT formId, formNummer, datum FROM formulier_mio WHERE personeelsnummerEigenaar = ? UNION ALL SELECT formId, formNummer, datumMeeting FROM formulier_tbm WHERE personeelsnummerEigenaar = ? UNION ALL SELECT formId, formNummer, createDate FROM formulier_tra WHERE personeelsnummerEigenaar = ? UNION ALL SELECT formId, formNummer, datum FROM formulier_wpi WHERE personeelsnummerEigenaar = ?;",
 
   getOrders: "SELECT * FROM `order`",
 

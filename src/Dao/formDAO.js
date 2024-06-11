@@ -248,15 +248,6 @@ const formDAO = {
     });
   },
 
-  getTBMKey: (formNummer, callback) => {
-    database.query(queryLibrary.getTBMKey, [formNummer], (err, rows) => {
-      if (err) {
-        console.error("Error executing query", err);
-        return callback(err, null);
-      }
-      callback(null, rows);
-    });
-  },
 
 };
 

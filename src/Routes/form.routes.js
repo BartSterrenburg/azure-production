@@ -13,7 +13,6 @@ router.post("/api/form/MIO", formController.saveMIO)
 router.get("/api/form/TBM/:id", formController.getTBM)
 router.post("/api/form/TBM", formController.saveTBM)
 
-router.get("/api/form/TBM/:formNummer", formController.getTBMKey)
 
 router.post("/api/signature", formController.saveSignature)
 router.post("/api/taakstap", formController.saveTaakStap)
