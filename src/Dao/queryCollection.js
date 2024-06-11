@@ -1,4 +1,3 @@
-
 const queries = {
   getAllUsers: "SELECT * FROM gebruiker",
   getUserById: "SELECT * FROM gebruiker WHERE personeelsnummer = ?",
@@ -6,24 +5,23 @@ const queries = {
   getPasswordByID:
     "SELECT wachtwoord FROM gebruiker WHERE personeelsnummer = ?",
   postWPI:
-    "INSERT INTO formulier_wpi (formNummer, personeelsnummerEigenaar, datum, project, locatie, naamEigenaar, functieEigenaar, foto, gehandeldVolgensRegelsEnVoorschriften, gehandeldVolgensRegelsEnVoorschriftenAantekeningen, omstandighedenVeiligWerken, omstandighedenVeiligWerkenAantekeningen, voldoenUitvoerendeAanEisen, voldoenUitvoerendeAanEisenAantekeningen, vereisteBeschermingsmiddelen, vereisteBeschermingsmiddelenAantekeningen, gevaarlijkeSituatiesVoorkomen, gevaarlijkeSituatiesVoorkomenAantekeningen, gevaarlijkeStoffenVerwerking, gevaarlijkeStoffenVerwerkingAantekeningen, benodigdeVoorzieningenCalimiteiten, benodigdeVoorzieningenCalimiteitenAantekeningen, staatGebruiktGereedschappen, staatGebruiktGereedschappenAantekeningen, omschrijvingVerbetering, actieTeNemenDoor, actieTeNemenVoorDatum, evaluatieTerVerbetering, datumAfgehandeld, paraaf) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    "INSERT INTO formulier_wpi (formNummer, datum, project, locatie, naamEigenaar, functieEigenaar, foto, gehandeldVolgensRegelsEnVoorschriften, gehandeldVolgensRegelsEnVoorschriftenAantekeningen, omstandighedenVeiligWerken, omstandighedenVeiligWerkenAantekeningen, voldoenUitvoerendeAanEisen, voldoenUitvoerendeAanEisenAantekeningen, vereisteBeschermingsmiddelen, vereisteBeschermingsmiddelenAantekeningen, gevaarlijkeSituatiesVoorkomen, gevaarlijkeSituatiesVoorkomenAantekeningen, gevaarlijkeStoffenVerwerking, gevaarlijkeStoffenVerwerkingAantekeningen, benodigdeVoorzieningenCalimiteiten, benodigdeVoorzieningenCalimiteitenAantekeningen, staatGebruiktGereedschappen, staatGebruiktGereedschappenAantekeningen, omschrijvingVerbetering, actieTeNemenDoor, actieTeNemenVoorDatum, evaluatieTerVerbetering, datumAfgehandeld, door, paraaf) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 
   postTRA:
-    "INSERT INTO formulier_tra(formNummer, personeelsnummerEigenaar, naamVGWCoordinator, paraafVGWCoordinator, naamAkkoordUitvoerendLeidinggevende, paraafAkkoordUitvoerendLeidinggevende, taakomschrijving) VALUES (?, ?, ?, ?, ?, ?, ?)",
+    "INSERT INTO formulier_tra(formNummer, naamVGWCoordinator, paraafVGWCoordinator, naamAkkoordUitvoerendLeidinggevende, paraafAkkoordUitvoerendLeidinggevende, taakomschrijving) VALUES (?, ?, ?, ?, ?, ?)",
   postTaakStap:
-    "INSERT INTO taakstap_tra(formNummer, taakstapNummer, taakstapActiviteit, gevaar, beheersMaatregel, actieDoor) VALUES(?, ?, ?, ?, ?, ?)",
-
-    postGezienUitvoering:
-    "INSERT INTO gezienVoorUitvoering_tra(formNummer, naam, paraaf) VALUES(?, ?, ?)",
+    "INSERT INTO taakstap_tra(primarykey, formNummer, taakstapNummer, taakstapActiviteit, gevaar, beheersMaatregel, actieDoor) VALUES(?, ?, ?, ?, ?, ?, ?)",
+  postGezienUitvoering:
+    "INSERT INTO gezienVoorUitvoering_tra(primarykey, formNummer, naam, paraaf) VALUES(?, ?, ?, ?)",
 
   postMIO:
-    "INSERT INTO formulier_mio (formNummer, personeelsnummerEigenaar, typeMelding, datum, tijdstip, naamEigenaar, functieEigenaar, locatie, aardLetsel, plaatsLetsel, foto, eersteBehandeling, onmiddellijkeActieNotitie, omschrijving, OH_onveiligeSnelheid, OH_beveiligingBuitenWerking, OH_verkeerdGebruikGereedschap, OH_nietGebruikenPBM, OH_onveiligLaden, OH_innemenOnveiligeLaden, OH_werkenAanGevaarlijkeDelen, OH_Afleiden, OH_AndersB, OH_Anders, OS_onvoldoendeBeveiligd, OS_onbeveiligd, OS_defectInstallatie, OS_onveiligeConstructie, OS_ondeugdelijkeGereedschap, OS_onveiligeKleding, OS_gebreikkigeOrdeEnNetheid, OS_Anders, OS_AndersB, BZ_onvoldoendeMaatregelen, BZ_onvoldoendeErvaring, BZ_onvoldoendeInstructie, BZ_nietBevoegdBedienen, BZ_onvoldoendeOnderhoud, BZ_onvoldoendeVakkenis, BZ_Anders, BZ_AndersB, omschrijvingActie, actieTeNemenDoor, actieTenemenVoorDatum, meldingAfgehandeldVoorDatum, meldingAfgehandeldDoor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    "INSERT INTO formulier_mio (formNummer, typeMelding, datum, tijdstip, naamEigenaar, functieEigenaar, locatie, aardLetsel, plaatsLetsel, foto, eersteBehandeling, onmiddellijkeActieNotitie, omschrijving, OH_onveiligeSnelheid, OH_beveiligingBuitenWerking, OH_verkeerdGebruikGereedschap, OH_nietGebruikenPBM, OH_onveiligLaden, OH_innemenOnveiligeLaden, OH_werkenAanGevaarlijkeDelen, OH_Afleiden, OH_AndersB, OH_Anders, OS_onvoldoendeBeveiligd, OS_onbeveiligd, OS_defectInstallatie, OS_onveiligeConstructie, OS_ondeugdelijkeGereedschap, OS_onveiligeKleding, OS_gebreikkigeOrdeEnNetheid, OS_Anders, OS_AndersB, BZ_onvoldoendeMaatregelen, BZ_onvoldoendeErvaring, BZ_onvoldoendeInstructie, BZ_nietBevoegdBedienen, BZ_onvoldoendeOnderhoud, BZ_onvoldoendeVakkenis, BZ_Anders, BZ_AndersB, omschrijvingActie, actieTeNemenDoor, actieTenemenVoorDatum, meldingAfgehandeldVoorDatum, meldingAfgehandeldDoor, paraaf) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
   postTBM:
     "INSERT INTO formulier_tbm(formNummer, personeelsnummerEigenaar, datumMeeting, locatie, gehoudenDoor, functie, aantalPaginas, besprokenOnderwerpen) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
   postLMRA:
     "INSERT INTO formulier_lmra (personeelsnummerEigenaar, inhoudTraWerkvergunning, traWerkvergunningBesproken, kenIkMijnTaak, waarWerkzaam, gekeurdGereedschapBeschikken, juisteMiddelenBeschikken, gevaarVallendeVoorwerpen, gevaarKnellenOfStoten, struikelgevaar, voldoendeVerlicht, kenIkMijnVluchtroute, juistePBMBeschikken) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
   postSignature:
-  "INSERT INTO handtekening(formNummer, name, signature) VALUES(?,?,?)",
+    "INSERT INTO handtekening(formId, name, signature) VALUES(?,?,?)",
 
   createUser:
     "INSERT INTO gebruiker (personeelsnummer, naam, email, wachtwoord, handtekening, rol) VALUES (?, ?, ?, ?, ?, ?)",
@@ -33,9 +31,16 @@ const queries = {
   updateSignature:
     "UPDATE gebruiker SET handtekening = ? WHERE personeelsnummer = ?",
 
-  getFormsByPersoneelsnummer: "SELECT formNummer, datum FROM formulier_mio WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, datumMeeting FROM formulier_tbm WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, createDate FROM formulier_tra WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, datum FROM formulier_wpi WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, createDate FROM formulier_lmra WHERE personeelsnummerEigenaar = ?;",
+  getFormsByPersoneelsnummer:
+    "SELECT formNummer, datum FROM formulier_mio WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, datumMeeting FROM formulier_tbm WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, createDate FROM formulier_tra WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, datum FROM formulier_wpi WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, createDate FROM formulier_lmra WHERE personeelsnummerEigenaar = ?;",
 
   getOrders: "SELECT * FROM `order`",
+
+  getWPI: "SELECT * FROM `formulier_wpi` WHERE primarykey = ?",
+  getTBM:
+    "SELECT * FROM formulier_tbm JOIN handtekening ON handtekening.formId = formulier_tbm.formId WHERE formulier_tbm.formId = ?",
+  getTRA:
+    "SELECT * FROM formulier_tra JOIN taakstap_tra ON formulier_tra.primarykey = taakstap_tra.primarykey JOIN gezienVoorUitvoering_tra ON formulier_tra.primarykey = gezienVoorUitvoering_tra.primarykey WHERE formulier_tra.primarykey = ?",
 };
 
 module.exports = queries;
