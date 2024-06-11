@@ -136,6 +136,26 @@ const formController = {
     });
   },
 
+  saveLMRA: (req, res, next) => {
+    console.log("saveLMRA");
+    const form = req.body;
+    formDAO.saveLMRA(form, (err, data) => {
+      if (err) {
+        console.error("saveLMRA error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "LMRA saved",
+        data: data,
+      });
+    });
+  },
+
   saveSignature: (req, res, next) => {
     const form = req.body;
     formDAO.saveSignature(form, (err, data) => {
