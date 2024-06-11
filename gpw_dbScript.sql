@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS formulier_wpi;
 DROP TABLE IF EXISTS formulier_lmra;
 DROP TABLE IF EXISTS gebruiker;
 DROP TABLE IF EXISTS rollen;
+DROP TABLE IF EXISTS `order`;
 
 -- Create rollen table
 CREATE TABLE rollen (
@@ -135,7 +136,7 @@ CREATE TABLE formulier_tbm (
     besprokenOnderwerpen TEXT,
     createDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updateDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
-    FOREIGN KEY (personeelsnummerEige) REFERENCES gebruiker(personeelsnummer)
+    FOREIGN KEY (personeelsnummerEigenaar) REFERENCES gebruiker(personeelsnummer)
 );
 
 -- Create formulier_tra table
@@ -207,6 +208,14 @@ CREATE TABLE handtekening (
     signature varchar(5000)
 );
 
+-- Create orde table
+CREATE TABLE `order` (
+    ordernummer varchar(50) PRIMARY KEY,
+    Naam varchar(100),
+    beschrijving varchar(500)
+);
+
+
 -- Insert test data into rollen
 INSERT INTO rollen (rolNummer, rolOmschrijving) VALUES
 (10, 'Medewerker'),
@@ -219,35 +228,30 @@ INSERT INTO gebruiker (personeelsnummer, naam, email, wachtwoord, handtekening, 
 
 -- Insert test data into formulier_mio
 INSERT INTO formulier_mio (formNummer, personeelsnummerEigenaar, typeMelding, datum, tijdstip, naamEigenaar, functieEigenaar, locatie, aardLetsel, plaatsLetsel, foto, eersteBehandeling, onmiddellijkeActieNotitie, omschrijving, OH_onveiligeSnelheid, OH_beveiligingBuitenWerking, OH_verkeerdGebruikGereedschap, OH_nietGebruikenPBM, OH_onveiligLaden, OH_innemenOnveiligeLaden, OH_werkenAanGevaarlijkeDelen, OH_Afleiden, OH_Anders, OS_onvoldoendeBeveiligd, OS_onbeveiligd, OS_defectInstallatie, OS_onveiligeConstructie, OS_ondeugdelijkeGereedschap, OS_onveiligeKleding, OS_gebreikkigeOrdeEnNetheid, OS_Anders, BZ_onvoldoendeMaatregelen, BZ_onvoldoendeErvaring, BZ_onvoldoendeInstructie, BZ_nietBevoegdBedienen, BZ_onvoldoendeOnderhoud, BZ_onvoldoendeVakkenis, BZ_Anders, OmschrijvingActie, ActieTeNemenDoor, ActieTeNemenVoorDatum, MeldingAfgehandeldVoorDatum, MeldingAfgehandeldDoor)
-VALUES ('ABC123', '000002', 'Type Melding', '2024-06-06', '12:30:00', 'Naam Eigenaar', 'Functie Eigenaar', 'Locatie', 'Aard Letsel', 'Plaats Letsel', NULL, 'Eerste Behandeling', 'Onmiddellijke Actie Notitie', 'Omschrijving', 1, 0, 1, 0, 1, 0, 1, 0, 'Anders', 1, 0, 1, 0, 1, 0, 1, 'Anders', 1, 0, 1, 0, 1, 0, 'Anders', 'Omschrijving Actie', 'Actie Te Nemen Door', '2024-06-07', '2024-06-08', 'Afgehandeld Door');
+VALUES ('MIO-23443123', 1, 'Type Melding', '2024-06-06', '12:30:00', 'Naam Eigenaar', 'Functie Eigenaar', 'Locatie', 'Aard Letsel', 'Plaats Letsel', NULL, 'Eerste Behandeling', 'Onmiddellijke Actie Notitie', 'Omschrijving', 1, 0, 1, 0, 1, 0, 1, 0, 'Anders', 1, 0, 1, 0, 1, 0, 1, 'Anders', 1, 0, 1, 0, 1, 0, 'Anders', 'Omschrijving Actie', 'Actie Te Nemen Door', '2024-06-07', '2024-06-08', 'Afgehandeld Door');
 
 -- Insert test data into formulier_wpi
 INSERT INTO formulier_wpi (formNummer, personeelsnummerEigenaar, datum, project, locatie, naamEigenaar, functieEigenaar, gehandeldVolgensRegelsEnVoorschriften, gehandeldVolgensRegelsEnVoorschriftenAantekeningen, omstandighedenVeiligWerken, omstandighedenVeiligWerkenAantekeningen, voldoenUitvoerendeAanEisen, voldoenUitvoerendeAanEisenAantekeningen, vereisteBeschermingsmiddelen, vereisteBeschermingsmiddelenAantekeningen, gevaarlijkeSituatiesVoorkomen, gevaarlijkeSituatiesVoorkomenAantekeningen, gevaarlijkeStoffenVerwerking, gevaarlijkeStoffenVerwerkingAantekeningen, benodigdeVoorzieningenCalimiteiten, benodigdeVoorzieningenCalimiteitenAantekeningen, staatGebruiktGereedschappen, staatGebruiktGereedschappenAantekeningen, omschrijvingVerbetering, actieTeNemenDoor, actieTeNemenVoorDatum, evaluatieTerVerbetering, datumAfgehandeld, paraaf) VALUES 
-('1', '000002', '2023-02-01', 'Project 1', 'Locatie 1', 'Eigenaar 1', 'Functie 1', true, 'Aantekeningen 1', true, 'Aantekeningen 2', true, 'Aantekeningen 3', true, 'Aantekeningen 4', true, 'Aantekeningen 5', true, 'Aantekeningen 6', true, 'Aantekeningen 7', true, 'Aantekeningen 8', 'Verbetering 1', 'Actiehouder 1', '2023-03-01', 'Evaluatie 1', '2023-04-01', 'Paraaf 1');
+('WPI-3435233453', 1, '2023-02-01', 'Project 1', 'Locatie 1', 'Eigenaar 1', 'Functie 1', true, 'Aantekeningen 1', true, 'Aantekeningen 2', true, 'Aantekeningen 3', true, 'Aantekeningen 4', true, 'Aantekeningen 5', true, 'Aantekeningen 6', true, 'Aantekeningen 7', true, 'Aantekeningen 8', 'Verbetering 1', 'Actiehouder 1', '2023-03-01', 'Evaluatie 1', '2023-04-01', 'Paraaf 1');
 
 -- Insert test data into formulier_tbm
-INSERT INTO formulier_tbm (formNummer, personeelsnummerEige, datumMeeting, locatie, gehoudenDoor, functie, aantalPaginas, besprokenOnderwerpen)
-VALUES ('TBM001','000001', '2023-06-01', 'Locatie A', 'John Doe', 'Manager', 5, 'Onderwerp 1, Onderwerp 2, Onderwerp 3');
+INSERT INTO formulier_tbm (formNummer, personeelsnummerEigenaar, datumMeeting, locatie, gehoudenDoor, functie, aantalPaginas, besprokenOnderwerpen)
+VALUES ('TBM-234523523', 1, '2023-06-01', 'Locatie A', 'John Doe', 'Manager', 5, 'Onderwerp 1, Onderwerp 2, Onderwerp 3');
 
 -- Insert test data into formulier_tra
 INSERT INTO formulier_tra (formNummer, personeelsnummerEigenaar, naamVGWCoordinator, paraafVGWCoordinator, naamAkkoordUitvoerendLeidinggevende, paraafAkkoordUitvoerendLeidinggevende, taakomschrijving) 
-VALUES ('12348', '000002', 'VGW Coordinator 1', 'Paraaf 1', 'Leidinggevende 1', 'Paraaf 2', 'Taakomschrijving 1');
+VALUES ('TRA-23412348', 1, 'VGW Coordinator 1', 'Paraaf 1', 'Leidinggevende 1', 'Paraaf 2', 'Taakomschrijving 1');
 
--- Insert test data into formulier_lmra
-INSERT INTO formulier_lmra (personeelsnummerEigenaar, inhoudTraWerkvergunning, traWerkvergunningBesproken, kenIkMijnTaak, waarWerkzaam, gekeurdGereedschapBeschikken, juisteMiddelenBeschikken, gevaarVallendeVoorwerpen, gevaarKnellenOfStoten, struikelgevaar, voldoendeVerlicht, kenIkMijnVluchtroute, juistePBMBeschikken)
-VALUES ('000001', 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1);
 
--- Insert test data into gezienVoorUitvoering_tra
-INSERT INTO gezienVoorUitvoering_tra (formNummer, naam, paraaf) VALUES
-('12348', 'Naam 1', 'Paraaf 1');
-
--- Insert test data into taakstap_tra
-INSERT INTO taakstap_tra (formNummer, taakstapNummer, taakstapActiviteit, gevaar, Beheersmaatregel, actieDoor) VALUES
-('12348', 1, 'Activiteit 1', 'Gevaar 1', 'Beheersmaatregel 1', 'Actie Door 1'), 
-('12348', 2, 'Activiteit 2', 'Gevaar 2', 'Beheersmaatregel 2', 'Actie Door 2'), 
-('12348', 3, 'Activiteit 3', 'Gevaar 3', 'Beheersmaatregel 3', 'Actie Door 3');
-
--- Insert test data into deelnemer_tbm
-INSERT INTO deelnemer_tbm (formId, personeelsnummer) VALUES
-(1, '000001'),
-(1, '000002');
+-- Insert test data into `order` table
+INSERT INTO `order` (ordernummer, Naam, beschrijving) VALUES
+('10324234', 'Naam 1', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.'),
+('20730274', 'Naam 2', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.'),
+('36382940', 'Naam 3', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.'),
+('39362811', 'Naam 4', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.'),
+('32849332', 'Naam 5', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.'),
+('32674383', 'Naam 6', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.'),
+('32398254', 'Naam 7', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.'),
+('10328492', 'Naam 8', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.'),
+('20738490', 'Naam 9', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.'),
+('36389420', 'Naam 10', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.');

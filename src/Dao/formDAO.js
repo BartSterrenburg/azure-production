@@ -3,11 +3,26 @@ const { saveLMRA } = require("../Controllers/form.controller");
 const queryLibrary = require("./queryCollection");
 
 const formDAO = {
+  getFormsByPersoneelsnummer: (personeelsnummer, callback) => {
+    database.query(
+      queryLibrary.getFormsByPersoneelsnummer,
+      [personeelsnummer, personeelsnummer, personeelsnummer, personeelsnummer],
+      (err, rows) => {
+        if (err) {
+          console.error("Error executing query", err);
+          return callback(err, null);
+        }
+        callback(null, rows);
+      }
+    );
+  },
+
   saveWPI: (form, callback) => {
     database.query(
       queryLibrary.postWPI,
       [
         form.nummer,
+        form.owner,
         form.datum,
         form.project,
         form.locatie,
@@ -58,6 +73,7 @@ const formDAO = {
       queryLibrary.postTRA,
       [
         form.nummer,
+        form.owner,
         form.naamVGWCoordinator,
         form.paraafVGWCoordinator,
         form.naamUitvoerendeLeidinggevende,
@@ -119,6 +135,7 @@ const formDAO = {
       queryLibrary.postMIO,
       [
         form.nummer,
+        form.owner,
         form.typeMelding,
         form.datum,
         form.tijdstip,

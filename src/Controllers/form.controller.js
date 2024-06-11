@@ -1,6 +1,26 @@
 const formDAO = require("../Dao/formDAO");
 
-const formController = {  
+const formController = {
+
+  getFormsByPersoneelsnummer: (req, res, next) => {
+    const personeelsnummer = req.params.personeelsnummer;
+    formDAO.getFormsByPersoneelsnummer(personeelsnummer, (err, data) => {
+      if (err) {
+        console.error("getFormsByPersoneelsnummer error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "Forms found",
+        data: data,
+      });
+    });
+  },
+
   saveWPI: (req, res, next) => {
     const form = req.body;
     console.log(form.nummer);
