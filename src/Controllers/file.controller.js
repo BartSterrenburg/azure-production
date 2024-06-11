@@ -33,29 +33,33 @@ const fileController = {
     },
 
     putFile: (req, res) => {
-        // Haal formNummer op uit FormData
-        const formNummer = req.body.formNummer;
+        const formNummer = req.body.formNummer; // Extract formNummer from the form-data
+        const file = req.files; // Assuming a single file upload, extract the file object
     
-        // Haal het bestand op uit FormData
-        const fileData = req.body.file;
+        if (!formNummer || !file) {
+            return res.status(400).json({
+                status: 400,
+                message: 'Form number or file is missing',
+                data: {}
+            });
+        }
     
-        // Voer de logica uit om het bestand bij te werken in de database
-        fileDAO.putFile(formNummer, fileData, (err, result) => {
+        // Call your DAO function to handle database operations
+        fileDAO.putFile(formNummer, file.buffer, (err, result) => {
             if (err) {
-                // Als er een fout optreedt, stuur een foutmelding terug naar de client
                 return res.status(500).json({
-                    message: "Error updating file",
-                    error: err,
+                    status: 500,
+                    message: 'Error saving file',
+                    data: {}
                 });
             }
-            // Als alles goed gaat, stuur een succesbericht terug naar de client
-            res.json({
-                message: "File updated successfully",
-                data: fileData  
+            res.status(200).json({
+                status: 200,
+                message: 'File saved successfully',
+                data: result
             });
         });
     },
-    
 }
 
 module.exports = fileController;

@@ -21,7 +21,7 @@ const upload = multer({
 router.get('/api/form/TBM/ordernummer', fileController.getTBMOrderNummer);
 
 // Add multer middleware to the putFile route
-router.put('/api/form/TBM/ordernummer/file', upload.single('file'), fileController.putFile);
+router.put('/api/form/TBM/ordernummer/file', upload.array('file'), fileController.putFile);
 
 router.get('/api/form/TBM/ordernummer/file', fileController.getFile);
 
