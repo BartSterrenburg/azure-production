@@ -2,11 +2,26 @@ const database = require("../../dbConnection");
 const queryLibrary = require("./queryCollection");
 
 const formDAO = {
+  getFormsByPersoneelsnummer: (personeelsnummer, callback) => {
+    database.query(
+      queryLibrary.getFormsByPersoneelsnummer,
+      [personeelsnummer, personeelsnummer, personeelsnummer, personeelsnummer, personeelsnummer],
+      (err, rows) => {
+        if (err) {
+          console.error("Error executing query", err);
+          return callback(err, null);
+        }
+        callback(null, rows);
+      }
+    );
+  },
+
   saveWPI: (form, callback) => {
     database.query(
       queryLibrary.postWPI,
       [
         form.nummer,
+        form.owner,
         form.datum,
         form.project,
         form.locatie,
@@ -57,6 +72,7 @@ const formDAO = {
       queryLibrary.postTRA,
       [
         form.nummer,
+        form.owner,
         form.naamVGWCoordinator,
         form.paraafVGWCoordinator,
         form.naamUitvoerendeLeidinggevende,
@@ -118,6 +134,7 @@ const formDAO = {
       queryLibrary.postMIO,
       [
         form.nummer,
+        form.owner,
         form.typeMelding,
         form.datum,
         form.tijdstip,
@@ -186,6 +203,34 @@ const formDAO = {
         form.function,
         form.pageAmount,
         form.summary,
+      ],
+      (err, rows) => {
+        if (err) {
+          console.error("Error executing query", err);
+          return callback(err, null);
+        }
+        callback(null, rows);
+      }
+    );
+  },
+
+  saveLMRA: (form, callback) => {
+    database.query(
+      queryLibrary.postLMRA,
+      [
+        form.personeelsnummerEigenaar,
+        form.inhoudTraWerkvergunning,
+        form.traWerkvergunningBesproken,
+        form.kenIkMijnTaak,
+        form.waarWerkzaam,
+        form.gekeurdGereedschapBeschikken,
+        form.juisteMiddelenBeschikken,
+        form.gevaarVoorVallendeVoorwerpen,
+        form.gevaarKnellenOfStoten,
+        form.struikelgevaar,
+        form.voldoendeVerlicht,
+        form.kenIkMijnVluchtroute,
+        form.juistePBMBeschikken,
       ],
       (err, rows) => {
         if (err) {
