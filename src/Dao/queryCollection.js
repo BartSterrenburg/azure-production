@@ -27,8 +27,9 @@ const queries = {
     "SELECT * FROM `gebruiker` WHERE personeelsnummer = ? AND wachtwoord = ?",
   getWPI: "SELECT * FROM `formulier_wpi` WHERE primarykey = ?",
   getTBM: "SELECT * FROM `formulier_tbm` WHERE formId = ?",
-  getTRA: "SELECT * FROM `formulier_tra` WHERE primarykey = ?",
-  getMIO: "SELECT * FROM `formulier_mio` WHERE primarykey = ?",
+  getTRA: "SELECT * FROM formulier_tra JOIN taakstap_tra ON formulier_tra.primarykey = taakstap_tra.primarykey JOIN gezienVoorUitvoering_tra ON formulier_tra.primarykey = gezienVoorUitvoering_tra.primarykey WHERE formulier_tra.primarykey = ?",
 };
+
+module.exports = queries;
 
 module.exports = queries;

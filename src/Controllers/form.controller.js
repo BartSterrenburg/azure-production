@@ -200,9 +200,9 @@ const formController = {
       }
     });
   },
-  
+
   getTRA: (req, res, next) => {
-    console.log("getTRA")
+    console.log("getTRA");
     const primarykey = req.params.primarykey;
     formDAO.getTRA(primarykey, async (err, data) => {
       if (err) {
