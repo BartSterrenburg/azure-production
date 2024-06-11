@@ -1,5 +1,4 @@
 const fileDAO = require("../Dao/fileDAO");
-const { putFile } = require("../Dao/queryCollection");
 
 const fileController = {
     getTBMOrderNummer: (req, res) => {
@@ -28,14 +27,15 @@ const fileController = {
                     message: "File not found",
                 });
             }
-            res.send(fileData.bijlage);
+            res.send(fileData);
         });
     },
 
     putFile: (req, res) => {
-        const formNummer = req.body.formNummer; // Extract formNummer from the form-data
-        const file = req.files; // Assuming a single file upload, extract the file object
-    
+        console.log(req.body);
+        const formNummer = req.body.formNummer; 
+        const file = req.files[0]; 
+
         if (!formNummer || !file) {
             return res.status(400).json({
                 status: 400,
@@ -43,8 +43,7 @@ const fileController = {
                 data: {}
             });
         }
-    
-        // Call your DAO function to handle database operations
+
         fileDAO.putFile(formNummer, file.buffer, (err, result) => {
             if (err) {
                 return res.status(500).json({
@@ -58,8 +57,9 @@ const fileController = {
                 message: 'File saved successfully',
                 data: result
             });
+            console.log("result: ", result + file.buffer);    
         });
-    },
+    }
 }
 
 module.exports = fileController;

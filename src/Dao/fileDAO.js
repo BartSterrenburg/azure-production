@@ -24,13 +24,12 @@ const fileDAO = {
                     console.error("Error executing query", err);
                     return callback(err, null);
                 }
-                callback(null, rows[0].count > 0); // Check of het formulier bestaat
+                callback(null, rows[0].count > 0); 
             }
         );
     },
 
     putFile: (formNumber, fileData, callback) => {
-        // Controleer eerst of het formulier bestaat
         fileDAO.checkFormNumberExists(formNumber, (err, exists) => {
             if (err) {
                 console.error("Error checking form number existence", err);
@@ -39,10 +38,9 @@ const fileDAO = {
             if (!exists) {
                 return callback("Form number does not exist", null);
             }
-            // Het formulier bestaat, voer de query uit om het bestand bij te werken
             database.query(
                 queryLibrary.putFile,
-                [fileData, formNumber], // Plaats de bestand- en formulier nummer parameters in een array
+                [fileData, formNumber], 
                 (err, result) => {
                     if (err) {
                         console.error("Error executing query", err);
@@ -55,7 +53,6 @@ const fileDAO = {
     },
     
     getFile: (formNumber, callback) => {
-        // Controleer eerst of het formulier bestaat
         fileDAO.checkFormNumberExists(formNumber, (err, exists) => {
             if (err) {
                 console.error("Error checking form number existence", err);
@@ -64,7 +61,6 @@ const fileDAO = {
             if (!exists) {
                 return callback("Form number does not exist", null);
             }
-            // Het formulier bestaat, voer de query uit om het bestand op te halen
             database.query(
                 queryLibrary.getFile,
                 formNumber,
@@ -73,7 +69,7 @@ const fileDAO = {
                         console.error("Error executing query", err);
                         return callback(err, null);
                     }
-                    callback(null, rows[0]); // Return het eerste resultaat (bijlage)
+                    callback(null, rows); 
                 }
             );
         });
