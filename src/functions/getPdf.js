@@ -276,8 +276,7 @@ const pdfFunctions = {
   
     const fields = [
       // General Information
-      { label: "Nummer TBM -", value: String(object.formNummer) },
-      { label: "Beschrijving:", value: String(object.beschrijving) }, 
+      { label: "Nummer:", value: String(object.formNummer) },
       { label: "Datum Meeting:", value: formatDate(object.datumMeeting) },
       { label: "Locatie:", value: String(object.locatie) },
       { label: "Gehouden door:", value: String(object.gehoudenDoor) },
@@ -466,8 +465,7 @@ const pdfFunctions = {
   
     // Add fields
     const fields = [
-      { label: "Nummer MIO -", value: String(object.formNummer) },
-      { label: "Beschrijving:", value: String(object.beschrijving) },
+      { label: "Nummer:", value: String(object.formNummer) },
       { label: "Type Melding:", value: capitalizeFirstLetter(object.typeMelding) },
       { label: "Datum:", value: formatDate(object.datum) },
       { label: "Tijd:", value: String(object.tijdstip) },
@@ -621,8 +619,7 @@ const pdfFunctions = {
 
     // General Information
     const generalInfoFields = [
-        { label: "Nummer TRA -", value: String(object.formNummer) },
-        { label: "Beschrijving:", value: String(object.beschrijving) }, 
+        { label: "Nummer:", value: String(object.formNummer) },
         { label: "Naam VGW Coördinator:", value: String(object.naamVGWCoordinator) },
         { label: "Naam Uitvoerende Leidinggevende:", value: String(object.naamAkkoordUitvoerendLeidinggevende) },
         { label: "Taak Omschrijving:", value: String(object.taakomschrijving) },
@@ -630,14 +627,14 @@ const pdfFunctions = {
 
     // Taakstap
     const taskStepFields = [
-        { label: "Taakstap of activiteit:", value: String(object.taakStap) },
+        { label: "Taakstap of activiteit:", value: String(object.taakstapActiviteit) },
         { label: "Gevaar:", value: String(object.gevaar) },
         { label: "Beheersmaatregel:", value: String(object.beheersMaatregel) },
         { label: "Actie door:", value: String(object.actieDoor) },
     ];
 
     const seenByExecutionFields = [
-        { label: "Gezien door uitvoerende:", value: String(object.gezienDoorUitvoerende) },
+        { label: "Gezien door uitvoerende:", value: String(object.naam) },
     ];
 
     generalInfoFields.forEach(field => {
