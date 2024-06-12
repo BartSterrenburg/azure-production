@@ -9,6 +9,7 @@ router.get("/api/form/:personeelsnummer", formController.getFormsByPersoneelsnum
 router.post("/api/form/WPI", formController.saveWPI)
 router.post("/api/form/TRA", formController.saveTRA)
 router.get("/api/form/MIO/:id", formController.getMIO)
+router.put("/api/form/MIO/:id", formController.updateMIO)
 router.post("/api/form/MIO", formController.saveMIO)
 router.get("/api/form/TBM/:id", formController.getTBM)
 router.post("/api/form/TBM", formController.saveTBM)

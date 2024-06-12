@@ -129,6 +129,9 @@ const formDAO = {
     );
   },
 
+  
+
+
   saveMIO: (form, callback) => {
     database.query(
       queryLibrary.postMIO,
@@ -247,6 +250,70 @@ const formDAO = {
       callback(null, rows);
     });
   },
+
+  updateMIO: (form, callback) => {
+    database.query(
+      queryLibrary.updateMIO,
+      [
+        [
+          form.formNummer,
+          form.personeelsnummerEigenaar,
+          form.typeMelding,
+          form.datum,
+          form.tijdstip,
+          form.naamEigenaar,
+          form.functieEigenaar,
+          form.locatie,
+          form.aardLetsel,
+          form.plaatsLetsel,
+          form.foto,
+          form.checkboxEersteBehandeling.eersteBehandeling,
+          form.checkboxEersteBehandeling.onmiddellijkeActieNotitie,
+          form.omschrijving,
+          form.OH_onveiligeSnelheid,
+          form.OH_beveiligingBuitenWerking,
+          form.OH_verkeerdGebruikGereedschap,
+          form.OH_nietGebruikenPBM,
+          form.OH_onveiligLaden,
+          form.OH_innemenOnveiligeLaden,
+          form.OH_werkenAanGevaarlijkeDelen,
+          form.OH_Afleiden,
+          form.OH_AndersB,
+          form.OH_Anders,
+          form.OS_onvoldoendeBeveiligd,
+          form.OS_onbeveiligd,
+          form.OS_defectInstallatie,
+          form.OS_onveiligeConstructie,
+          form.OS_ondeugdelijkeGereedschap,
+          form.OS_onveiligeKleding,
+          form.OS_gebreikkigeOrdeEnNetheid,
+          form.OS_Anders,
+          form.OS_AndersB,
+          form.BZ_onvoldoendeMaatregelen,
+          form.BZ_onvoldoendeErvaring,
+          form.BZ_onvoldoendeInstructie,
+          form.BZ_nietBevoegdBedienen,
+          form.BZ_onvoldoendeOnderhoud,
+          form.BZ_onvoldoendeVakkenis,
+          form.BZ_Anders,
+          form.BZ_AndersB,
+          form.omschrijvingActie,
+          form.actieTeNemenDoor,
+          form.actieTenemenVoorDatum,
+          form.meldingAfgehandeldVoorDatum,
+          form.meldingAfgehandeldDoor,
+          form.formId,
+      ]
+      
+      ],
+      (err, rows) => {
+        if (err) {
+          console.error("Error executing query", err);
+        } else {
+          callback(null, rows);
+        }
+  });
+}
 
 
 };

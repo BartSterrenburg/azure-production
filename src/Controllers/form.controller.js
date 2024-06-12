@@ -98,6 +98,26 @@ const formController = {
     });
   },
 
+  updateMIO: (req, res, next) => {
+    const id = req.params.id;
+    const form = req.body;
+    formDAO.updateMIO(id, form, (err, data) => {
+      if (err) {
+        console.error("updateMIO error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "MIO updated",
+        data: data,
+      });
+    });
+  },
+
   saveMIO: (req, res, next) => {
     const form = req.body;
     formDAO.saveMIO(form, (err, data) => {

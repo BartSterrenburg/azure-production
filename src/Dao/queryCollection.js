@@ -36,7 +36,7 @@ const queries = {
   getOrders: "SELECT * FROM `order`",
 
   getTBMKey: "SELECT * FROM formulier_tbm WHERE formNummer = ?",
-
+  updateMIO: "UPDATE formulier_mio SET formNummer = ?, personeelsnummerEigenaar = ?, typeMelding = ?, datum = ?, tijdstip = ?, naamEigenaar = ?, functieEigenaar = ?, locatie = ?, aardLetsel = ?, plaatsLetsel = ?, foto = ?, eersteBehandeling = ?, onmiddellijkeActieNotitie = ?, omschrijving = ?, OH_onveiligeSnelheid = ?, OH_beveiligingBuitenWerking = ?, OH_verkeerdGebruikGereedschap = ?, OH_nietGebruikenPBM = ?, OH_onveiligLaden = ?, OH_innemenOnveiligeLaden = ?, OH_werkenAanGevaarlijkeDelen = ?, OH_Afleiden = ?, OH_AndersB = ?, OH_Anders = ?, OS_onvoldoendeBeveiligd = ?, OS_onbeveiligd = ?, OS_defectInstallatie = ?, OS_onveiligeConstructie = ?, OS_ondeugdelijkeGereedschap = ?, OS_onveiligeKleding = ?, OS_gebreikkigeOrdeEnNetheid = ?, OS_Anders = ?, OS_AndersB = ?, BZ_onvoldoendeMaatregelen = ?, BZ_onvoldoendeErvaring = ?, BZ_onvoldoendeInstructie = ?, BZ_nietBevoegdBedienen = ?, BZ_onvoldoendeOnderhoud = ?, BZ_onvoldoendeVakkenis = ?, BZ_Anders = ?, BZ_AndersB = ?, omschrijvingActie = ?, actieTeNemenDoor = ?, actieTenemenVoorDatum = ?, meldingAfgehandeldVoorDatum = ?, meldingAfgehandeldDoor = ? WHERE formId = ?",
   getMIO: "SELECT * FROM formulier_mio WHERE formId = ?",
   getTBM: "SELECT * FROM formulier_tbm WHERE formId = ?",
 };
