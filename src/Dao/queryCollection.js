@@ -33,16 +33,15 @@ const queries = {
   updateSignature:
     "UPDATE gebruiker SET handtekening = ? WHERE personeelsnummer = ?",
 
-  getTBMOrderNummer: "SELECT formNummer FROM formulier_tbm",
-
-  putFile: "UPDATE formulier_tbm SET bijlage = ? WHERE formNummer = ?",
-  getFile: "SELECT bijlage FROM formulier_tbm WHERE formNummer = ?",
-  checkFormNumberExists: "SELECT COUNT(*) AS count FROM formulier_tbm WHERE formNummer = ?",
-
-
-  
-    
-  getFormsByPersoneelsnummer: "SELECT formNummer, datum FROM formulier_mio WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, datumMeeting FROM formulier_tbm WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, createDate FROM formulier_tra WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, datum FROM formulier_wpi WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, createDate FROM formulier_lmra WHERE personeelsnummerEigenaar = ?;",
+  getTBMOrderNummer: "SELECT formId FROM formulier_tbm WHERE formNummer = ?",
+  checkFormNumberExists: 'SELECT COUNT(*) AS count FROM formulier_tbm WHERE formNummer = ?',
+  postFile: 'INSERT INTO bijlage (bijlage, formId) VALUES (?, ?);',
+  getFiles: `
+      SELECT b.bijlage
+      FROM bijlage AS b
+      JOIN formulier_tbm AS t ON b.formId = t.formId
+      WHERE t.formNummer = ?;`,
+  getFormsByPersoneelsnummer: "SELECT formNummer, datum FROM formulier_mio WHERE personeelsnummerEigegit cnaar = ? UNION SELECT formNummer, datumMeeting FROM formulier_tbm WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, createDate FROM formulier_tra WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, datum FROM formulier_wpi WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, createDate FROM formulier_lmra WHERE personeelsnummerEigenaar = ?;",
 
   getOrders: "SELECT * FROM `order`",
 };
