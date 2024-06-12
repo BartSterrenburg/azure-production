@@ -31,16 +31,20 @@ const queries = {
   updateSignature:
     "UPDATE gebruiker SET handtekening = ? WHERE personeelsnummer = ?",
 
-  getFormsByPersoneelsnummer:
-    "SELECT formNummer, datum FROM formulier_mio WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, datumMeeting FROM formulier_tbm WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, createDate FROM formulier_tra WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, datum FROM formulier_wpi WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, createDate FROM formulier_lmra WHERE personeelsnummerEigenaar = ?;",
+  getFormsByPersoneelsnummer: "SELECT formId, formNummer, datum FROM formulier_mio WHERE personeelsnummerEigenaar = ? UNION ALL SELECT formId, formNummer, datumMeeting FROM formulier_tbm WHERE personeelsnummerEigenaar = ? UNION ALL SELECT formId, formNummer, createDate FROM formulier_tra WHERE personeelsnummerEigenaar = ? UNION ALL SELECT formId, formNummer, datum FROM formulier_wpi WHERE personeelsnummerEigenaar = ?;",
 
   getOrders: "SELECT * FROM `order`",
 
-  getWPI: "SELECT * FROM `formulier_wpi` WHERE primarykey = ?",
+  getTBMKey: "SELECT * FROM formulier_tbm WHERE formNummer = ?",
+  updateMIO: "UPDATE formulier_mio SET formNummer = ?, personeelsnummerEigenaar = ?, typeMelding = ?, datum = ?, tijdstip = ?, naamEigenaar = ?, functieEigenaar = ?, locatie = ?, aardLetsel = ?, plaatsLetsel = ?, foto = ?, eersteBehandeling = ?, onmiddellijkeActieNotitie = ?, omschrijving = ?, OH_onveiligeSnelheid = ?, OH_beveiligingBuitenWerking = ?, OH_verkeerdGebruikGereedschap = ?, OH_nietGebruikenPBM = ?, OH_onveiligLaden = ?, OH_innemenOnveiligeLaden = ?, OH_werkenAanGevaarlijkeDelen = ?, OH_Afleiden = ?, OH_AndersB = ?, OH_Anders = ?, OS_onvoldoendeBeveiligd = ?, OS_onbeveiligd = ?, OS_defectInstallatie = ?, OS_onveiligeConstructie = ?, OS_ondeugdelijkeGereedschap = ?, OS_onveiligeKleding = ?, OS_gebreikkigeOrdeEnNetheid = ?, OS_Anders = ?, OS_AndersB = ?, BZ_onvoldoendeMaatregelen = ?, BZ_onvoldoendeErvaring = ?, BZ_onvoldoendeInstructie = ?, BZ_nietBevoegdBedienen = ?, BZ_onvoldoendeOnderhoud = ?, BZ_onvoldoendeVakkenis = ?, BZ_Anders = ?, BZ_AndersB = ?, omschrijvingActie = ?, actieTeNemenDoor = ?, actieTenemenVoorDatum = ?, meldingAfgehandeldVoorDatum = ?, meldingAfgehandeldDoor = ? WHERE formId = ?",
+  getMIO: "SELECT * FROM formulier_mio WHERE formId = ?",
+  getTBM: "SELECT * FROM formulier_tbm WHERE formId = ?",
+
+  getWPI: "SELECT * FROM `formulier_wpi` WHERE formId = ?",
   getTBM:
     "SELECT * FROM formulier_tbm JOIN handtekening ON handtekening.formId = formulier_tbm.formId WHERE formulier_tbm.formId = ?",
   getTRA:
-    "SELECT * FROM formulier_tra JOIN taakstap_tra ON formulier_tra.primarykey = taakstap_tra.primarykey JOIN gezienVoorUitvoering_tra ON formulier_tra.primarykey = gezienVoorUitvoering_tra.primarykey WHERE formulier_tra.primarykey = ?",
+    "SELECT * FROM formulier_tra JOIN taakstap_tra ON formulier_tra.formId = taakstap_tra.formId JOIN gezienVoorUitvoering_tra ON formulier_tra.formId = gezienVoorUitvoering_tra.formId WHERE formulier_tra.formId = ?",
 };
 
 module.exports = queries;

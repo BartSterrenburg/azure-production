@@ -5,7 +5,13 @@ const formDAO = {
   getFormsByPersoneelsnummer: (personeelsnummer, callback) => {
     database.query(
       queryLibrary.getFormsByPersoneelsnummer,
-      [personeelsnummer, personeelsnummer, personeelsnummer, personeelsnummer, personeelsnummer],
+      [
+        personeelsnummer,
+        personeelsnummer,
+        personeelsnummer,
+        personeelsnummer,
+        personeelsnummer,
+      ],
       (err, rows) => {
         if (err) {
           console.error("Error executing query", err);
@@ -288,8 +294,8 @@ const formDAO = {
     );
   },
 
-  getWPI: (primarykey, callback) => {
-    database.query(queryLibrary.getWPI, [primarykey], (err, rows) => {
+  getMIO: (id, callback) => {
+    database.query(queryLibrary.getMIO, [id], (err, rows) => {
       if (err) {
         console.error("Error executing query", err);
         return callback(err, null);
@@ -298,8 +304,8 @@ const formDAO = {
     });
   },
 
-  getTBM: (primarykey, callback) => {
-    database.query(queryLibrary.getTBM, [primarykey], (err, rows) => {
+  getTBM: (id, callback) => {
+    database.query(queryLibrary.getTBM, [id], (err, rows) => {
       if (err) {
         console.error("Error executing query", err);
         return callback(err, null);
@@ -308,8 +314,72 @@ const formDAO = {
     });
   },
 
-  getTRA: (primarykey, callback) => {
-    database.query(queryLibrary.getTRA, [primarykey], (err, rows) => {
+  updateMIO: (form, callback) => {
+    database.query(
+      queryLibrary.updateMIO,
+      [
+        [
+          form.formNummer,
+          form.personeelsnummerEigenaar,
+          form.typeMelding,
+          form.datum,
+          form.tijdstip,
+          form.naamEigenaar,
+          form.functieEigenaar,
+          form.locatie,
+          form.aardLetsel,
+          form.plaatsLetsel,
+          form.foto,
+          form.checkboxEersteBehandeling.eersteBehandeling,
+          form.checkboxEersteBehandeling.onmiddellijkeActieNotitie,
+          form.omschrijving,
+          form.OH_onveiligeSnelheid,
+          form.OH_beveiligingBuitenWerking,
+          form.OH_verkeerdGebruikGereedschap,
+          form.OH_nietGebruikenPBM,
+          form.OH_onveiligLaden,
+          form.OH_innemenOnveiligeLaden,
+          form.OH_werkenAanGevaarlijkeDelen,
+          form.OH_Afleiden,
+          form.OH_AndersB,
+          form.OH_Anders,
+          form.OS_onvoldoendeBeveiligd,
+          form.OS_onbeveiligd,
+          form.OS_defectInstallatie,
+          form.OS_onveiligeConstructie,
+          form.OS_ondeugdelijkeGereedschap,
+          form.OS_onveiligeKleding,
+          form.OS_gebreikkigeOrdeEnNetheid,
+          form.OS_Anders,
+          form.OS_AndersB,
+          form.BZ_onvoldoendeMaatregelen,
+          form.BZ_onvoldoendeErvaring,
+          form.BZ_onvoldoendeInstructie,
+          form.BZ_nietBevoegdBedienen,
+          form.BZ_onvoldoendeOnderhoud,
+          form.BZ_onvoldoendeVakkenis,
+          form.BZ_Anders,
+          form.BZ_AndersB,
+          form.omschrijvingActie,
+          form.actieTeNemenDoor,
+          form.actieTenemenVoorDatum,
+          form.meldingAfgehandeldVoorDatum,
+          form.meldingAfgehandeldDoor,
+          form.formId,
+        ],
+      ],
+      (err, rows) => {
+        if (err) {
+          console.error("Error executing query", err);
+        } else {
+          callback(null, rows);
+        }
+      }
+    );
+  },
+
+  getTRA: (id, callback) => {
+    database.query(queryLibrary.getTRA, [id], (err, rows) => {
       if (err) {
         console.error("Error executing query", err);
         return callback(err, null);
@@ -318,8 +388,8 @@ const formDAO = {
     });
   },
 
-  getMIO: (primarykey, callback) => {
-    database.query(queryLibrary.getMIO, [primarykey], (err, rows) => {
+  getMIO: (id, callback) => {
+    database.query(queryLibrary.getMIO, [id], (err, rows) => {
       if (err) {
         console.error("Error executing query", err);
         return callback(err, null);

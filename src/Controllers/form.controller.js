@@ -99,6 +99,26 @@ const formController = {
     });
   },
 
+  updateMIO: (req, res, next) => {
+    const id = req.params.id;
+    const form = req.body;
+    formDAO.updateMIO(id, form, (err, data) => {
+      if (err) {
+        console.error("updateMIO error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "MIO updated",
+        data: data,
+      });
+    });
+  },
+
   saveMIO: (req, res, next) => {
     const form = req.body;
     formDAO.saveMIO(form, (err, data) => {
@@ -178,8 +198,8 @@ const formController = {
 
   //Get WPI data by primary key
   getWPI: (req, res, next) => {
-    const primarykey = req.params.primarykey;
-    formDAO.getWPI(primarykey, async (err, data) => {
+    const id = req.params.id;
+    formDAO.getWPI(id, async (err, data) => {
       if (err) {
         console.error("getWPI error", err);
         return next({
@@ -210,8 +230,8 @@ const formController = {
   },
 
   getTBM: (req, res, next) => {
-    const primarykey = req.params.primarykey;
-    formDAO.getTBM(primarykey, async (err, data) => {
+    const id = req.params.id;
+    formDAO.getTBM(id, async (err, data) => {
       if (err) {
         console.error("getTBM error", err);
         return next({
@@ -243,8 +263,8 @@ const formController = {
 
   getTRA: (req, res, next) => {
     console.log("getTRA");
-    const primarykey = req.params.primarykey;
-    formDAO.getTRA(primarykey, async (err, data) => {
+    const id = req.params.id;
+    formDAO.getTRA(id, async (err, data) => {
       if (err) {
         console.error("getTRA error", err);
         return next({
@@ -274,8 +294,8 @@ const formController = {
     });
   },
   getMIO: (req, res, next) => {
-    const primarykey = req.params.primarykey;
-    formDAO.getMIO(primarykey, async (err, data) => {
+    const id = req.params.id;
+    formDAO.getMIO(id, async (err, data) => {
       if (err) {
         console.error("getMIO error", err);
         return next({
@@ -304,6 +324,46 @@ const formController = {
       }
     });
   },
+
+  getMIO: (req, res, next) => {
+    const id = req.params.id;
+    formDAO.getMIO(id, (err, data) => {
+      if (err) {
+        console.error("getMIO error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "MIO found",
+        data: data,
+      });
+    });
+  },
+
+  getTBM: (req, res, next) => {
+    const id = req.params.id;
+    formDAO.getTBM(id, (err, data) => {
+      if (err) {
+        console.error("getTBM error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "TBM found",
+        data: data,
+      });
+    });
+  },
+
+
 };
 
 module.exports = formController;

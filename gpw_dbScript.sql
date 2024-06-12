@@ -33,8 +33,8 @@ CREATE TABLE gebruiker (
 
 -- Create formulier_mio table
 CREATE TABLE formulier_mio (
-    primarykey INT AUTO_INCREMENT PRIMARY KEY,
-    formNummer varChar(10),
+    formId INT AUTO_INCREMENT PRIMARY KEY,
+    formNummer varChar(50),
     personeelsnummerEigenaar varchar(6),
     typeMelding VARCHAR(50),
     datum DATE,
@@ -88,7 +88,7 @@ CREATE TABLE formulier_mio (
 
 -- Create formulier_wpi table
 CREATE TABLE formulier_wpi (
-    primarykey INT AUTO_INCREMENT PRIMARY KEY,
+    formId INT AUTO_INCREMENT PRIMARY KEY,
     formNummer varchar(50),
     personeelsnummerEigenaar varchar(6),
     datum DATE,
@@ -143,7 +143,7 @@ CREATE TABLE formulier_tbm (
 
 -- Create formulier_tra table
 CREATE TABLE formulier_tra (
-    primarykey INT AUTO_INCREMENT PRIMARY KEY,
+    formId INT AUTO_INCREMENT PRIMARY KEY,
     formNummer varchar(50),
     personeelsnummerEigenaar varchar(6),
     naamVGWCoordinator VARCHAR(100),
