@@ -26,8 +26,8 @@ const formDAO = {
     database.query(
       queryLibrary.postWPI,
       [
-        form.nummer,
         form.owner,
+        form.nummer,
         form.datum,
         form.project,
         form.locatie,
@@ -75,22 +75,11 @@ const formDAO = {
   },
 
   saveTRA: (form, callback) => {
-    const insertQuery = `
-      INSERT INTO formulier_tra (
-        formNummer, 
-        naamVGWCoordinator, 
-        paraafVGWCoordinator, 
-        naamAkkoordUitvoerendLeidinggevende, 
-        paraafAkkoordUitvoerendLeidinggevende, 
-        taakomschrijving
-      ) VALUES (?, ?, ?, ?, ?, ?);
-    `;
-
     database.query(
-      insertQuery,
+      queryLibrary.postTRA,
       [
-        form.nummer,
         form.owner,
+        form.nummer,
         form.naamVGWCoordinator,
         form.paraafVGWCoordinator,
         form.naamUitvoerendeLeidinggevende,
@@ -159,8 +148,8 @@ const formDAO = {
     database.query(
       queryLibrary.postMIO,
       [
-        form.nummer,
         form.owner,
+        form.nummer,
         form.typeMelding,
         form.datum,
         form.tijdstip,
@@ -170,8 +159,8 @@ const formDAO = {
         form.aardLetsel,
         form.plaatsLetsel,
         form.foto,
-        form.checkboxEersteBehandeling.eersteBehandeling,
-        form.checkboxEersteBehandeling.onmiddellijkeActieNotitie,
+        form.eersteBehandeling,
+        form.onmiddellijkeActieNotitie,
         form.omschrijving,
         form.OH_onveiligeSnelheid,
         form.OH_beveiligingBuitenWerking,
@@ -222,8 +211,8 @@ const formDAO = {
     database.query(
       queryLibrary.postTBM,
       [
-        form.number,
         form.owner,
+        form.number,
         form.date,
         form.location,
         form.holdBy,
@@ -330,7 +319,7 @@ const formDAO = {
       [
         [
           form.formNummer,
-          form.personeelsnummerEigenaar,
+          form.personeelsnummerEigenaar, // This does not match any column in the query
           form.typeMelding,
           form.datum,
           form.tijdstip,
@@ -340,8 +329,8 @@ const formDAO = {
           form.aardLetsel,
           form.plaatsLetsel,
           form.foto,
-          form.checkboxEersteBehandeling.eersteBehandeling,
-          form.checkboxEersteBehandeling.onmiddellijkeActieNotitie,
+          form.eersteBehandeling,
+          form.onmiddellijkeActieNotitie,
           form.omschrijving,
           form.OH_onveiligeSnelheid,
           form.OH_beveiligingBuitenWerking,
