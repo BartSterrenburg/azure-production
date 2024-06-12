@@ -304,6 +304,16 @@ const formDAO = {
     });
   },
 
+  getWPI: (id, callback) => {
+    database.query(queryLibrary.getWPI, [id], (err, rows) => {
+      if (err) {
+        console.error("Error executing query", err);
+        return callback(err, null);
+      }
+      callback(null, rows);
+    });
+  },
+
   getTBM: (id, callback) => {
     database.query(queryLibrary.getTBM, [id], (err, rows) => {
       if (err) {

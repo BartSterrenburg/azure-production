@@ -158,7 +158,7 @@ CREATE TABLE formulier_tra (
 
 -- Create formulier_lmra table
 CREATE TABLE formulier_lmra (
-    primarykey INT AUTO_INCREMENT PRIMARY KEY,
+    formId INT AUTO_INCREMENT PRIMARY KEY,
     formNummer varchar(50) DEFAULT "LMRA",
     personeelsnummerEigenaar varchar(6),
     inhoudTraWerkvergunning BOOL,
@@ -180,25 +180,25 @@ CREATE TABLE formulier_lmra (
 
 -- Create gezienVoorUitvoering_tra table
 CREATE TABLE gezienVoorUitvoering_tra (
-    primarykey INT,
+    formId INT,
     formNummer varchar(50),
     naam VARCHAR(100),
     paraaf MEDIUMTEXT,
-    PRIMARY KEY (primarykey, naam),
-    FOREIGN KEY (primarykey) REFERENCES formulier_tra(primarykey)
+    PRIMARY KEY (formId, naam),
+    FOREIGN KEY (formId) REFERENCES formulier_tra(formId)
 );
 
 -- Create taakstap_tra table
 CREATE TABLE taakstap_tra (
-    primarykey INT,
+    formId INT,
     formNummer varchar(50),
     taakstapNummer INT,
     taakstapActiviteit varchar(512),
     gevaar varchar(512),
     beheersMaatregel varchar(512),
     actieDoor varchar(100),
-    PRIMARY KEY (primarykey, taakstapNummer),
-    FOREIGN KEY (primarykey) REFERENCES formulier_tra(primarykey)
+    PRIMARY KEY (formId, taakstapNummer),
+    FOREIGN KEY (formId) REFERENCES formulier_tra(formId)
 );
 
 -- Create handtekening table
