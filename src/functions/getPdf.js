@@ -39,8 +39,7 @@ const pdfFunctions = {
 
     const fields = [
       // General Information
-      { label: "Nummer WPI -", value: String(object.formNummer) },
-      { label: "Beschrijving:", value: String(object.beschrijving) }, 
+      { label: "Nummer", value: String(object.formNummer) },
       { label: "Datum:", value: formatDate(object.datum) },
       { label: "Project:", value: String(object.project) },
       { label: "Locatie:", value: String(object.locatie) },
@@ -139,7 +138,7 @@ const pdfFunctions = {
       doc.text("In orde", 67, currentY);
       drawCheckbox(90, currentY - 5, section.value === 0);
       doc.text("Niet in orde", 97, currentY);
-      drawCheckbox(125, currentY - 5, section.value === 2);
+      drawCheckbox(125, currentY - 5, section.value === 2 || section.value === null);  
       doc.text("n.v.t.", 132, currentY);
       currentY += 8;
       addField("Aantekeningen:", section.notes || "");
