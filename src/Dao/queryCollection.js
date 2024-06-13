@@ -33,9 +33,13 @@ const queries = {
   updateSignature:
     "UPDATE gebruiker SET handtekening = ? WHERE personeelsnummer = ?",
 
+
+
+
+
   getTBMOrderNummer: "SELECT formId FROM formulier_tbm WHERE formNummer = ?",
   checkFormNumberExists: 'SELECT COUNT(*) AS count FROM formulier_tbm WHERE formNummer = ?',
-  postFile: 'INSERT INTO bijlage (bijlage, formId) VALUES (?, ?);',
+  postFile: 'INSERT INTO `order_files` (ordernummer, file_name, file_data) VALUES (?, ?, ?);',
   getFiles: `
       SELECT b.bijlage
       FROM bijlage AS b
