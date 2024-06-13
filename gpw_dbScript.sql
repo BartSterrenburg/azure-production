@@ -11,8 +11,7 @@ DROP TABLE IF EXISTS formulier_lmra;
 DROP TABLE IF EXISTS gebruiker;
 DROP TABLE IF EXISTS rollen;
 DROP TABLE IF EXISTS `order`;
-DROP TABLE IF EXISTS bijlage;
- 
+DROP TABLE IF EXISTS `order_files`; 
 
 -- Create rollen table
 CREATE TABLE rollen (
@@ -221,13 +220,15 @@ CREATE TABLE `order` (
     beschrijving varchar(500)
 );
 
--- create bijlage table
-CREATE TABLE bijlage (
-    bijlageId INT AUTO_INCREMENT PRIMARY KEY,
-    formId INT,
-    bijlage MEDIUMBLOB,
-    FOREIGN KEY (formId) REFERENCES formulier_tbm(formId)
+-- create bijlage order_files
+CREATE TABLE `order_files` (
+    fileId INT AUTO_INCREMENT PRIMARY KEY,
+    ordernummer varchar(50),
+    file_name varchar(100),
+    file_data LONGBLOB,
+    FOREIGN KEY (ordernummer) REFERENCES `order`(ordernummer)
 );
+
 -- Insert test data into rollen
 INSERT INTO rollen (rolNummer, rolOmschrijving) VALUES
 (10, 'Medewerker'),
@@ -267,8 +268,3 @@ INSERT INTO `order` (ordernummer, Naam, beschrijving) VALUES
 ('10328492', 'Naam 8', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.'),
 ('20738490', 'Naam 9', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.'),
 ('36389420', 'Naam 10', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim metus ut elit suscipit, in laoreet justo ullamcorper. Praesent faucibus ex sit amet purus accumsan, nec posuere magna bibendum. Sed aliquam felis quis turpis ullamcorper, non dignissim urna tempus. Curabitur eleifend, sapien eu vehicula semper, turpis risus malesuada libero, a posuere purus leo nec mauris. Phasellus non est quis orci aliquam volutpat. Proin venenatis ante vel lacus posuere, nec fringilla velit varius. Nullam id leo auctor, mollis ex at, bibendum eros. Sed sagittis dui ut lectus malesuada, et lacinia eros congue.');
-
-
--- Insert test data bijlage table
-INSERT INTO bijlage(formId) VALUES
-(1)
