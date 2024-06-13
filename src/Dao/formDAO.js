@@ -313,69 +313,71 @@ const formDAO = {
     });
   },
 
-  updateMIO: (form, callback) => {
+  updateMIO: (id, form, callback) => {
+    console.log('aangeroepen')
+    console.log(id)
+    // console.log(form)
     database.query(
-      queryLibrary.updateMIO,
-      [
+        queryLibrary.updateMIO,
         [
-          form.formNummer,
-          form.personeelsnummerEigenaar, // This does not match any column in the query
-          form.typeMelding,
-          form.datum,
-          form.tijdstip,
-          form.naamEigenaar,
-          form.functieEigenaar,
-          form.locatie,
-          form.aardLetsel,
-          form.plaatsLetsel,
-          form.foto,
-          form.eersteBehandeling,
-          form.onmiddellijkeActieNotitie,
-          form.omschrijving,
-          form.OH_onveiligeSnelheid,
-          form.OH_beveiligingBuitenWerking,
-          form.OH_verkeerdGebruikGereedschap,
-          form.OH_nietGebruikenPBM,
-          form.OH_onveiligLaden,
-          form.OH_innemenOnveiligeLaden,
-          form.OH_werkenAanGevaarlijkeDelen,
-          form.OH_Afleiden,
-          form.OH_AndersB,
-          form.OH_Anders,
-          form.OS_onvoldoendeBeveiligd,
-          form.OS_onbeveiligd,
-          form.OS_defectInstallatie,
-          form.OS_onveiligeConstructie,
-          form.OS_ondeugdelijkeGereedschap,
-          form.OS_onveiligeKleding,
-          form.OS_gebreikkigeOrdeEnNetheid,
-          form.OS_Anders,
-          form.OS_AndersB,
-          form.BZ_onvoldoendeMaatregelen,
-          form.BZ_onvoldoendeErvaring,
-          form.BZ_onvoldoendeInstructie,
-          form.BZ_nietBevoegdBedienen,
-          form.BZ_onvoldoendeOnderhoud,
-          form.BZ_onvoldoendeVakkenis,
-          form.BZ_Anders,
-          form.BZ_AndersB,
-          form.omschrijvingActie,
-          form.actieTeNemenDoor,
-          form.actieTenemenVoorDatum,
-          form.meldingAfgehandeldVoorDatum,
-          form.meldingAfgehandeldDoor,
-          form.formId,
+            form.nummer,
+            form.typeMelding,
+            form.datum,
+            form.tijdstip,
+            form.naamEigenaar,
+            form.functieEigenaar,
+            form.locatie,
+            form.aardLetsel,
+            form.plaatsLetsel,
+            form.foto,
+            form.eersteBehandeling,
+            form.onmiddellijkeActieNotitie,
+            form.omschrijving,
+            form.OH_onveiligeSnelheid,
+            form.OH_beveiligingBuitenWerking,
+            form.OH_verkeerdGebruikGereedschap,
+            form.OH_nietGebruikenPBM,
+            form.OH_onveiligLaden,
+            form.OH_innemenOnveiligeLaden,
+            form.OH_werkenAanGevaarlijkeDelen,
+            form.OH_Afleiden,
+            form.OH_AndersB,
+            form.OH_Anders,
+            form.OS_onvoldoendeBeveiligd,
+            form.OS_onbeveiligd,
+            form.OS_defectInstallatie,
+            form.OS_onveiligeConstructie,
+            form.OS_ondeugdelijkeGereedschap,
+            form.OS_onveiligeKleding,
+            form.OS_gebreikkigeOrdeEnNetheid,
+            form.OS_Anders,
+            form.OS_AndersB,
+            form.BZ_onvoldoendeMaatregelen,
+            form.BZ_onvoldoendeErvaring,
+            form.BZ_onvoldoendeInstructie,
+            form.BZ_nietBevoegdBedienen,
+            form.BZ_onvoldoendeOnderhoud,
+            form.BZ_onvoldoendeVakkenis,
+            form.BZ_Anders,
+            form.BZ_AndersB,
+            form.omschrijvingActie,
+            form.actieTeNemenDoor,
+            form.actieTenemenVoorDatum,
+            form.meldingAfgehandeldVoorDatum,
+            form.meldingAfgehandeldDoor,
+            id // totaal 46
         ],
-      ],
-      (err, rows) => {
-        if (err) {
-          console.error("Error executing query", err);
-        } else {
-          callback(null, rows);
+        (err, rows) => {
+            if (err) {
+                console.error("Error executing query", err);
+                callback(err);
+            } else {
+                callback(null, rows);
+            }
         }
-      }
     );
-  },
+},
+
 
   getTRA: (id, callback) => {
     database.query(queryLibrary.getTRA, [id], (err, rows) => {
