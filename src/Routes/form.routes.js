@@ -4,7 +4,7 @@ const formController = require("../Controllers/form.controller")
 
 
 router.get("/api/form/:personeelsnummer", formController.getFormsByPersoneelsnummer)
-router.get("/api.form", formController.getAllForms)
+router.get("/api/form", formController.getAllForms)
 
 //Form routes
 router.get("/api/form/WPI/:id", formController.getWPI)
