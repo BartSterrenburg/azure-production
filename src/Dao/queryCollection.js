@@ -33,18 +33,9 @@ const queries = {
   updateSignature:
     "UPDATE gebruiker SET handtekening = ? WHERE personeelsnummer = ?",
 
-
-
-
-
-  getTBMOrderNummer: "SELECT formId FROM formulier_tbm WHERE formNummer = ?",
-  checkFormNumberExists: 'SELECT COUNT(*) AS count FROM formulier_tbm WHERE formNummer = ?',
   postFile: 'INSERT INTO `order_files` (ordernummer, file_name, file_data) VALUES (?, ?, ?);',
-  getFiles: `
-      SELECT b.bijlage
-      FROM bijlage AS b
-      JOIN formulier_tbm AS t ON b.formId = t.formId
-      WHERE t.formNummer = ?;`,
+  getFiles: 'SELECT fileId, file_name, file_data FROM `order_files` WHERE ordernummer = ?;',
+
   getFormsByPersoneelsnummer: "SELECT formNummer, datum FROM formulier_mio WHERE personeelsnummerEigegit cnaar = ? UNION SELECT formNummer, datumMeeting FROM formulier_tbm WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, createDate FROM formulier_tra WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, datum FROM formulier_wpi WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, createDate FROM formulier_lmra WHERE personeelsnummerEigenaar = ?;",
 
   getOrders: "SELECT * FROM `order`",

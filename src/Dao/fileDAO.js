@@ -2,65 +2,35 @@ const database = require("../../dbConnection");
 const queryLibrary = require("./queryCollection");
 
 const fileDAO = {
-    
-    getFormId: (formNumber, callback) => {
-        database.query(queryLibrary.getTBMOrderNummer, [formNumber], (err, result) => {
-            if (err) {
-                console.error("Error checking form number existence", err);
-                return callback(err, null);
-            }
-            if (result.length === 0) {
-                return callback(null, null); // Form number does not exist
-            }
-            const formId = result[0].formId;
-            callback(null, formId);
-        });
-    },
-
     postFile: (formNumber, fileName, fileData, callback) => {
+        console.log('Executing postFile query');
+        console.log('Form Number:', formNumber);
+        console.log('File Name:', fileName);
+        console.log('File Data (first 100 bytes):', fileData.slice(0, 100));
+        
         database.query(queryLibrary.postFile, [formNumber, fileName, fileData], (err, result) => {
             if (err) {
-                console.error("Error executing query", err);
+                console.error("Error executing query:", err);
                 return callback(err, null);
             }
+            console.log('Query executed successfully:', result);
             callback(null, result);
         });
     },
-    checkFormNumberExists: (formNumber, callback) => {
-        database.query(queryLibrary.checkFormNumberExists, [formNumber], (err, result) => {
-            if (err) {
-                console.error("Error checking form number existence", err);
-                return callback(err, null);
-            }
-            const exists = result[0].count > 0;
-            callback(null, exists);
-        });
-    },
 
-        
-
-  
     getFiles: (formNumber, callback) => {
-        fileDAO.checkFormNumberExists(formNumber, (err, exists) => {
+        console.log('Executing getFiles query');
+        console.log('Form Number:', formNumber);
+        
+        database.query(queryLibrary.getFiles, [formNumber], (err, result) => {
             if (err) {
-                console.error("Error checking form number existence", err);
+                console.error("Error executing query:", err);
                 return callback(err, null);
             }
-            if (!exists) {
-                return callback("Form number does not exist", null);
-            }
-            database.query(queryLibrary.getFiles, [formNumber], (err, rows) => {
-                if (err) {
-                    console.error("Error executing query", err);
-                    return callback(err, null);
-                }
-                callback(null, rows); 
-            });
+            console.log('Query executed successfully:', result);
+            callback(null, result);
         });
     }
-
-   
-}
+};
 
 module.exports = fileDAO;
-

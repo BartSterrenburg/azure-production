@@ -1,12 +1,12 @@
 const fileDAO = require("../Dao/fileDAO");
 
 const fileController = {
-
     postFile: async (req, res) => {
         const formNummer = req.params.formNummer;
         const files = req.files;
 
         if (!formNummer || !files || files.length === 0) {
+            console.error('Form number or file is missing');
             return res.status(400).json({
                 status: 400,
                 message: 'Form number or file is missing',
@@ -15,9 +15,12 @@ const fileController = {
         }
 
         const file = files[0]; 
-
         const fileName = file.originalname;
         const fileData = file.buffer;
+
+        console.log("Formnummer:", formNummer);
+        console.log("FileName:", fileName);
+        console.log("File (first 100 bytes):", fileData.slice(0, 100));
 
         try {
             fileDAO.postFile(formNummer, fileName, fileData, (err, result) => {
@@ -30,10 +33,11 @@ const fileController = {
                     });
                 }
 
+                console.log("File saved successfully:", result);
                 res.status(200).json({
                     status: 200,
                     message: 'File saved successfully',
-                    data: { formNummer, fileName, fileData }
+                    data: result
                 });
             });
         } catch (error) {
@@ -45,37 +49,46 @@ const fileController = {
             });
         }
     },
-    
-    getFiles: (req, res) => {
-        const formNummer = req.params.formnummer;
-    
+
+    getFiles: async (req, res) => {
+        const formNummer = req.params.formNummer;
+
         if (!formNummer) {
+            console.error('Form number is missing');
             return res.status(400).json({
                 status: 400,
                 message: 'Form number is missing',
                 data: {}
             });
         }
-    
-        console.log('Received formNummer: ' + formNummer); // Debug log
-    
-        fileDAO.getFiles(formNummer, (err, fileLinks) => {
-            if (err) {
-                return res.status(500).json({
-                    status: 500,
-                    message: 'Error fetching file links',
-                    data: {}
+
+        try {
+            fileDAO.getFiles(formNummer, (err, result) => {
+                if (err) {
+                    console.error("Error fetching files:", err);
+                    return res.status(500).json({
+                        status: 500,
+                        message: 'Error fetching files',
+                        data: {}
+                    });
+                }
+
+                console.log("Files fetched successfully:", result);
+                res.status(200).json({
+                    status: 200,
+                    message: 'Files fetched successfully',
+                    data: result
                 });
-            }
-    
-            res.status(200).json({
-                status: 200,
-                message: 'File links fetched successfully',
-                data: fileLinks
             });
-        });
+        } catch (error) {
+            console.error("Error fetching files:", error);
+            res.status(500).json({
+                status: 500,
+                message: 'Error fetching files',
+                data: {}
+            });
+        }
     }
 };
 
 module.exports = fileController;
-

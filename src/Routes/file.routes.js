@@ -8,7 +8,6 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 router.post('/api/form/TBM/file/:formNummer', upload.array('files'), fileController.postFile);
-
-router.get('/api/form/TBM/ordernummer/file/:formNummer', fileController.getFiles);
+router.get('/api/form/TBM/file/:formNummer', fileController.getFiles);
 
 module.exports = router;
