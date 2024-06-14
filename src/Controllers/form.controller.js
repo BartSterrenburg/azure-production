@@ -23,6 +23,24 @@ const formController = {
     });
   },
 
+  getAllForms: (req, res, next) => {
+    formDAO.getAllForms((err, data) => {
+      if (err) {
+        console.error("getAllForms error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "Forms found",
+        data: data,
+      });
+    });
+  },
+
   saveWPI: (req, res, next) => {
     const form = req.body;
     console.log(form.nummer);
