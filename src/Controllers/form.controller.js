@@ -1,4 +1,5 @@
 const formDAO = require("../Dao/formDAO");
+const { getTRA } = require("../Dao/queryCollection");
 const getPdf = require("../functions/getPdf");
 
 const formController = {
@@ -197,7 +198,7 @@ const formController = {
   },
 
   //Get WPI data by primary key
-  getWPI: (req, res, next) => {
+  getPdfWPI: (req, res, next) => {
     const id = req.params.id;
     formDAO.getWPI(id, async (err, data) => {
       if (err) {
@@ -229,7 +230,7 @@ const formController = {
     });
   },
 
-  getTBM: (req, res, next) => {
+  getPdfTBM: (req, res, next) => {
     const id = req.params.id;
     formDAO.getTBM(id, async (err, data) => {
       if (err) {
@@ -261,7 +262,7 @@ const formController = {
     });
   },
 
-  getTRA: (req, res, next) => {
+  getPdfTRA: (req, res, next) => {
     console.log("getTRA");
     const id = req.params.id;
     formDAO.getTRA(id, async (err, data) => {
@@ -294,6 +295,37 @@ const formController = {
     });
   },
 
+  getPdfMIO: (req, res, next) => {
+    const id = req.params.id;
+    formDAO.getMIO(id, async (err, data) => {
+      if (err) {
+        console.error("getMIO error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+
+      //Try to get PDF data and covert it to byte array to send to client
+      try {
+        const pdfBase64 = await getPdf.getPdfMIO(data);
+        const byteArray = Buffer.from(pdfBase64, "base64");
+        res.set({
+          "Content-Type": "application/pdf",
+          "Content-Length": byteArray.length,
+        });
+        res.send(byteArray);
+      } catch (error) {
+        console.error("Error sending PDF:", error);
+        next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+    });
+  },
 
   getMIO: (req, res, next) => {
     const id = req.params.id;
@@ -312,60 +344,68 @@ const formController = {
           data: data,
         });
       }
-
-      // //Try to get PDF data and covert it to byte array to send to client
-      // try {
-      //   const pdfBase64 = await getPdf.getPdfMio(data);
-      //   const byteArray = Buffer.from(pdfBase64, "base64");
-      //   res.set({
-      //     "Content-Type": "application/pdf",
-      //     "Content-Length": byteArray.length,
-      //   });
-      //   res.send(byteArray);
-      // } catch (error) {
-      //   console.error("Error sending PDF:", error);
-      //   next({
-      //     status: 500,
-      //     message: "Internal Server Error",
-      //     data: {},
-      //   });
-      // }
     });
   },
 
+  getTRA: (req, res, next) => {
+    const id = req.params.id;
+    formDAO.getTRA(id, async (err, data) => {
+      if (err) {
+        console.error("getTRA error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      } else {
+        res.json({
+          status: 200,
+          message: "TRA found",
+          data: data,
+        });
+      }
+    });
+  },
 
-  // getMIO: (req, res, next) => {
-  //   const id = req.params.id;
-  //   formDAO.getMIO(id, async (err, data) => {
-  //     if (err) {
-  //       console.error("getMIO error", err);
-  //       return next({
-  //         status: 500,
-  //         message: "Internal Server Error",
-  //         data: {},
-  //       });
-  //     }
+  getWPI: (req, res, next) => {
+    const id = req.params.id;
+    formDAO.getWPI(id, async (err, data) => {
+      if (err) {
+        console.error("getWPI error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      } else {
+        res.json({
+          status: 200,
+          message: "WPI found",
+          data: data,
+        });
+      }
+    });
+  },
 
-  //     //Try to get PDF data and covert it to byte array to send to client
-  //     try {
-  //       const pdfBase64 = await getPdf.getPdfMIO(data);
-  //       const byteArray = Buffer.from(pdfBase64, "base64");
-  //       res.set({
-  //         "Content-Type": "application/pdf",
-  //         "Content-Length": byteArray.length,
-  //       });
-  //       res.send(byteArray);
-  //     } catch (error) {
-  //       console.error("Error sending PDF:", error);
-  //       next({
-  //         status: 500,
-  //         message: "Internal Server Error",
-  //         data: {},
-  //       });
-  //     }
-  //   });
-  // },
-
+  getTBM: (req, res, next) => {
+    const id = req.params.id;
+    formDAO.getTBM(id, async (err, data) => {
+      if (err) {
+        console.error("getTBM error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      } else {
+        res.json({
+          status: 200,
+          message: "TBM found",
+          data: data,
+        });
+      }
+    });
+  }
 
 };
 

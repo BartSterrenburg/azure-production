@@ -11,6 +11,11 @@ router.get("/api/form/TBM/:id", formController.getTBM)
 router.get("/api/form/TRA/:id", formController.getTRA)
 router.get("/api/form/MIO/:id", formController.getMIO)
 
+router.get("/api/form/WPI/pdf/:id", formController.getPdfWPI)
+router.get("/api/form/TBM/pdf/:id", formController.getPdfTBM)
+router.get("/api/form/TRA/pdf/:id", formController.getPdfTRA)
+router.get("/api/form/MIO/pdf/:id", formController.getPdfMIO)
+
 router.post("/api/form/WPI", formController.saveWPI)
 router.post("/api/form/TRA", formController.saveTRA)
 router.put("/api/form/MIO/:id", formController.updateMIO)
