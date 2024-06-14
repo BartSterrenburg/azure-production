@@ -7,8 +7,8 @@ const tokenController = {
             if (err) {
                 console.error("getPersoneelsNummerFromToken error", err);
                 return next({
-                    status: 500,
-                    message: "Internal Server Error",
+                    status: 401,
+                    message: "Internal Server Error (token is either not provided or invalid)",
                     data: {},
                 });
             }

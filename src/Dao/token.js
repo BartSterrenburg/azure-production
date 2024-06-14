@@ -6,7 +6,7 @@ const tokenFunctions = {
   getPersoneelsNummerFromToken: (token, callback) => {
     try {
       // Decode the token
-
+      console.log("yeahnothisdo: " + token)
       const decoded = jwt.verify(token, process.env.JWT_KEY);
       console.log(token)
       // Extract userId from the decoded payload
