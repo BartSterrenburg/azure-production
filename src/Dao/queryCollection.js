@@ -35,6 +35,8 @@ const queries = {
 
   postFile: 'INSERT INTO `order_files` (ordernummer, file_name, file_data) VALUES (?, ?, ?);',
   getFiles: 'SELECT fileId, file_name, file_data FROM `order_files` WHERE ordernummer = ?;',
+  deleteFiles: 'DELETE FROM `order_files` WHERE file_name = ? AND ordernummer = ? LIMIT 1;',
+  getFileByFileName: 'SELECT file_name FROM `order_files` WHERE ordernummer = ?',
 
   getFormsByPersoneelsnummer: "SELECT formNummer, datum FROM formulier_mio WHERE personeelsnummerEigegit cnaar = ? UNION SELECT formNummer, datumMeeting FROM formulier_tbm WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, createDate FROM formulier_tra WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, datum FROM formulier_wpi WHERE personeelsnummerEigenaar = ? UNION SELECT formNummer, createDate FROM formulier_lmra WHERE personeelsnummerEigenaar = ?;",
 

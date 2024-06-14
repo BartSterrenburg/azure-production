@@ -9,5 +9,6 @@ const upload = multer({ storage: storage });
 
 router.post('/api/form/TBM/file/:formNummer', upload.array('files'), fileController.postFile);
 router.get('/api/form/TBM/file/:formNummer', fileController.getFiles);
+router.delete('/api/form/TBM/file/:formNummer/:fileName', fileController.deleteFiles);
 
 module.exports = router;

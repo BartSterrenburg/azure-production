@@ -30,7 +30,22 @@ const fileDAO = {
             console.log('Query executed successfully:', result);
             callback(null, result);
         });
-    }
+    },
+
+    deleteFiles: (formNumber, fileName, callback) => {
+        console.log('Executing deleteFiles query');
+        console.log('Form Number:', formNumber);
+        console.log('File Name:', fileName);
+
+        database.query(queryLibrary.deleteFiles, [fileName, formNumber], (err, result) => {
+            if (err) {
+                console.error("Error executing query:", err);
+                return callback(err, null);
+            }
+            console.log('Query executed successfully:', result);
+            callback(null, result);
+        });
+    }    
 };
 
 module.exports = fileDAO;

@@ -88,6 +88,47 @@ const fileController = {
                 data: {}
             });
         }
+    },
+
+    deleteFiles: async (req, res) => { 
+        const formNummer = req.params.formNummer;
+        const fileName = req.params.fileName;
+
+        if (!formNummer || !fileName) {
+            console.error('Form number or file name is missing');
+            return res.status(400).json({
+                status: 400,
+                message: 'Form number or file name is missing',
+                data: {}
+            });
+        }
+
+        try {
+            fileDAO.deleteFiles(formNummer, fileName, (err, result) => {
+                if (err) {
+                    console.error("Error deleting file:", err);
+                    return res.status(500).json({
+                        status: 500,
+                        message: 'Error deleting file',
+                        data: {}
+                    });
+                }
+
+                console.log("File deleted successfully:", result);
+                res.status(200).json({
+                    status: 200,
+                    message: 'File deleted successfully',
+                    data: result
+                });
+            });
+        } catch (error) {
+            console.error("Error deleting file:", error);
+            res.status(500).json({
+                status: 500,
+                message: 'Error deleting file',
+                data: {}
+            });
+        }
     }
 };
 
