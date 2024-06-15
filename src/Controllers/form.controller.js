@@ -23,6 +23,25 @@ const formController = {
     });
   },
 
+  getParticipants: (req, res, next) => {
+    const id = req.params.id;
+    formDAO.getParticipants(id, (err, data) => {
+      if (err) {
+        console.error("getParticipants error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "Participants found",
+        data: data,
+      });
+    });
+  },
+
   getAllForms: (req, res, next) => {
     formDAO.getAllForms((err, data) => {
       if (err) {
@@ -158,6 +177,26 @@ const formController = {
     });
   },
 
+  updateTBM: (req, res, next) => {
+    const id = req.params.id;
+    const form = req.body;
+    formDAO.updateTBM(id, form, (err, data) => {
+      if (err) {
+        console.error("updateTBM error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "TBM updated",
+        data: data,
+      });
+    });
+  },
+
   saveMIO: (req, res, next) => {
     const form = req.body;
     formDAO.saveMIO(form, (err, data) => {
@@ -230,6 +269,25 @@ const formController = {
       res.json({
         status: 200,
         message: "Signature saved",
+        data: data,
+      });
+    });
+  },
+
+  deleteSignature: (req, res, next) => {
+    const id = req.params.id;
+    formDAO.deleteSignature(id, (err, data) => {
+      if (err) {
+        console.error("deleteSignature error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "Signature deleted",
         data: data,
       });
     });

@@ -32,6 +32,16 @@ const formDAO = {
     });
   },
 
+  getParticipants: (id, callback) => {
+    database.query(queryLibrary.getParticipants, [id], (err, rows) => {
+      if (err) {
+        console.error("Error executing query", err);
+        return callback(err, null);
+      }
+      callback(null, rows);
+    });
+  },
+
   saveWPI: (form, callback) => {
     database.query(
       queryLibrary.postWPI,
@@ -293,6 +303,16 @@ const formDAO = {
     );
   },
 
+  deleteSignature: (id, callback) => {
+    database.query(queryLibrary.deleteSignature, [id], (err, rows) => {
+      if (err) {
+        console.error("Error executing query", err);
+        return callback(err, null);
+      }
+      callback(null, rows);
+    });
+  },
+
   getMIO: (id, callback) => {
     database.query(queryLibrary.getMIO, [id], (err, rows) => {
       if (err) {
@@ -425,6 +445,29 @@ const formDAO = {
         id,
       ],
     )
+  },
+
+  updateTBM: (id, form, callback) => {
+    database.query(
+      queryLibrary.updateTBM,
+      [
+        form.number,
+        form.date,
+        form.location,
+        form.holdBy,
+        form.function,
+        form.pageAmount,
+        form.summary,
+        id,
+      ],
+      (err, rows) => {
+        if (err) {
+          console.error("Error executing query", err);
+          return callback(err, null);
+        }
+        callback(null, rows);
+      }
+    );
   },
 
 
