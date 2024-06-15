@@ -2,6 +2,7 @@ const database = require('../../dbConnection');
 const queryLibrary = require('./queryCollection');
 const tokenFunctions = require('./token');
 const encryptionFunctions = require('../functions/encryption');
+const e = require('cors');
 
 const userDAO = {
     getAllUsers: (callback) => {
@@ -55,8 +56,7 @@ const userDAO = {
     },
 
 // Login user
-loginUser: function(personeelsnummer, wachtwoord, callback) {
-    const self = this;
+loginUser: async function(personeelsnummer, wachtwoord, callback) {
     database.query(queryLibrary.loginUser, [personeelsnummer], async (err, rows) => {
       if (err) {
         console.error("Error executing query", err);
@@ -70,7 +70,7 @@ loginUser: function(personeelsnummer, wachtwoord, callback) {
       const wachtwoordHash = rows[0].wachtwoord;
       
       try {
-        const result = await self.checkIfPasswordMatches(personeelsnummer, wachtwoord);
+        const result = await this.checkIfPasswordMatches(personeelsnummer, wachtwoord);
         if (!result) {
           const error = new Error("Password incorrect");
           error.code = "PASSWORD_INCORRECT";
