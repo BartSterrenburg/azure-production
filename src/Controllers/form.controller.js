@@ -138,6 +138,26 @@ const formController = {
     });
   },
 
+  updateWPI: (req, res, next) => {
+    const id = req.params.id;
+    const form = req.body;
+    formDAO.updateWPI(id, form, (err, data) => {
+      if (err) {
+        console.error("updateWPI error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "WPI updated",
+        data: data,
+      });
+    });
+  },
+
   saveMIO: (req, res, next) => {
     const form = req.body;
     formDAO.saveMIO(form, (err, data) => {

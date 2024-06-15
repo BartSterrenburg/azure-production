@@ -388,6 +388,46 @@ const formDAO = {
     );
 },
 
+  updateWPI: (id, form, callback) => {
+    database.query(
+      queryLibrary.updateWPI,
+      [
+        form.nummer,
+        form.datum,
+        form.project,
+        form.locatie,
+        form.naamEigenaar,
+        form.functieEigenaar,
+        form.foto,
+        form.inspectie.regelsVoorschriften.gehandeldVolgensRegelsEnVoorschriften,
+        form.inspectie.regelsVoorschriften.gehandeldVolgensRegelsEnVoorschriftenAantekeningen,
+        form.inspectie.omstandigheden.omstandighedenVeiligWerken,
+        form.inspectie.omstandigheden.omstandighedenVeiligWerkenAantekeningen,
+        form.inspectie.uitvoerenden.voldoenUitvoerendeAanEisen,
+        form.inspectie.uitvoerenden.voldoenUitvoerendeAanEisenAantekeningen,
+        form.inspectie.pbmGebruikt.vereisteBeschermingsmiddelen,
+        form.inspectie.pbmGebruikt.vereisteBeschermingsmiddelenAantekeningen,
+        form.inspectie.gevaarlijkeSituaties.gevaarlijkeSituatiesVoorkomen,
+        form.inspectie.gevaarlijkeSituaties.gevaarlijkeSituatiesVoorkomenAantekeningen,
+        form.inspectie.milieubelastendeStoffen.gevaarlijkeStoffenVerwerking,
+        form.inspectie.milieubelastendeStoffen.gevaarlijkeStoffenVerwerkingAantekeningen,
+        form.inspectie.voorzieningenAanwezig.benodigdeVoorzieningenCalimiteiten,
+        form.inspectie.voorzieningenAanwezig.benodigdeVoorzieningenCalimiteitenAantekeningen,
+        form.inspectie.gebruikteGereedschappen.staatGebruiktGereedschappen,
+        form.inspectie.gebruikteGereedschappen.staatGebruiktGereedschappenAantekeningen,
+        form.omschrijvingVerbetering,
+        form.actieTeNemenDoor,
+        form.actieTeNemenVoorDatum,
+        form.evaluatieTerVerbetering,
+        form.datumAfgehandeld,
+        form.door,
+        form.paraaf,
+        id,
+      ],
+    )
+  },
+
+
 
   getTRA: (id, callback) => {
     database.query(queryLibrary.getTRA, [id], (err, rows) => {
