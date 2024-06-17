@@ -37,6 +37,11 @@ const queries = {
   updateSignature:
     "UPDATE gebruiker SET handtekening = ? WHERE personeelsnummer = ?",
 
+  postFile: 'INSERT INTO `order_files` (ordernummer, file_name, file_data) VALUES (?, ?, ?);',
+  getFiles: 'SELECT fileId, file_name, file_data FROM `order_files` WHERE ordernummer = ?;',
+  deleteFiles: 'DELETE FROM `order_files` WHERE file_name = ? AND ordernummer = ? LIMIT 1;',
+  getFileByFileName: 'SELECT file_name FROM `order_files` WHERE ordernummer = ?',
+
   getFormsByPersoneelsnummer:
     "SELECT formId, formNummer, datum FROM formulier_mio WHERE personeelsnummerEigenaar = ? UNION ALL SELECT formId, formNummer, datumMeeting FROM formulier_tbm WHERE personeelsnummerEigenaar = ? UNION ALL SELECT formId, formNummer, createDate FROM formulier_tra WHERE personeelsnummerEigenaar = ? UNION ALL SELECT formId, formNummer, datum FROM formulier_wpi WHERE personeelsnummerEigenaar = ?;",
   getAllForms:

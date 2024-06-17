@@ -11,13 +11,14 @@ DROP TABLE IF EXISTS formulier_lmra;
 DROP TABLE IF EXISTS gebruiker;
 DROP TABLE IF EXISTS rollen;
 DROP TABLE IF EXISTS `order`;
+DROP TABLE IF EXISTS `order_files`; 
 
 -- Create rollen table
 CREATE TABLE rollen (
     rolNummer INT PRIMARY KEY,
     rolOmschrijving VARCHAR(50)
 );
-
+ 
 -- Create gebruiker table
 CREATE TABLE gebruiker (
     personeelsnummer varchar(6) PRIMARY KEY,
@@ -30,7 +31,7 @@ CREATE TABLE gebruiker (
     updateDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
     FOREIGN KEY (rol) REFERENCES rollen(rolNummer)
 );
-
+ 
 -- Create formulier_mio table
 CREATE TABLE formulier_mio (
     formId INT AUTO_INCREMENT PRIMARY KEY,
@@ -85,7 +86,7 @@ CREATE TABLE formulier_mio (
     updateDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
     FOREIGN KEY (personeelsnummerEigenaar) REFERENCES gebruiker(personeelsnummer)
 );
-
+ 
 -- Create formulier_wpi table
 CREATE TABLE formulier_wpi (
     formId INT AUTO_INCREMENT PRIMARY KEY,
@@ -124,7 +125,7 @@ CREATE TABLE formulier_wpi (
     updateDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
     FOREIGN KEY (personeelsnummerEigenaar) REFERENCES gebruiker(personeelsnummer)
 );
-
+ 
 -- Create formulier_tbm table
 CREATE TABLE formulier_tbm (
     formId INT AUTO_INCREMENT PRIMARY KEY,
@@ -140,7 +141,7 @@ CREATE TABLE formulier_tbm (
     updateDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
     FOREIGN KEY (personeelsnummerEigenaar) REFERENCES gebruiker(personeelsnummer)
 );
-
+ 
 -- Create formulier_tra table
 CREATE TABLE formulier_tra (
     formId INT AUTO_INCREMENT PRIMARY KEY,
@@ -151,6 +152,7 @@ CREATE TABLE formulier_tra (
     naamAkkoordUitvoerendLeidinggevende VARCHAR(100),
     paraafAkkoordUitvoerendLeidinggevende MEDIUMTEXT,
     taakomschrijving varchar(512),
+
     createDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updateDate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
     FOREIGN KEY (personeelsnummerEigenaar) REFERENCES gebruiker(personeelsnummer)
@@ -187,7 +189,7 @@ CREATE TABLE gezienVoorUitvoering_tra (
     paraaf MEDIUMTEXT,
     FOREIGN KEY (formId) REFERENCES formulier_tra(formId)
 );
-
+ 
 -- Create taakstap_tra table
 CREATE TABLE taakstap_tra (
     formId INT,
@@ -200,7 +202,7 @@ CREATE TABLE taakstap_tra (
     PRIMARY KEY (formId, taakstapNummer),
     FOREIGN KEY (formId) REFERENCES formulier_tra(formId)
 );
-
+ 
 -- Create handtekening table
 CREATE TABLE handtekening (
     formId INT,
@@ -208,7 +210,7 @@ CREATE TABLE handtekening (
     signature MEDIUMTEXT,
     FOREIGN KEY (formId) REFERENCES formulier_tbm(formId)
 );
-
+ 
 -- Create orde table
 CREATE TABLE `order` (
     ordernummer varchar(50) PRIMARY KEY,
@@ -216,6 +218,14 @@ CREATE TABLE `order` (
     beschrijving varchar(1000)
 );
 
+-- create bijlage order_files
+CREATE TABLE `order_files` (
+    fileId INT AUTO_INCREMENT PRIMARY KEY,
+    ordernummer varchar(50),
+    file_name varchar(100),
+    file_data LONGBLOB,
+    FOREIGN KEY (ordernummer) REFERENCES `order`(ordernummer)
+);
 
 -- Insert test data into rollen
 INSERT INTO rollen (rolNummer, rolOmschrijving) VALUES
