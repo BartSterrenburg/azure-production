@@ -542,26 +542,6 @@ const formController = {
     });
   },
 
-  updateTaakStap: (req, res, next) => {
-    const id = req.params.id;
-    const form = req.body;
-    formDAO.updateTaakStap(id, form, (err, data) => {
-      if (err) {
-        console.error("updateTaakStap error", err);
-        return next({
-          status: 500,
-          message: "Internal Server Error",
-          data: {},
-        });
-      }
-      res.json({
-        status: 200,
-        message: "TaakStap updated",
-        data: data,
-      });
-    });
-  },
-
   deleteTaakStap: (req, res, next) => {
     const id = req.params.id;
     formDAO.deleteTaakStap(id, (err, data) => {
@@ -600,25 +580,6 @@ const formController = {
     });
   },
 
-  updateGezienUitvoering: (req, res, next) => {
-    const id = req.params.id;
-    const form = req.body;
-    formDAO.updateGezienUitvoering(id, form, (err, data) => {
-      if (err) {
-        console.error("updateGezienUitvoering error", err);
-        return next({
-          status: 500,
-          message: "Internal Server Error",
-          data: {},
-        });
-      }
-      res.json({
-        status: 200,
-        message: "GezienUitvoering updated",
-        data: data,
-      });
-    });
-  },
 
   deleteGezienUitvoering: (req, res, next) => {
     const id = req.params.id;

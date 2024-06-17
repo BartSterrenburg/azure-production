@@ -180,11 +180,11 @@ CREATE TABLE formulier_lmra (
 
 -- Create gezienVoorUitvoering_tra table
 CREATE TABLE gezienVoorUitvoering_tra (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     formId INT,
     formNummer varchar(50),
     naam VARCHAR(100),
     paraaf MEDIUMTEXT,
-    PRIMARY KEY (formId, naam),
     FOREIGN KEY (formId) REFERENCES formulier_tra(formId)
 );
 
