@@ -470,6 +470,28 @@ const formDAO = {
     );
   },
 
+  updateTRA: (id, form, callback) => {
+    database.query(
+      queryLibrary.updateTRA,
+      [
+        form.nummer,
+        form.naamVGWCoordinator,
+        form.paraafVGWCoordinator,
+        form.naamUitvoerendeLeidinggevende,
+        form.paraafUitvoerendeLeidinggevende,
+        form.omschrijvingTaak,
+        id,
+      ],
+      (err, rows) => {
+        if (err) {
+          console.error("Error executing query", err);
+          return callback(err, null);
+        }
+        callback(null, rows);
+      }
+    );
+  },
+
 
 
   getTRA: (id, callback) => {
@@ -491,6 +513,84 @@ const formDAO = {
       callback(null, rows);
     });
   },
+
+
+  getTaakStap: (id, callback) => {
+    database.query(queryLibrary.getTaakStap, [id], (err, rows) => {
+      if (err) {
+        console.error("Error executing query", err);
+        return callback(err, null);
+      }
+      callback(null, rows);
+    });
+  },
+
+  getGezienUitvoering: (id, callback) => {
+    database.query(queryLibrary.getGezienUitvoering, [id], (err, rows) => {
+      if (err) {
+        console.error("Error executing query", err);
+        return callback(err, null);
+      }
+      callback(null, rows);
+    });
+  },
+
+  updateTaakStap: (id, form, callback) => {
+    database.query(
+      queryLibrary.updateTaakStap,
+      [
+        form.number,
+        form.taakstapNummer,
+        form.taakstapActiviteit,
+        form.gevaar,
+        form.beheersMaatregel,
+        form.actieDoor,
+        id,
+      ],
+      (err, rows) => {
+        if (err) {
+          console.error("Error executing query", err);
+          return callback(err, null);
+        }
+        callback(null, rows);
+      }
+    );
+  },
+
+  updateGezienUitvoering: (id, form, callback) => {
+    database.query(
+      queryLibrary.updateGezienUitvoering,
+      [form.number, form.name, form.signature, id],
+      (err, rows) => {
+        if (err) {
+          console.error("Error executing query", err);
+          return callback(err, null);
+        }
+        callback(null, rows);
+      }
+    );
+  },
+
+  deleteTaakStap: (id, callback) => {
+    database.query(queryLibrary.deleteTaakStap, [id], (err, rows) => {
+      if (err) {
+        console.error("Error executing query", err);
+        return callback(err, null);
+      }
+      callback(null, rows);
+    });
+  },
+
+  deleteGezienUitvoering: (id, callback) => {
+    database.query(queryLibrary.deleteGezienUitvoering, [id], (err, rows) => {
+      if (err) {
+        console.error("Error executing query", err);
+        return callback(err, null);
+      }
+      callback(null, rows);
+    });
+  },
+  
 };
 
 module.exports = formDAO;

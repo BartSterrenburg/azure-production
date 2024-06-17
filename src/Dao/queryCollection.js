@@ -1,3 +1,4 @@
+
 const queries = {
   getAllUsers: "SELECT * FROM gebruiker",
   getParticipants: "SELECT * FROM handtekening WHERE formId = ?",
@@ -12,9 +13,14 @@ const queries = {
     "INSERT INTO formulier_tra(personeelsnummerEigenaar, formNummer, naamVGWCoordinator, paraafVGWCoordinator, naamAkkoordUitvoerendLeidinggevende, paraafAkkoordUitvoerendLeidinggevende, taakomschrijving) VALUES (?, ?, ?, ?, ?, ?, ?)",
   postTaakStap:
     "INSERT INTO taakstap_tra(formId, formNummer, taakstapNummer, taakstapActiviteit, gevaar, beheersMaatregel, actieDoor) VALUES(?, ?, ?, ?, ?, ?, ?)",
-  postGezienUitvoering:
+    getTaakStap: "SELECT * FROM taakstap_tra WHERE formId = ?",
+    updateTaakStap: "UPDATE taakstap_tra SET formNummer = ?, taakstapActiviteit = ?, gevaar = ?, beheersMaatregel = ?, actieDoor = ? WHERE formId = ? AND taakstapNummer = ?",
+    deleteTaakStap: "DELETE FROM taakstap_tra WHERE formId = ?",
+    postGezienUitvoering:
     "INSERT INTO gezienVoorUitvoering_tra(formId, formNummer, naam, paraaf) VALUES(?, ?, ?, ?)",
-
+    getGezienUitvoering: "SELECT * FROM gezienVoorUitvoering_tra WHERE formId = ?",
+    updateGezienUitvoering: "UPDATE gezienVoorUitvoering_tra SET formNummer = ?, naam = ?, paraaf = ? WHERE formId = ?",
+    deleteGezienUitvoering: "DELETE FROM gezienVoorUitvoering_tra WHERE formId = ?",
   postMIO:
     "INSERT INTO formulier_mio (personeelsnummerEigenaar, formNummer, typeMelding, datum, tijdstip, naamEigenaar, functieEigenaar, locatie, aardLetsel, plaatsLetsel, foto, eersteBehandeling, onmiddellijkeActieNotitie, omschrijving, OH_onveiligeSnelheid, OH_beveiligingBuitenWerking, OH_verkeerdGebruikGereedschap, OH_nietGebruikenPBM, OH_onveiligLaden, OH_innemenOnveiligeLaden, OH_werkenAanGevaarlijkeDelen, OH_Afleiden, OH_AndersB, OH_Anders, OS_onvoldoendeBeveiligd, OS_onbeveiligd, OS_defectInstallatie, OS_onveiligeConstructie, OS_ondeugdelijkeGereedschap, OS_onveiligeKleding, OS_gebreikkigeOrdeEnNetheid, OS_Anders, OS_AndersB, BZ_onvoldoendeMaatregelen, BZ_onvoldoendeErvaring, BZ_onvoldoendeInstructie, BZ_nietBevoegdBedienen, BZ_onvoldoendeOnderhoud, BZ_onvoldoendeVakkenis, BZ_Anders, BZ_AndersB, omschrijvingActie, actieTeNemenDoor, actieTenemenVoorDatum, meldingAfgehandeldVoorDatum, meldingAfgehandeldDoor, paraaf) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
   postTBM:
@@ -43,6 +49,7 @@ const queries = {
   updateWPI: "UPDATE formulier_wpi SET formNummer = ?, datum = ?, project = ?, locatie = ?, naamEigenaar = ?, functieEigenaar = ?, foto = ?, gehandeldVolgensRegelsEnVoorschriften = ?, gehandeldVolgensRegelsEnVoorschriftenAantekeningen = ?, omstandighedenVeiligWerken = ?, omstandighedenVeiligWerkenAantekeningen = ?, voldoenUitvoerendeAanEisen = ?, voldoenUitvoerendeAanEisenAantekeningen = ?, vereisteBeschermingsmiddelen = ?, vereisteBeschermingsmiddelenAantekeningen = ?, gevaarlijkeSituatiesVoorkomen = ?, gevaarlijkeSituatiesVoorkomenAantekeningen = ?, gevaarlijkeStoffenVerwerking = ?, gevaarlijkeStoffenVerwerkingAantekeningen = ?, benodigdeVoorzieningenCalimiteiten = ?, benodigdeVoorzieningenCalimiteitenAantekeningen = ?, staatGebruiktGereedschappen = ?, staatGebruiktGereedschappenAantekeningen = ?, omschrijvingVerbetering = ?, actieTeNemenDoor = ?, actieTeNemenVoorDatum = ?, evaluatieTerVerbetering = ?, datumAfgehandeld = ?, door = ?, paraaf = ? WHERE formId = ?",
   updateMIO: "UPDATE formulier_mio SET formNummer = ?, typeMelding = ?, datum = ?, tijdstip = ?, naamEigenaar = ?, functieEigenaar = ?, locatie = ?, aardLetsel = ?, plaatsLetsel = ?, foto = ?, eersteBehandeling = ?, onmiddellijkeActieNotitie = ?, omschrijving = ?, OH_onveiligeSnelheid = ?, OH_beveiligingBuitenWerking = ?, OH_verkeerdGebruikGereedschap = ?, OH_nietGebruikenPBM = ?, OH_onveiligLaden = ?, OH_innemenOnveiligeLaden = ?, OH_werkenAanGevaarlijkeDelen = ?, OH_Afleiden = ?, OH_AndersB = ?, OH_Anders = ?, OS_onvoldoendeBeveiligd = ?, OS_onbeveiligd = ?, OS_defectInstallatie = ?, OS_onveiligeConstructie = ?, OS_ondeugdelijkeGereedschap = ?, OS_onveiligeKleding = ?, OS_gebreikkigeOrdeEnNetheid = ?, OS_Anders = ?, OS_AndersB = ?, BZ_onvoldoendeMaatregelen = ?, BZ_onvoldoendeErvaring = ?, BZ_onvoldoendeInstructie = ?, BZ_nietBevoegdBedienen = ?, BZ_onvoldoendeOnderhoud = ?, BZ_onvoldoendeVakkenis = ?, BZ_Anders = ?, BZ_AndersB = ?, omschrijvingActie = ?, actieTeNemenDoor = ?, actieTenemenVoorDatum = ?, meldingAfgehandeldVoorDatum = ?, meldingAfgehandeldDoor = ? WHERE formId = ?",
   updateTBM: "UPDATE formulier_tbm SET formNummer = ?, datumMeeting = ?, locatie = ?, gehoudenDoor = ?, functie = ?, aantalPaginas = ?, besprokenOnderwerpen = ? WHERE formId = ?",
+  updateTRA: "UPDATE formulier_tra SET formNummer = ?, naamVGWCoordinator = ?, paraafVGWCoordinator = ?, naamAkkoordUitvoerendLeidinggevende = ?, paraafAkkoordUitvoerendLeidinggevende = ?, taakomschrijving = ? WHERE formId = ?",
   getWPI: "SELECT * FROM `formulier_wpi` WHERE formId = ?",
   getMIO: "SELECT * FROM `formulier_mio` WHERE formId = ?",
   getTBM:

@@ -1,5 +1,4 @@
 const formDAO = require("../Dao/formDAO");
-const { getTRA } = require("../Dao/queryCollection");
 const getPdf = require("../functions/getPdf");
 
 const formController = {
@@ -192,6 +191,26 @@ const formController = {
       res.json({
         status: 200,
         message: "TBM updated",
+        data: data,
+      });
+    });
+  },
+
+  updateTRA: (req, res, next) => {
+    const id = req.params.id;
+    const form = req.body;
+    formDAO.updateTRA(id, form, (err, data) => {
+      if (err) {
+        console.error("updateTRA error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "TRA updated",
         data: data,
       });
     });
@@ -501,7 +520,124 @@ const formController = {
         });
       }
     });
-  }
+  },
+
+  getTaakStap: (req, res, next) => {
+    const id = req.params.id;
+    formDAO.getTaakStap(id, async (err, data) => {
+      if (err) {
+        console.error("getTaakStap error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      } else {
+        res.json({
+          status: 200,
+          message: "TaakStap found",
+          data: data,
+        });
+      }
+    });
+  },
+
+  updateTaakStap: (req, res, next) => {
+    const id = req.params.id;
+    const form = req.body;
+    formDAO.updateTaakStap(id, form, (err, data) => {
+      if (err) {
+        console.error("updateTaakStap error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "TaakStap updated",
+        data: data,
+      });
+    });
+  },
+
+  deleteTaakStap: (req, res, next) => {
+    const id = req.params.id;
+    formDAO.deleteTaakStap(id, (err, data) => {
+      if (err) {
+        console.error("deleteTaakStap error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "TaakStap deleted",
+        data: data,
+      });
+    });
+  },
+
+  getGezienUitvoering: (req, res, next) => {
+    const id = req.params.id;
+    formDAO.getGezienUitvoering(id, (err, data) => {
+      if (err) {
+        console.error("getGezienUitvoering error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "GezienUitvoering found",
+        data: data,
+      });
+    });
+  },
+
+  updateGezienUitvoering: (req, res, next) => {
+    const id = req.params.id;
+    const form = req.body;
+    formDAO.updateGezienUitvoering(id, form, (err, data) => {
+      if (err) {
+        console.error("updateGezienUitvoering error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "GezienUitvoering updated",
+        data: data,
+      });
+    });
+  },
+
+  deleteGezienUitvoering: (req, res, next) => {
+    const id = req.params.id;
+    formDAO.deleteGezienUitvoering(id, (err, data) => {
+      if (err) {
+        console.error("deleteGezienUitvoering error", err);
+        return next({
+          status: 500,
+          message: "Internal Server Error",
+          data: {},
+        });
+      }
+      res.json({
+        status: 200,
+        message: "GezienUitvoering deleted",
+        data: data,
+      });
+    });
+  },
 
 };
 
