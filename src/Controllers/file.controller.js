@@ -4,52 +4,49 @@ const fileController = {
     postFile: async (req, res) => {
         const formNummer = req.params.formNummer;
         const files = req.files;
-
+    
         if (!formNummer || !files || files.length === 0) {
-            console.error('Form number or file is missing');
+            console.error('Form number or files are missing');
             return res.status(400).json({
                 status: 400,
-                message: 'Form number or file is missing',
+                message: 'Form number or files are missing',
                 data: {}
             });
         }
-
-        const file = files[0]; 
-        const fileName = file.originalname;
-        const fileData = file.buffer;
-
-        console.log("Formnummer:", formNummer);
-        console.log("FileName:", fileName);
-        console.log("File (first 100 bytes):", fileData.slice(0, 100));
-
+    
         try {
-            fileDAO.postFile(formNummer, fileName, fileData, (err, result) => {
-                if (err) {
-                    console.error("Error saving file:", err);
-                    return res.status(500).json({
-                        status: 500,
-                        message: 'Error saving file',
-                        data: {}
+            const filePromises = files.map(file => {
+                const fileName = file.originalname;
+                const fileData = file.buffer;
+    
+                return new Promise((resolve, reject) => {
+                    fileDAO.postFile(formNummer, fileName, fileData, (err, result) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(result);
+                        }
                     });
-                }
-
-                console.log("File saved successfully:", result);
-                res.status(200).json({
-                    status: 200,
-                    message: 'File saved successfully',
-                    data: result
                 });
             });
+    
+            const results = await Promise.all(filePromises);
+    
+            res.status(200).json({
+                status: 200,
+                message: 'Files saved successfully',
+                data: results
+            });
         } catch (error) {
-            console.error("Error saving file:", error);
+            console.error("Error saving files:", error);
             res.status(500).json({
                 status: 500,
-                message: 'Error saving file',
+                message: 'Error saving files',
                 data: {}
             });
         }
     },
-
+    
     getFiles: async (req, res) => {
         const formNummer = req.params.formNummer;
 
@@ -65,7 +62,6 @@ const fileController = {
         try {
             fileDAO.getFiles(formNummer, (err, result) => {
                 if (err) {
-                    console.error("Error fetching files:", err);
                     return res.status(500).json({
                         status: 500,
                         message: 'Error fetching files',
@@ -73,7 +69,6 @@ const fileController = {
                     });
                 }
 
-                console.log("Files fetched successfully:", result);
                 res.status(200).json({
                     status: 200,
                     message: 'Files fetched successfully',
@@ -81,7 +76,6 @@ const fileController = {
                 });
             });
         } catch (error) {
-            console.error("Error fetching files:", error);
             res.status(500).json({
                 status: 500,
                 message: 'Error fetching files',
@@ -95,7 +89,6 @@ const fileController = {
         const fileName = req.params.fileName;
 
         if (!formNummer || !fileName) {
-            console.error('Form number or file name is missing');
             return res.status(400).json({
                 status: 400,
                 message: 'Form number or file name is missing',
@@ -106,7 +99,6 @@ const fileController = {
         try {
             fileDAO.deleteFiles(formNummer, fileName, (err, result) => {
                 if (err) {
-                    console.error("Error deleting file:", err);
                     return res.status(500).json({
                         status: 500,
                         message: 'Error deleting file',
@@ -114,7 +106,6 @@ const fileController = {
                     });
                 }
 
-                console.log("File deleted successfully:", result);
                 res.status(200).json({
                     status: 200,
                     message: 'File deleted successfully',
@@ -122,7 +113,6 @@ const fileController = {
                 });
             });
         } catch (error) {
-            console.error("Error deleting file:", error);
             res.status(500).json({
                 status: 500,
                 message: 'Error deleting file',

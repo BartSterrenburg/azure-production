@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const multer = require("multer");
 const bodyParser = require('body-parser');
 const userRoutes = require('./src/Routes/user.routes');
 const tokenRoutes = require('./src/Routes/token.routes');
@@ -11,6 +12,13 @@ const orderRoutes = require("./src/Routes/order.routes");
 // Set limits for JSON and URL-encoded data
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+const storage = multer.memoryStorage();
+const upload = multer({
+  storage: storage,
+  limits: {
+      fileSize: 50 * 1024 * 1024, // 50 MB
+  }
+});
 
 // Gebruik CORS middleware
 const corsOptions = {
@@ -33,7 +41,7 @@ app.get("/", (req, res, next) => {
 app.use(userRoutes)
 app.use(tokenRoutes)
 app.use(formRoutes)
-app.use(fileRoutes)
+app.use(fileRoutes(upload)); 
 app.use(orderRoutes)
 
 
