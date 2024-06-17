@@ -45,7 +45,7 @@ const queries = {
   getFileByFileName: 'SELECT file_name FROM `order_files` WHERE ordernummer = ?',
 
   getFormsByPersoneelsnummer:
-    "SELECT formId, formNummer, datum FROM formulier_mio WHERE personeelsnummerEigegit cnaar = ? UNION ALL SELECT formId, formNummer, datumMeeting FROM formulier_tbm WHERE personeelsnummerEigenaar = ? UNION ALL SELECT formId, formNummer, createDate FROM formulier_tra WHERE personeelsnummerEigenaar = ? UNION ALL SELECT formId, formNummer, datum FROM formulier_wpi WHERE personeelsnummerEigenaar = ?;",
+    "SELECT formId, formNummer, datum FROM formulier_mio WHERE personeelsnummerEigenaar = ? UNION ALL SELECT formId, formNummer, datumMeeting FROM formulier_tbm WHERE personeelsnummerEigenaar = ? UNION ALL SELECT formId, formNummer, createDate FROM formulier_tra WHERE personeelsnummerEigenaar = ? UNION ALL SELECT formId, formNummer, datum FROM formulier_wpi WHERE personeelsnummerEigenaar = ?;",
   getAllForms:
     "SELECT formId, formNummer, datum FROM formulier_mio UNION ALL SELECT formId, formNummer, datumMeeting FROM formulier_tbm UNION ALL SELECT formId, formNummer, createDate FROM formulier_tra UNION ALL SELECT formId, formNummer, datum FROM formulier_wpi;",
   getOrders: "SELECT * FROM `order`",
