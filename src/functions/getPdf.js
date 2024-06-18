@@ -427,7 +427,7 @@ const pdfFunctions = {
           onveiligeConstructie: object.OS_onveiligeConstructie,
           ondeugdelijkeGereedschap: object.OS_ondeugdelijkeGereedschap,
           onveiligeKleding: object.OS_onveiligeKleding,
-          gebrekkigeOrdeEnNetheid: object.OS_gebrekkigeOrdeEnNetheid,
+          gebrekkigeOrdeEnNetheid: object.S_gebreikkigeOrdeEnNetheid,
           Anders: object.OS_AndersB
         },
         andersField: "OS_Anders"
