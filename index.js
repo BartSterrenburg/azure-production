@@ -22,7 +22,7 @@ const upload = multer({
 
 // Gebruik CORS middleware
 const corsOptions = {
-  origin: "http://127.0.0.1:1234",
+  origin: "http://r640.concor.me:33065/",
   methods: ["GET,HEAD,PUT,PATCH,POST,DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
@@ -65,7 +65,7 @@ app.use((error, req, res, next) => {
  
 // Onderstaande code zorgt ervoor dat de server alleen luistert als het bestand niet tijdens testen wordt uitgevoerd.
 if (process.env.NODE_ENV !== "test") {
-  const port = process.env.PORT || 3000;
+  const port = process.env.DB_PORT || 3000;
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
   });

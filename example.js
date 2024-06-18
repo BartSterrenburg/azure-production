@@ -1,7 +1,7 @@
 // Function to fetch all users from the API
 async function getAllUsers() {
     try {
-        const response = await fetch('http://127.0.0.1:3000/api/users');
+        const response = await fetch('http://r640.concor.me:33065/api/users');
         
         // Check if the request was successful
         if (!response.ok) {
@@ -21,7 +21,7 @@ async function getAllUsers() {
 
 async function getUserById(id) {
     try {
-        const response = await fetch('http://127.0.0.1:3000/api/user/' + id);
+        const response = await fetch('http://r640.concor.me:33065/api/user/' + id);
         
         // Check if the request was successful
         if (!response.ok) {
@@ -41,7 +41,7 @@ async function getUserById(id) {
 
 async function getUserRolById(id) {
     try {
-        const response = await fetch('http://127.0.0.1:3000/api/user/rol' + id);
+        const response = await fetch('http://r640.concor.me:33065/api/user/rol' + id);
         
         // Check if the request was successful
         if (!response.ok) {
@@ -60,7 +60,7 @@ async function getUserRolById(id) {
 
 async function getUserPasswordById(id) {
     try {
-        const response = await fetch('http://127.0.0.1:3000/api/user/password/' + id);
+        const response = await fetch('http://r640.concor.me:33065/api/user/password/' + id);
         
         // Check if the request was successful
         if (!response.ok) {
