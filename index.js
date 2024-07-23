@@ -22,7 +22,7 @@ const upload = multer({
 
 // Gebruik CORS middleware
 const corsOptions = {
-  origin: "http://r640.concor.me:33065/",
+  origin: "http://127.0.0.1:1234",
   methods: ["GET,HEAD,PUT,PATCH,POST,DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
