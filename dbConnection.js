@@ -1,20 +1,30 @@
-const mysql = require("mysql2");
+const sql = require("mssql");
 require("dotenv").config();
 
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
+const config = {
   user: process.env.DB_USER,
-  database: process.env.DB_DATABASE,
   password: process.env.DB_PASSWORD,
-});
+  server: process.env.DB_HOST,
+  database: process.env.DB_DATABASE,
+  port: parseInt(process.env.DB_PORT),
+  options: {
+    encrypt: true, // Gebruik 'true' als je een Azure SQL-database gebruikt, anders 'false'
+    enableArithAbort: true, // Nodig voor compatibiliteit
+  },
+};
 
-connection.connect((err) => {
-  if (err) {
-    console.error("Error connecting to database: ", err);
-    return;
-  }
-  console.log(`Connected to database.`);
-});
+const poolPromise = new sql.ConnectionPool(config)
+  .connect()
+  .then(pool => {
+    console.log('Connected to SQL Server');
+    return pool;
+  })
+  .catch(err => {
+    console.error('Database connection failed: ', err);
+    process.exit(1);
+  });
 
-module.exports = connection;
+module.exports = {
+  sql,
+  poolPromise
+};
